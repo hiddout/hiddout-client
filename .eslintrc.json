@@ -5,11 +5,18 @@
     "node": true,
     "es6": true
   },
+  "plugins": [
+    "react"
+  ],
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "extends": [
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
   "rules": {
     "curly": "error",
@@ -38,6 +45,7 @@
     ]
   },
   "globals": {
-    "nwWinGUI":true
+    "nwWinGUI":true,
+    "hiddoutViewer":true
   }
 }

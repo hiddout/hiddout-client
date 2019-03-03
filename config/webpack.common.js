@@ -21,6 +21,7 @@ module.exports = {
 								useBuiltIns: 'usage',
 							},
 						],
+							"@babel/preset-react",
 							'@babel/preset-flow',
 						],
 						plugins: [
@@ -29,6 +30,16 @@ module.exports = {
 						],
 					},
 				},
+			},
+			{
+				test: /\.css$/,
+				use: [
+					'style-loader',
+					'css-loader'
+				]
+			}, {
+				test: /\.(png|jpg|jpeg|ico|ttf|otf|eot|svg|woff(2)?)$/,
+				use: ['file-loader']
 			},
 			{
 				test: /\.html$/,
@@ -47,6 +58,6 @@ module.exports = {
 			exclude: /node_modules/,
 			failOnError: true,
 			cwd: process.cwd(),
-		}),
+		})
 	],
 };
