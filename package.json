@@ -28,7 +28,8 @@
     "dev-win": "npm run build-dev && npm run run-win",
     "test": "npm run unit-testing && npm run flow check && npm run lint && npm run build-prod",
     "unit-testing": "mocha test/**/*.test.js --require @babel/register",
-    "web": "webpack-dev-server --open --config config/webpack.web.js"
+    "web": "webpack-dev-server --open --config config/webpack.web.js",
+    "web-dist": "node ./devScript/webDist.js"
   },
   "prettier": {
     "useTabs": true,
