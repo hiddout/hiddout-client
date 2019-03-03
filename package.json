@@ -84,7 +84,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "hiddout-viewer": "^0.1.1",
+    "hiddout-viewer": "^0.1.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "semantic-ui-react": "^0.85.0",
