@@ -3,6 +3,7 @@ const path = require('path'),
 
 module.exports = {
 	output: {
+		publicPath: path.resolve(__dirname, '../assets'),
 		path: path.resolve(__dirname, '../'),
 		filename: 'hiddout.js',
 	},

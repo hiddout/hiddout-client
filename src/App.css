@@ -1,22 +1,2 @@
-body {
-    height: 100%;
-    background: #444;
-}
-
-.grid {
-
-}
-
-.gridItem {
-    width: 320px;
-    height: 200px;
-    background-color: #555;
-    margin: 10px;
-    float: left;
-}
-
 .App {
-    position: absolute;
-    height: 100%;
-    width: 100%;
 }
