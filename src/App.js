@@ -1,52 +1,66 @@
 import React from 'react';
-import { BrowserRouter} from 'react-router-dom';
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 import { Image, Menu } from 'semantic-ui-react';
 import './App.css';
+
+import { Home } from './container/homePage/Home';
+import { About } from './container/aboutPage/About';
+import { Login } from './container/loginPage/Login';
+import { Message } from './container/messagePage/Message';
+import { Friend } from './container/friendPage/Friend';
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { activeItem: 'home' };
-		this.handleItemClick = this.handleItemClick.bind(this);
-	}
-
-	handleItemClick(e, { name }) {
-		return this.setState({ activeItem: name });
 	}
 
 	render() {
-		const { activeItem } = this.state;
+
+		const Nav = props => (
+			<NavLink
+				exact
+				{...props}
+				activeClassName="active"
+			/>
+		);
+
 		return (
 			<BrowserRouter>
 				<div className="App">
 					<Menu pointing secondary>
 						<Menu.Item>
-							<Image src='./public/static/Hiddout.png' avatar />
+							<Image src="./public/static/Hiddout.png" avatar />
 						</Menu.Item>
 
 						<Menu.Item
 							name="home"
-							active={activeItem === 'home'}
-							onClick={this.handleItemClick}
+							as={Nav}
+							to="/"
 						/>
 						<Menu.Item
 							name="messages"
-							active={activeItem === 'messages'}
-							onClick={this.handleItemClick}
+							as={Nav}
+							to="/message"
 						/>
 						<Menu.Item
 							name="friends"
-							active={activeItem === 'friends'}
-							onClick={this.handleItemClick}
+							as={Nav}
+							to="/friend"
 						/>
 						<Menu.Menu position="right">
 							<Menu.Item
-								name="login"
-								active={activeItem === 'login'}
-								onClick={this.handleItemClick}
+								name="LOG IN"
+								as={Nav}
+								to="/login"
 							/>
 						</Menu.Menu>
 					</Menu>
+
+					<Route exact path="/" component={Home} />
+					<Route path="/message" component={Message} />
+					<Route path="/friend" component={Friend} />
+					<Route path="/login" component={Login} />
+					<Route path="/about" component={About} />
 				</div>
 			</BrowserRouter>
 		);

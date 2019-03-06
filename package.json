@@ -13,7 +13,7 @@
   "chromium-args": "--disable-raf-throttling",
   "scripts": {
     "build": "node ./devScript/dist.js",
-    "build-web": "webpack --config config/webpack.web.js --mode=production",
+    "build-web": "webpack --config config/webpack.web.prod.js && node ./devScript/webDist.js",
     "build-dev": "webpack --config config/webpack.client.js",
     "build-prod": "webpack --config config/webpack.prod.js",
     "flow": "flow",
@@ -28,8 +28,7 @@
     "dev-win": "npm run build-dev && npm run run-win",
     "test": "npm run unit-testing && npm run flow check && npm run lint && npm run build-prod",
     "unit-testing": "mocha test/**/*.test.js --require @babel/register",
-    "web": "webpack --config config/webpack.web.js --mode=development && webpack-dev-server --open --config config/webpack.web.js --mode=development",
-    "web-dist": "npm run build-web && node ./devScript/webDist.js"
+    "web": "webpack-dev-server --open --config config/webpack.web.js"
   },
   "prettier": {
     "useTabs": true,
@@ -85,7 +84,7 @@
     "webpack-merge": "4.2.1"
   },
   "dependencies": {
-    "hiddout-viewer": "0.1.2",
+    "hiddout-viewer": "0.1.4",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-router-dom": "4.3.1",
