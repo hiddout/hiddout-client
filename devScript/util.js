@@ -22,10 +22,10 @@ function downloadClientAndSDK(){
 
 		Promise.all([
 			clientDownloadURL,
-			sdkDownloadURL
+			sdkDownloadURL,
 		].map(x => download(x, path.join(process.cwd()), {
 			extract: true,
-			headers: {accept: 'application/zip'}
+			headers: {accept: 'application/zip'},
 		}).catch(error => {
 			return reject(error);
 		}))).then(()=>{
@@ -89,8 +89,8 @@ function deleteDevDependency(dest) {
 async function packageSourceToNWClient(distPath) {
 
 	const rootPath = process.cwd();
-	const folders = ['src', 'assets', 'nwSystem' , 'node_modules'],
-		files = ['index.html', 'hiddout.js', 'package.json'];
+	const folders = ['public', 'assets', 'nwSystem' , 'node_modules'],
+		files = ['index.html', 'package.json'];
 
 	let dest = null;
 

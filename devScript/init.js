@@ -21,4 +21,5 @@ util.downloadClientAndSDK()
 	})
 	.catch((e) => {
 		console.log(`Download error: ${e}`);
+		downloadingStr.stop();
 	});

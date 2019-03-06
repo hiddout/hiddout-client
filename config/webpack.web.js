@@ -3,7 +3,6 @@ const merge = require('webpack-merge'),
 
 const webConfig = {
 	entry: './src/main.web.js',
-	mode: 'production',
 };
 
 module.exports = merge(common, webConfig);
