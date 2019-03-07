@@ -1,5 +1,6 @@
 import React from 'react';
 import './Friend.css';
+import { NavigationBar } from '../../containers/navigationBar/NavigationBar';
 
 class Friend extends React.Component {
 	constructor(props) {
@@ -8,9 +9,10 @@ class Friend extends React.Component {
 
 	render(){
 		return (
-			<div>
+			<React.Fragment>
+				<NavigationBar/>
 				<h2>Friends</h2>
-			</div>
+			</React.Fragment>
 		);
 	}
 }

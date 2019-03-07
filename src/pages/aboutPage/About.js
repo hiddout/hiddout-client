@@ -8,9 +8,9 @@ class About extends React.Component {
 
 	render(){
 		return (
-			<div>
+			<React.Fragment>
 				<h2>About</h2>
-			</div>
+			</React.Fragment>
 		);
 	}
 }

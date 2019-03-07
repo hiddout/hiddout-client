@@ -10,13 +10,13 @@ util.downloadClientAndSDK()
 		downloadingStr.stop();
 		console.log('Download finished!');
 
-		// util.rebuildNW()
+		// utils.rebuildNW()
 		// 	.then(() => {
 		// 		console.log('Install finished!');
 		// 		console.log('Project is ready for development!');
 		// 	})
 		// 	.catch((e) => {
-		// 		console.log(`Build native module error: ${e}`);
+		// 		console.log(`Build native modules error: ${e}`);
 		// 	});
 	})
 	.catch((e) => {

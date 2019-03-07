@@ -1,5 +1,6 @@
 import React from 'react';
 import './Login.css';
+import { NavigationBar } from '../../containers/navigationBar/NavigationBar';
 
 class Login extends React.Component {
 	constructor(props) {
@@ -8,9 +9,10 @@ class Login extends React.Component {
 
 	render(){
 		return (
-			<div>
+			<React.Fragment>
+				<NavigationBar/>
 				<h2>LOG IN</h2>
-			</div>
+			</React.Fragment>
 		);
 	}
 }
