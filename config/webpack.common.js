@@ -3,7 +3,8 @@ const path = require('path'),
 
 module.exports = {
 	output: {
-		filename: './public/js/hiddout.js', // <-- it has to be that way, otherwise dev-server will not working!!!!
+		path: path.resolve(__dirname, '../public/js'),
+		filename: 'hiddout.js',
 	},
 	module: {
 		rules: [

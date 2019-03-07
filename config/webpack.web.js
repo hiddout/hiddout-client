@@ -3,6 +3,9 @@ const merge = require('webpack-merge'),
 
 const webConfig = {
 	entry: './src/main.web.js',
+	output: {
+		filename: './public/js/hiddout.js', // <-- it has to be that way, otherwise dev-server will not working!!!!
+	},
 	mode: 'development',
 	devServer: {
 		historyApiFallback: true,
