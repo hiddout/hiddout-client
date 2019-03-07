@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 import { Home } from './homePage/Home';
 import { About } from './aboutPage/About';
@@ -18,6 +18,7 @@ class MainPage extends React.Component {
 		return (
 			<Switch>
 				<Route exact path="/" component={Home}/>
+				<Redirect from='/index.html' to='/'/>
 				<Route path="/message" component={Message}/>
 				<Route path="/friend" component={Friend}/>
 				<Route path="/login" component={Login}/>

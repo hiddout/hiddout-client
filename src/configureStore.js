@@ -1,14 +1,14 @@
 import { createBrowserHistory } from 'history';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createRootReducer from './reducers';
 
 export const history = createBrowserHistory();
 
-const composeEnhancers = composeWithDevTools({
+const composeEnhancers = process.env.NODE_ENV !== 'production'? composeWithDevTools({
 	// Specify name here, actionsBlacklist, actionsCreators and other options if needed
-});
+}): compose;
 
 export default function configureStore(preloadedState) {
 	const store = createStore(
