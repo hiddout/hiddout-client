@@ -51,6 +51,7 @@
     ]
   },
   "globals": {
+    "immer": true,
     "nwWinGUI":true,
     "hiddoutViewer":true
   }

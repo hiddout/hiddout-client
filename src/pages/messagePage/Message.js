@@ -1,13 +1,15 @@
+// @flow
 import React from 'react';
 import './Message.css';
 import { NavigationBar } from '../../containers/navigationBar/NavigationBar';
+import type {Node} from 'react';
+type Props = {};
 
-class Message extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+type State = {};
 
-	render(){
+class Message extends React.Component<Props, State> {
+
+	render(): Node {
 		return (
 			<React.Fragment>
 				<NavigationBar/>

@@ -1,12 +1,15 @@
+// @flow
 import React from 'react';
 import './About.css';
+import type {Node} from 'react';
 
-class About extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+type Props = {};
 
-	render(){
+type State = {};
+
+class About extends React.Component<Props,State> {
+
+	render(): Node {
 		return (
 			<React.Fragment>
 				<h2>About</h2>

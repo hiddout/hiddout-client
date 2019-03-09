@@ -1,18 +1,29 @@
 import { createBrowserHistory } from 'history';
 import { applyMiddleware, compose, createStore } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
 import { routerMiddleware } from 'connected-react-router';
 import { composeWithDevTools } from 'redux-devtools-extension';
+
+import storage from 'redux-persist/lib/storage';
 import createRootReducer from './reducers';
 
 export const history = createBrowserHistory();
 
-const composeEnhancers = process.env.NODE_ENV !== 'production'? composeWithDevTools({
+const persistConfig = {
+	key: 'root',
+	storage,
+	blacklist: ['router'],
+};
+
+const persistedReducer = persistReducer(persistConfig, createRootReducer(history));
+
+const composeEnhancers = process.env.NODE_ENV !== 'production' ? composeWithDevTools({
 	// Specify name here, actionsBlacklist, actionsCreators and other options if needed
-}): compose;
+}) : compose;
 
 export default function configureStore(preloadedState) {
 	const store = createStore(
-		createRootReducer(history), // root reducer with router state
+		persistedReducer, // root reducer with router state
 		preloadedState,
 		composeEnhancers(
 			applyMiddleware(
@@ -22,5 +33,7 @@ export default function configureStore(preloadedState) {
 		),
 	);
 
-	return store;
+	const persistor = persistStore(store);
+
+	return { store, persistor };
 }

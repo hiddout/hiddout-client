@@ -1,12 +1,16 @@
+// @flow
 import React from 'react';
 import './NoMatch.css';
 
-class NoMatch extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+import type {Node} from 'react';
 
-	render(){
+type Props = {};
+
+type State = {};
+
+class NoMatch extends React.Component<Props,State> {
+
+	render(): Node {
 		return (
 			<React.Fragment>
 				<h2>404</h2>

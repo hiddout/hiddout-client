@@ -1,13 +1,15 @@
+// @flow
 import React from 'react';
 import './Friend.css';
 import { NavigationBar } from '../../containers/navigationBar/NavigationBar';
+import type {Node} from 'react';
+type Props = {};
 
-class Friend extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+type State = {};
 
-	render(){
+class Friend extends React.Component<Props, State> {
+
+	render(): Node {
 		return (
 			<React.Fragment>
 				<NavigationBar/>
@@ -17,4 +19,4 @@ class Friend extends React.Component {
 	}
 }
 
-export {Friend};
+export { Friend };

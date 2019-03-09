@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
@@ -8,12 +9,15 @@ import { Message } from './messagePage/Message';
 import { Friend } from './friendPage/Friend';
 import { NoMatch } from './404Page/NoMatch';
 
-class MainPage extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+import type {Node} from 'react';
 
-	render() {
+type Props = {};
+
+type State = {};
+
+class MainPage extends React.Component<Props, State> {
+
+	render(): Node {
 
 		return (
 			<Switch>
