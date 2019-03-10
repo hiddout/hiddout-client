@@ -5,6 +5,9 @@ import { ConnectedRouter } from 'connected-react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import configureStore, { history } from './configureStore';
 import { MainPage } from './pages/mainPage';
+import { Loader } from 'semantic-ui-react'
+
+import type {Node} from 'react';
 
 const { store, persistor } = configureStore();
 
@@ -21,7 +24,7 @@ class App extends React.Component<Props, State> {
 
 		return (
 			<Provider store={store}>
-				<PersistGate loading={null} persistor={persistor}>
+				<PersistGate loading={<Loader/>} persistor={persistor}>
 					<ConnectedRouter history={history}>
 						<div className="App">
 							<MainPage/>

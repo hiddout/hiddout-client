@@ -1,29 +1,72 @@
 import React from 'react';
+import { t } from 'i18next';
 import './NavigationBar.css';
-import { Image, Menu } from 'semantic-ui-react';
+import { Image, Menu, Button, Flag, Popup } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import { openLoginModal } from '../../actions/loginAction';
+import { changeLanguage } from '../../actions/i18nAction';
+import { connect } from 'react-redux';
+
+const Nav = (props) => (
+	<NavLink exact {...props} activeClassName="active"/>
+);
 
 class NavigationBar extends React.Component {
 
 	render() {
-		const Nav = (props) => (
-			<NavLink exact {...props} activeClassName="active"/>
-		);
+
+		const {language} = this.props.i18n;
+		const nextLanguage = language === 'en'? 'zh': 'en';
+
 		return (
 			<Menu pointing secondary>
 				<Menu.Item>
 					<Image src="./public/static/Hiddout.png" avatar/>
 				</Menu.Item>
 
-				<Menu.Item name="home" as={Nav} to="/"/>
-				<Menu.Item name="messages" as={Nav} to="/message"/>
-				<Menu.Item name="friends" as={Nav} to="/friend"/>
+				<Menu.Item name={t('homeMenu')} as={Nav} to="/"/>
+				<Menu.Item name={t('messagesMenu')} as={Nav} to="/message"/>
+				<Menu.Item name={t('friendsMenu')} as={Nav} to="/friend"/>
 				<Menu.Menu position="right">
-					<Menu.Item name="LOG IN" as={Nav} to="/login"/>
+					<Menu.Item>
+						<Button content={t('loginBtn')} primary onClick={() => this.props.openLoginModal()}/>
+					</Menu.Item>
+					<Menu.Item>
+						<Button content={t('signupBtn')} positive/>
+					</Menu.Item>
+
+					<Menu.Item>
+						<Popup trigger={<Flag name={language === 'en'? 'us': 'hk'} style={{cursor: 'pointer'}} onClick={()=>{
+							this.props.changeLanguage(nextLanguage);
+						}}/>} content={t('change Language')} />
+					</Menu.Item>
 				</Menu.Menu>
 			</Menu>
 		);
 	}
 }
 
-export { NavigationBar };
+const mapStateToProps = (state) => {
+	return {
+		i18n: state.i18n,
+	};
+};
+
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		openLoginModal: () => {
+			dispatch(openLoginModal());
+		},
+		changeLanguage: lng => {
+			dispatch(changeLanguage(lng));
+		}
+	};
+};
+
+const navigationBar = connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(NavigationBar);
+
+export { navigationBar as NavigationBar };
