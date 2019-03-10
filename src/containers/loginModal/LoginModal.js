@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { Button, Modal, Form, Icon } from 'semantic-ui-react';
 import {t} from "i18next";
 
-import { closeLoginModal } from '../../actions/loginAction';
+import { closeLoginModal, openSignUpModal, userLogin } from '../../actions/loginAction';
 
 import type { Node } from 'react';
 
 type Props = {
-	login: Object,
+	modal: Object,
 	closeLoginModal:()=> void,
 };
 
@@ -21,12 +21,25 @@ class LoginModal extends React.Component<Props, State> {
 		this.props.closeLoginModal();
 	};
 
-	render() {
+	onLoginClick = () => {
+		const user = document.getElementById('usernameInput').value,
+			password = document.getElementById('passwordInput').value;
 
-		const {modalVisibility} = this.props.login;
+		const md = forge.md.sha256.create();
+		md.update(password);
+
+		this.props.userLogin({
+			user,
+			pwh: md.digest().toHex(),
+		});
+	};
+
+	render(): Node {
+
+		const {loginModalShowed} = this.props.modal;
 		return (
 			<Modal
-				open={modalVisibility}
+				open={loginModalShowed}
 				closeOnDimmerClick={false}
 				onClose={this.close}
 				closeIcon
@@ -35,19 +48,19 @@ class LoginModal extends React.Component<Props, State> {
 				<Modal.Content>
 					<Form>
 						<Form.Field>
-							<label>USERNAME</label>
-							<input placeholder='USERNAME' />
+							<label>{t('USERNAME')}</label>
+							<input id={'usernameInput'} placeholder={t('USERNAME')} />
 						</Form.Field>
 						<Form.Field>
-							<label>PASSWORD</label>
-							<input placeholder='PASSWORD' type={'password'}/>
+							<label>{t('PASSWORD')}</label>
+							<input id={'passwordInput'} placeholder={t('PASSWORD')} type={'password'}/>
 						</Form.Field>
-						<Button type={'submit'} primary>{t('loginBtn')}</Button>
+						<Button type={'submit'} primary onClick={this.onLoginClick}>{t('loginBtn')}</Button>
 					</Form>
 				</Modal.Content>
 				<Modal.Actions>
 					{t('new to hiddout?')}
-					<Button positive icon >
+					<Button positive icon onClick={() => this.props.openSignUpModal()}>
 						{t('signupBtn')}<Icon name='right chevron' />
 					</Button>
 				</Modal.Actions>
@@ -58,14 +71,20 @@ class LoginModal extends React.Component<Props, State> {
 
 const mapStateToProps = (state) => {
 	return {
-		login: state.login,
+		modal: state.modal,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		openSignUpModal: () => {
+			dispatch(openSignUpModal());
+		},
 		closeLoginModal: () => {
 			dispatch(closeLoginModal());
+		},
+		userLogin: (userData) => {
+			dispatch(userLogin(userData));
 		},
 	};
 };

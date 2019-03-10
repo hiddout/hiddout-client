@@ -1,5 +1,6 @@
 import { createBrowserHistory } from 'history';
 import { applyMiddleware, compose, createStore } from 'redux';
+import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
 import { routerMiddleware } from 'connected-react-router';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -12,7 +13,7 @@ export const history = createBrowserHistory();
 const persistConfig = {
 	key: 'root',
 	storage,
-	blacklist: ['router', 'login'],
+	blacklist: ['router', 'modal'],
 };
 
 const persistedReducer = persistReducer(persistConfig, createRootReducer(history));
@@ -28,6 +29,7 @@ export default function configureStore(preloadedState) {
 		composeEnhancers(
 			applyMiddleware(
 				routerMiddleware(history), // for dispatching history actions
+				thunk,
 				// ... other middlewares ...
 			),
 		),

@@ -1,26 +1,25 @@
+import { EXECUTE_IN_CLIENT, EXECUTE_IN_CLIENT_WITH_RETURN, EXECUTE_WITHOUT_CLIENT } from '../utils/envUtil';
+
 export default class Window {
 	
 	static enterFullscreen() {
-		nwWinGUI.maximize();
+		EXECUTE_IN_CLIENT(()=>{
+			nwWinGUI.maximize();
+		});
 	}
-	
-	static getDimension() {
-		
-		try {
-			return {
-					width: parseInt(nwWinGUI.width),
-					height: parseInt(nwWinGUI.height),
-				};
-		} catch (e) {
-			console.error(e);
-			return {
-				width: 800,
-				height: 600,
-			};
-		}
+
+	static reload(){
+		EXECUTE_WITHOUT_CLIENT(()=>{
+			window.location.reload();
+		});
+		EXECUTE_IN_CLIENT(()=>{
+			chrome.runtime.reload();
+		});
 	}
 	
 	static close() {
-		nwWinGUI.close();
+		EXECUTE_IN_CLIENT(()=>{
+			nwWinGUI.close();
+		});
 	}
 }

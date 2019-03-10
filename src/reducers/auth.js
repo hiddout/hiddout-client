@@ -1,5 +1,5 @@
 // @flow
-import { LOGIN } from '../actions/actionType';
+import { LOGIN, SIGNUP } from '../actions/actionType';
 
 type State = { token: string };
 
@@ -13,7 +13,7 @@ type Action = {
 const auth = (state: State = { token: '' }, action: Action) =>
 	immer.produce(state, draft => {
 		switch (action.type) {
-			case LOGIN :
+			case SIGNUP :
 				draft.token = `bearer ${action.payload.token}`;
 				break;
 		}

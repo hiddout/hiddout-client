@@ -7,6 +7,7 @@ const webConfig = {
 		filename: './public/js/hiddout.js', // <-- it has to be that way, otherwise dev-server will not working!!!!
 	},
 	mode: 'development',
+	devtool:'eval-source-map',
 	devServer: {
 		historyApiFallback: true,
 	},
