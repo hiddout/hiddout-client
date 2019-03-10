@@ -22,14 +22,18 @@ const modal = (state: State = initState, action: Action) =>
 	immer.produce(state, (draft) => {
 		switch (action.type) {
 			case OPEN_LOGIN_MODAL:
-			case CLOSE_SIGN_UP_MODAL:
 				draft.loginModalShowed = true;
 				draft.signUpModalShowed = false;
 				break;
-			case CLOSE_LOGIN_MODAL:
 			case OPEN_SIGN_UP_MODAL:
 				draft.loginModalShowed = false;
 				draft.signUpModalShowed = true;
+				break;
+			case CLOSE_SIGN_UP_MODAL:
+				draft.signUpModalShowed = false;
+				break;
+			case CLOSE_LOGIN_MODAL:
+				draft.loginModalShowed = false;
 				break;
 		}
 	});
