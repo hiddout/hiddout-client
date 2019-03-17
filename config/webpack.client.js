@@ -4,6 +4,7 @@ const merge = require('webpack-merge'),
 const nodeConfig = {
 	entry: './src/main.js',
 	mode: 'development',
+	devtool:'eval-source-map',
 };
 
 module.exports = merge(common, nodeConfig);
