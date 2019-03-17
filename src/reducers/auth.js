@@ -1,5 +1,5 @@
 // @flow
-import { LOGIN, SIGNUP } from '../actions/actionType';
+import { LOGIN, LOGOUT, SIGNUP } from '../actions/actionType';
 
 type State = { token: string };
 
@@ -15,6 +15,9 @@ const auth = (state: State = { token: '' }, action: Action) =>
 		switch (action.type) {
 			case SIGNUP :
 				draft.token = `bearer ${action.payload.token}`;
+				break;
+			case LOGOUT:
+				draft.token = '';
 				break;
 		}
 	});

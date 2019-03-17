@@ -1,7 +1,7 @@
 import {
 	CLOSE_LOGIN_MODAL,
 	CLOSE_SIGN_UP_MODAL,
-	LOGIN,
+	LOGIN, LOGOUT,
 	OPEN_LOGIN_MODAL,
 	OPEN_SIGN_UP_MODAL,
 	SIGNUP,
@@ -21,8 +21,24 @@ export const openSignUpModal = () => {
 };
 
 export const closeSignUpModal = () => {
-	return {type: CLOSE_SIGN_UP_MODAL};
-}
+	return { type: CLOSE_SIGN_UP_MODAL };
+};
+
+export const checkAuth = (status, dispatch) => {
+	if (!status) {
+		return null;
+	}
+
+	switch (status) {
+		case 401:
+			dispatch({ type: LOGOUT });
+			dispatch({ type: OPEN_LOGIN_MODAL });
+			throw new Error('token invalid');
+		case 200:
+		default:
+			break;
+	}
+};
 
 export const userLogin = (userData) => {
 
@@ -35,6 +51,10 @@ export const userLogin = (userData) => {
 				'Content-Type': 'application/json; charset=utf-8',
 			},
 			body: JSON.stringify({ ...userData }),
+		}).then(res => {
+			checkAuth(res.status, dispatch);
+		}).catch(e => {
+			console.error(e);
 		});
 	};
 };
@@ -48,8 +68,8 @@ export const userSignUp = (userData) => {
 			},
 			body: JSON.stringify({ ...userData }),
 		}).then(res => {
-			console.log(res);
-			dispatch({type: SIGNUP, payload:{token: res.token}});
+			checkAuth(res.status);
+			dispatch({ type: SIGNUP, payload: { token: res.token } });
 		}).catch(e => console.error(e));
 	};
 };

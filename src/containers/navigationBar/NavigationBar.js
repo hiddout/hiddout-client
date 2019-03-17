@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import './NavigationBar.css';
 import { Image, Menu, Button, Flag, Popup } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
-import { openLoginModal } from '../../actions/loginAction';
+import { openLoginModal, openSignUpModal } from '../../actions/loginAction';
 import { changeLanguage } from '../../actions/i18nAction';
 import { connect } from 'react-redux';
 
@@ -32,7 +32,7 @@ class NavigationBar extends React.Component {
 						<Button content={t('loginBtn')} primary onClick={() => this.props.openLoginModal()}/>
 					</Menu.Item>
 					<Menu.Item>
-						<Button content={t('signupBtn')} positive/>
+						<Button content={t('signupBtn')} positive onClick={() => this.props.openSignUpModal()}/>
 					</Menu.Item>
 
 					<Menu.Item>
@@ -57,6 +57,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		openLoginModal: () => {
 			dispatch(openLoginModal());
+		},
+		openSignUpModal: () => {
+			dispatch(openSignUpModal());
 		},
 		changeLanguage: lng => {
 			dispatch(changeLanguage(lng));
