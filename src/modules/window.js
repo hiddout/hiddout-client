@@ -1,4 +1,4 @@
-import { EXECUTE_IN_CLIENT, EXECUTE_IN_CLIENT_WITH_RETURN, EXECUTE_WITHOUT_CLIENT } from '../utils/envUtil';
+import { EXECUTE_IN_CLIENT, EXECUTE_WITHOUT_CLIENT } from '../utils/envUtil';
 
 export default class Window {
 	

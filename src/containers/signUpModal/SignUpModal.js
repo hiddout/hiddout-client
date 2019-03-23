@@ -2,21 +2,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, Form, Icon } from 'semantic-ui-react';
-import {t} from "i18next";
+import { t } from 'i18next';
 
-import { closeSignUpModal, openLoginModal, userSignUp } from '../../actions/loginAction';
+import {
+	closeSignUpModal,
+	openLoginModal,
+	userSignUp,
+} from '../../actions/loginAction';
 
 import type { Node } from 'react';
 
 type Props = {
 	modal: Object,
-	closeSignUpModal:()=> void,
+	closeSignUpModal: () => void,
 };
 
 type State = {};
 
 class SignUpModal extends React.Component<Props, State> {
-
 	close = () => {
 		this.props.closeSignUpModal();
 	};
@@ -35,8 +38,7 @@ class SignUpModal extends React.Component<Props, State> {
 	};
 
 	render(): Node {
-
-		const {signUpModalShowed} = this.props.modal;
+		const { signUpModalShowed } = this.props.modal;
 		return (
 			<Modal
 				open={signUpModalShowed}
@@ -49,19 +51,37 @@ class SignUpModal extends React.Component<Props, State> {
 					<Form>
 						<Form.Field>
 							<label>{t('USERNAME')}</label>
-							<input id={'signUp_usernameInput'} placeholder={t('USERNAME')} />
+							<input
+								id={'signUp_usernameInput'}
+								placeholder={t('USERNAME')}
+							/>
 						</Form.Field>
 						<Form.Field>
 							<label>{t('PASSWORD')}</label>
-							<input id={'signUp_passwordInput'} placeholder={t('PASSWORD')} type={'password'}/>
+							<input
+								id={'signUp_passwordInput'}
+								placeholder={t('PASSWORD')}
+								type={'password'}
+							/>
 						</Form.Field>
-						<Button type={'submit'} primary onClick={this.onSignUpClick}>{t('signupBtn')}</Button>
+						<Button
+							type={'submit'}
+							primary
+							onClick={this.onSignUpClick}
+						>
+							{t('signupBtn')}
+						</Button>
 					</Form>
 				</Modal.Content>
 				<Modal.Actions>
 					{t('already have hiddout account?')}
-					<Button positive icon onClick={() => this.props.openLoginMdoal()}>
-						{t('loginBtn')}<Icon name='right chevron'/>
+					<Button
+						positive
+						icon
+						onClick={() => this.props.openLoginMdoal()}
+					>
+						{t('loginBtn')}
+						<Icon name="right chevron" />
 					</Button>
 				</Modal.Actions>
 			</Modal>

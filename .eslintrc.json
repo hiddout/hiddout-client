@@ -25,6 +25,7 @@
     }
   },
   "rules": {
+    "react/prop-types": 0,
     "curly": "error",
     "comma-dangle": [
       "error",
@@ -51,7 +52,10 @@
     ]
   },
   "globals": {
+    "chrome": true,
+    "Action": true,
     "immer": true,
+    "forge": true,
     "nwWinGUI":true,
     "hiddoutViewer":true
   }

@@ -8,6 +8,10 @@ import {
 } from './actionType';
 import { config } from '../config';
 
+export const logout = () => {
+	return { type: LOGOUT };
+};
+
 export const closeLoginModal = () => {
 	return { type: CLOSE_LOGIN_MODAL };
 };
@@ -43,8 +47,6 @@ export const checkAuth = (status, dispatch) => {
 export const userLogin = (userData) => {
 
 	return (dispatch) => {
-		dispatch({ type: LOGIN });
-
 		hiddoutViewer.request(`${config.baseURL}${config.apiV1}login`, {
 			method: 'POST',
 			headers: {
@@ -53,6 +55,8 @@ export const userLogin = (userData) => {
 			body: JSON.stringify({ ...userData }),
 		}).then(res => {
 			checkAuth(res.status, dispatch);
+			dispatch({type: CLOSE_LOGIN_MODAL});
+			dispatch({ type: LOGIN, payload: { token: res.token, user: userData.user }  });
 		}).catch(e => {
 			console.error(e);
 		});
@@ -69,7 +73,13 @@ export const userSignUp = (userData) => {
 			body: JSON.stringify({ ...userData }),
 		}).then(res => {
 			checkAuth(res.status);
-			dispatch({ type: SIGNUP, payload: { token: res.token } });
+			if(res.isUsed){
+				console.log('isUsed');
+				return;
+			}
+
+			dispatch({type: CLOSE_SIGN_UP_MODAL});
+			dispatch({ type: SIGNUP, payload: { token: res.token, user: userData.user } });
 		}).catch(e => console.error(e));
 	};
 };
