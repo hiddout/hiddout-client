@@ -5,6 +5,8 @@ type Action = {
 	},
 };
 
+declare var forge: any;
+
 declare var immer: any;
 
 declare module 'i18next' {

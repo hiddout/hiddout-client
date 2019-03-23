@@ -6,13 +6,6 @@ type State = {
 	signUpModalShowed: boolean,
 };
 
-type Action = {
-	type: string,
-	payload: {
-		[key: any]: any,
-	},
-};
-
 const initState = {
 	loginModalShowed: false,
 	signUpModalShowed: false,

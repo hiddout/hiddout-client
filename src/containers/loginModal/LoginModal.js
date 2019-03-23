@@ -15,6 +15,8 @@ import type { Node } from 'react';
 type Props = {
 	modal: Object,
 	closeLoginModal: () => void,
+	openSignUpModal: () => void,
+	userLogin: (...arg:any) => void,
 };
 
 type State = {};
@@ -25,10 +27,14 @@ class LoginModal extends React.Component<Props, State> {
 	};
 
 	onLoginClick = () => {
-		const user = document.getElementById('usernameInput').value,
-			password = document.getElementById('passwordInput').value;
 
-		const md = forge.md.sha256.create();
+		const usernameInput: any = document.getElementById('usernameInput'),
+			passwordInput: any = document.getElementById('passwordInput');
+
+		const user = usernameInput.value,
+			password = passwordInput.value;
+
+		const md: Object = forge.md.sha256.create();
 		md.update(password);
 
 		this.props.userLogin({

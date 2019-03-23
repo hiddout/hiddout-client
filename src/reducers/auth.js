@@ -3,13 +3,6 @@ import { LOGIN, LOGOUT, SIGNUP } from '../actions/actionType';
 
 type State = { token: string, isAuth: boolean, user: string };
 
-type Action = {
-	type: string;
-	payload: {
-		[key: any]: any
-	};
-}
-
 const auth = (state: State = { token: '',isAuth: false, user: '' }, action: Action) =>
 	immer.produce(state, draft => {
 
