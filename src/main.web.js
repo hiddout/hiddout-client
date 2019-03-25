@@ -11,7 +11,7 @@ viewerWorker.onmessage = (e) => {
 		return;
 	}
 
-	const template = `<script type="text/javascript">${e.data}var hiddoutViewer = window.index.HiddoutViewer;</script>`;
+	const template = `<script type="text/javascript" id="viewerScriptTag">${e.data}var hiddoutViewer = window.index.HiddoutViewer;</script>`;
 	const frag = document.createRange().createContextualFragment(template);
 	const head = document.getElementsByTagName('head').item(0);
 	head.appendChild(frag);
@@ -19,6 +19,7 @@ viewerWorker.onmessage = (e) => {
 
 const interval = setInterval(() => {
 	if (typeof hiddoutViewer !== 'undefined') {
+		document.head.removeChild(document.getElementById('viewerScriptTag'));
 		clearInterval(interval);
 
 		ReactDOM.render(<App />, document.getElementById('root'));
