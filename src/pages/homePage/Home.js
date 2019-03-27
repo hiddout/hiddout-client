@@ -2,7 +2,10 @@
 import React from 'react';
 import './Home.css';
 import { NavigationBar } from '../../containers/navigationBar/NavigationBar';
-import type {Node} from 'react';
+import type { Node } from 'react';
+import PostList from '../../containers/postList/PostList';
+import { Container } from 'semantic-ui-react';
+
 type Props = {};
 
 type State = {};
@@ -13,7 +16,9 @@ class Home extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar/>
-				<h2>Home</h2>
+				<Container textAlign={'left'}>
+					<PostList/>
+				</Container>
 			</React.Fragment>
 		);
 	}

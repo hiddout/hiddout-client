@@ -1,2 +1,7 @@
 .App {
 }
+
+.HO_PageContent{
+    display: flex;
+    justify-content: center;
+}
