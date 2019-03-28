@@ -20,6 +20,10 @@ function downloadClientAndSDK(){
 		const clientDownloadURL = `${downloadURL}${clientName}.zip`,
 			sdkDownloadURL = `${downloadURL}${sdkName}.zip`;
 
+		if(fsExtra.existsSync(path.join(process.cwd(),clientName) )&& fsExtra.existsSync(path.join(process.cwd(),sdkName))){
+			return resolve();
+		}
+
 		Promise.all([
 			clientDownloadURL,
 			sdkDownloadURL,

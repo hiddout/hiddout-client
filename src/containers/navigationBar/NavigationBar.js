@@ -11,9 +11,10 @@ import {
 import { changeLanguage } from '../../actions/i18nAction';
 import { connect } from 'react-redux';
 
-const Nav = (props) => <NavLink exact {...props} activeClassName="active" />;
+const Nav = (props) => <NavLink exact {...props} activeClassName="active"/>;
 
 class NavigationBar extends React.Component {
+
 	renderRightMenu() {
 		const { language } = this.props.i18n;
 		const nextLanguage = language === 'en' ? 'zh' : 'en';
@@ -88,14 +89,14 @@ class NavigationBar extends React.Component {
 
 	render() {
 		return (
-			<Menu pointing secondary>
+			<Menu fixed='top'>
 				<Menu.Item>
-					<Image src="./public/static/Hiddout.png" avatar />
+					<Image src="./public/static/Hiddout.png" avatar/>
 				</Menu.Item>
 
-				<Menu.Item name={t('homeMenu')} as={Nav} to="/" />
-				<Menu.Item name={t('messagesMenu')} as={Nav} to="/message" />
-				<Menu.Item name={t('friendsMenu')} as={Nav} to="/friend" />
+				<Menu.Item name={t('homeMenu')} as={Nav} to="/"/>
+				<Menu.Item name={t('messagesMenu')} as={Nav} to="/message"/>
+				<Menu.Item name={t('friendsMenu')} as={Nav} to="/friend"/>
 				<Menu.Menu position="right">{this.renderRightMenu()}</Menu.Menu>
 			</Menu>
 		);

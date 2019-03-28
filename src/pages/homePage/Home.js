@@ -16,7 +16,7 @@ class Home extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar/>
-				<Container textAlign={'left'}>
+				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
 					<PostList/>
 				</Container>
 			</React.Fragment>
