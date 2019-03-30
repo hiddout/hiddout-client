@@ -21,6 +21,8 @@ declare module 'semantic-ui-react' {
 	declare export var Form: any;
 	declare export var Icon: any;
 	declare export var Loader: any;
+	declare export var Container: any;
+
 }
 
 declare module 'redux' {

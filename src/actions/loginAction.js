@@ -3,7 +3,7 @@ import {
 	CLOSE_SIGN_UP_MODAL,
 	LOGIN, LOGOUT,
 	OPEN_LOGIN_MODAL,
-	OPEN_SIGN_UP_MODAL,
+	OPEN_SIGN_UP_MODAL, REQUEST_LOGIN,
 	SIGNUP,
 } from './actionType';
 import { config } from '../config';
@@ -47,6 +47,9 @@ export const checkAuth = (status, dispatch) => {
 export const userLogin = (userData) => {
 
 	return (dispatch) => {
+
+		dispatch({type: REQUEST_LOGIN});
+
 		hiddoutViewer.request(`${config.baseURL}${config.apiV1}login`, {
 			method: 'POST',
 			headers: {
