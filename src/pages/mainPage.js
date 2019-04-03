@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import i18n from 'i18next';
 
 import { LoginModal } from '../containers/loginModal/LoginModal';
@@ -66,6 +66,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mainPage = connect(mapStateToProps)(MainPage);
+const mainPage = withRouter(connect(mapStateToProps)(MainPage));
 
 export { mainPage as MainPage };

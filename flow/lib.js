@@ -56,4 +56,5 @@ declare module 'react-router-dom' {
 	declare export var Route: any;
 	declare export var Redirect : any;
 	declare export var Switch: any;
+	declare export var withRouter: any;
 }
