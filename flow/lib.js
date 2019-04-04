@@ -9,6 +9,8 @@ declare var forge: any;
 
 declare var immer: any;
 
+declare var hiddoutViewer: any;
+
 declare module 'i18next' {
 	declare export default any;
 	declare export var t:any;
@@ -57,4 +59,5 @@ declare module 'react-router-dom' {
 	declare export var Redirect : any;
 	declare export var Switch: any;
 	declare export var withRouter: any;
+	declare export var Link: any;
 }

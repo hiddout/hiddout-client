@@ -1,12 +1,13 @@
 // @flow
 import React from 'react';
-import { List, Placeholder, Segment, Divider } from 'semantic-ui-react';
+import { List, Segment, Divider } from 'semantic-ui-react';
 import { PostItem } from '../../component/postItem/PostItem';
 import {connect} from 'react-redux';
 import { getPosts } from '../../actions/postAction';
+import type { PostState } from '../../reducers/post';
 
 type Props = {
-	post: Array<Object>;
+	post: PostState;
 	getPosts: () => void;
 };
 
@@ -39,14 +40,6 @@ class PostList extends React.Component<Props, State> {
 						/>
 						<Divider />
 					</React.Fragment>))}
-
-					{/*<Placeholder>*/}
-						{/*<Placeholder.Header image>*/}
-							{/*<Placeholder.Line />*/}
-							{/*<Placeholder.Line />*/}
-						{/*</Placeholder.Header>*/}
-					{/*</Placeholder>*/}
-					{/*<Divider />*/}
 				</List>
 			</Segment>
 		);
