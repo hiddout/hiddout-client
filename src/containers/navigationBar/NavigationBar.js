@@ -44,7 +44,7 @@ class NavigationBar extends React.Component {
 			const imageProps = {
 				avatar: true,
 				spaced: 'right',
-				src: './public/static/Hiddout.png',
+				src: '/public/static/Hiddout.png',
 			};
 
 			rightMenu = (
@@ -91,7 +91,7 @@ class NavigationBar extends React.Component {
 		return (
 			<Menu fixed='top'>
 				<Menu.Item>
-					<Image src="./public/static/Hiddout.png" avatar/>
+					<Image src="/public/static/Hiddout.png" avatar/>
 				</Menu.Item>
 
 				<Menu.Item name={t('homeMenu')} as={Nav} to="/"/>

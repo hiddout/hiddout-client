@@ -1,15 +1,17 @@
 // @flow
 import React from 'react';
 import { List, Placeholder, Segment, Divider } from 'semantic-ui-react';
-import { Post } from '../../component/post/Post';
+import { PostItem } from '../../component/postItem/PostItem';
 import {connect} from 'react-redux';
 import { getPosts } from '../../actions/postAction';
 
 type Props = {
+	post: Array<Object>;
 	getPosts: () => void;
 };
 
-type State = {};
+type State = {
+};
 
 class PostList extends React.Component<Props, State> {
 
@@ -18,25 +20,33 @@ class PostList extends React.Component<Props, State> {
 	};
 
 	render() {
+
+		const {post} = this.props;
+
 		return (
 			<Segment>
 				<List>
-					<Post
-						title={'titleOne'}
-						author={'Rachel'}
-						boardImgSrc={
-							'https://react.semantic-ui.com/images/wireframe/image.png'
-						}
-						createdAt={12}
-					/>
-					<Divider />
-					<Placeholder>
-						<Placeholder.Header image>
-							<Placeholder.Line />
-							<Placeholder.Line />
-						</Placeholder.Header>
-					</Placeholder>
-					<Divider />
+
+					{post.posts.map(p => (<React.Fragment key={p._id}>
+						<PostItem
+							title={p.title}
+							author={p.userId}
+							boardImgSrc={
+								'https://react.semantic-ui.com/images/wireframe/image.png'
+							}
+							createdAt={p.createTime}
+							postId={hiddoutViewer.encodeId(p._id)}
+						/>
+						<Divider />
+					</React.Fragment>))}
+
+					{/*<Placeholder>*/}
+						{/*<Placeholder.Header image>*/}
+							{/*<Placeholder.Line />*/}
+							{/*<Placeholder.Line />*/}
+						{/*</Placeholder.Header>*/}
+					{/*</Placeholder>*/}
+					{/*<Divider />*/}
 				</List>
 			</Segment>
 		);

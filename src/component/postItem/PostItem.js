@@ -1,21 +1,23 @@
 // @flow
 import React from 'react';
 import { List, Image } from 'semantic-ui-react';
+import { Link } from "react-router-dom";
 
 type Props = {
 	title: string,
 	author: string,
+	postId: string,
 	boardImgSrc: string,
 	createdAt: number,
 };
 
 type State = {};
 
-class Post extends React.Component<Props, State> {
+class PostItem extends React.Component<Props, State> {
 
 	render(){
 
-		const {title, author, boardImgSrc, createdAt} = this.props;
+		const {title, author, boardImgSrc, createdAt, postId} = this.props;
 
 		return (<List.Item>
 			<Image
@@ -23,7 +25,11 @@ class Post extends React.Component<Props, State> {
 				src={boardImgSrc}
 			/>
 			<List.Content>
-				<List.Header as="a">{title}</List.Header>
+				<List.Header>
+					<Link to={`/p/${postId}`}>
+					{title}
+					</Link>
+					</List.Header>
 				<List.Description>
 					post by{' '}
 					<a>
@@ -36,5 +42,4 @@ class Post extends React.Component<Props, State> {
 	}
 }
 
-
-export {Post};
+export {PostItem};

@@ -51,7 +51,7 @@ class MainPage extends React.Component<Props, State> {
 					<Redirect from="/index.html" to="/" />
 					<Route path="/message" component={Message} />
 					<Route path="/friend" component={Friend} />
-					<Route path="/login" component={Login} />
+					<Route path="/p/:id" component={Login} />
 					<Route path="/about" component={About} />
 					<Route component={NoMatch} />
 				</Switch>
