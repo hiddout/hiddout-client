@@ -2,7 +2,7 @@
 import React from 'react';
 import { List, Segment, Divider } from 'semantic-ui-react';
 import { PostItem } from '../../component/postItem/PostItem';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { getPosts } from '../../actions/postAction';
 import type { PostState } from '../../reducers/post';
 
@@ -11,8 +11,7 @@ type Props = {
 	getPosts: () => void;
 };
 
-type State = {
-};
+type State = {};
 
 class PostList extends React.Component<Props, State> {
 
@@ -22,13 +21,12 @@ class PostList extends React.Component<Props, State> {
 
 	render() {
 
-		const {post} = this.props;
+		const { posts } = this.props.post;
 
 		return (
 			<Segment>
 				<List>
-
-					{post.posts.map(p => (<React.Fragment key={p._id}>
+					{posts.map(p => (<React.Fragment key={p._id}>
 						<PostItem
 							title={p.title}
 							author={p.userId}
@@ -38,7 +36,7 @@ class PostList extends React.Component<Props, State> {
 							createdAt={p.createTime}
 							postId={hiddoutViewer.encodeId(p._id)}
 						/>
-						<Divider />
+						<Divider/>
 					</React.Fragment>))}
 				</List>
 			</Segment>

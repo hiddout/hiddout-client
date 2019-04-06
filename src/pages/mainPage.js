@@ -9,7 +9,6 @@ import {SignUpModal} from '../containers/signUpModal/SignUpModal';
 
 import { Home } from './homePage/Home';
 import { About } from './aboutPage/About';
-import { Login } from './loginPage/Login';
 import { Message } from './messagePage/Message';
 import { Friend } from './friendPage/Friend';
 import { NoMatch } from './404Page/NoMatch';
@@ -24,6 +23,7 @@ type State = {};
 
 import { resources } from '../i18n/resources';
 import Window from '../modules/window';
+import { Post } from './postPage/Post';
 
 class MainPage extends React.Component<Props, State> {
 	constructor(props) {
@@ -51,7 +51,7 @@ class MainPage extends React.Component<Props, State> {
 					<Redirect from="/index.html" to="/" />
 					<Route path="/message" component={Message} />
 					<Route path="/friend" component={Friend} />
-					<Route path="/p/:id" component={Login} />
+					<Route path="/p/:id" component={Post} />
 					<Route path="/about" component={About} />
 					<Route component={NoMatch} />
 				</Switch>

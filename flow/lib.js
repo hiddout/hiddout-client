@@ -19,17 +19,19 @@ declare module 'i18next' {
 declare module 'semantic-ui-react' {
 	declare export default any;
 	declare export var Button: any;
-	declare export var Modal : any;
+	declare export var Modal: any;
 	declare export var Form: any;
 	declare export var Icon: any;
 	declare export var Loader: any;
 	declare export var Container: any;
-	declare export var List:any;
-	declare export var Image:any;
-	declare export var laceholder:any;
-	declare export var Segment:any;
-	declare export var Divider:any;
-	declare export var Placeholder:any;
+	declare export var List: any;
+	declare export var Image: any;
+	declare export var laceholder: any;
+	declare export var Segment: any;
+	declare export var Divider: any;
+	declare export var Placeholder: any;
+	declare export var Comment: any;
+	declare export var Header: any;
 }
 
 declare module 'redux' {
@@ -60,4 +62,8 @@ declare module 'react-router-dom' {
 	declare export var Switch: any;
 	declare export var withRouter: any;
 	declare export var Link: any;
+}
+
+declare module 'react-markdown' {
+	declare export default any;
 }
