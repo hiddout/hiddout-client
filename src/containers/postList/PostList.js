@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { List, Segment, Divider } from 'semantic-ui-react';
+import { List, Segment, Divider, Placeholder } from 'semantic-ui-react';
 import { PostItem } from '../../component/postItem/PostItem';
 import { connect } from 'react-redux';
 import { getPosts } from '../../actions/postAction';
@@ -22,6 +22,18 @@ class PostList extends React.Component<Props, State> {
 	render() {
 
 		const { posts } = this.props.post;
+
+		if (!posts.length) {
+			return (
+				<Segment>
+					<Placeholder>
+						<Placeholder.Header image>
+							<Placeholder.Line length='medium' />
+							<Placeholder.Line length='full' />
+						</Placeholder.Header>
+					</Placeholder>
+				</Segment>);
+		}
 
 		return (
 			<Segment>
@@ -46,7 +58,6 @@ class PostList extends React.Component<Props, State> {
 
 const mapStateToProps = (state) => {
 	return {
-		i18n: state.i18n,
 		post: state.post,
 	};
 };

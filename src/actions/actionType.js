@@ -11,4 +11,6 @@ export const CLOSE_SIGN_UP_MODAL = 'CLOSE_SIGN_UP_MODAL';
 export const CHANG_LANGUAGE = 'CHANG_LANGUAGE';
 
 export const REQUEST_GET_POST = 'REQUEST_GET_POST';
+export const REQUEST_GET_POSTS = 'REQUEST_GET_POSTS';
 export const GET_POST = 'GET_POST';
+export const GET_POSTS = 'GET_POSTS';
