@@ -32,6 +32,7 @@ declare module 'semantic-ui-react' {
 	declare export var Placeholder: any;
 	declare export var Comment: any;
 	declare export var Header: any;
+	declare export var Popup: any;
 }
 
 declare module 'redux' {

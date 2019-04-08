@@ -6,10 +6,12 @@ import {
 	Button,
 	Comment,
 	Container,
+	Divider,
 	Header,
 	Form,
 	Segment,
 	Placeholder,
+	Popup,
 } from 'semantic-ui-react';
 import * as ReactMarkdown from 'react-markdown';
 import { getPost } from '../../actions/postAction';
@@ -78,20 +80,30 @@ class Post extends React.Component<Props, State> {
 
 		return (
 			<React.Fragment>
+				<Container textAlign='left'>b/{currentPost.board}. Post by {currentPost.userId}</Container>
 				<Header as="h1">{currentPost.title}</Header>
 				<Container textAlign="justified">
 					<MarkdownComponent source={markdown}/>
-					<Comment.Group>
-						<Comment>
-							<Comment.Content>
-								<Comment.Actions>
-									<Comment.Action>
-										Actions here
-									</Comment.Action>
-								</Comment.Actions>
-							</Comment.Content>
-						</Comment>
-					</Comment.Group>
+
+					<Popup trigger={<Button
+						color='green'
+						icon='arrow alternate circle up outline'
+						label={{ basic: true, color: 'green', pointing: 'left', content: '2,048' }}
+					/>} content='up' />
+
+					<Popup trigger={<Button
+						color='red'
+						icon='arrow alternate circle down outline'
+						label={{ basic: true, color: 'red', pointing: 'left', content: '2,048' }}
+					/>} content='down' />
+
+					<Popup trigger={<Button
+						color='black'
+						icon='child'
+						label={{ basic: true, color: 'black', pointing: 'left', content: '2,048' }}
+					/>} content='lol' />
+
+					<Divider/>
 
 					<Form reply>
 						<Form.TextArea/>
