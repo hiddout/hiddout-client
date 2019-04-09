@@ -19,6 +19,8 @@ const resources = {
 			'recentAgo': 'recently',
 			'weeksAgo': 'weeks ago',
 			'longTimeAgo': 'long time ago',
+			'create a post': 'create a new post',
+			'signed in as': 'Signed in as',
 		},
 	},
 	zh: {
@@ -41,6 +43,8 @@ const resources = {
 			'recentAgo': '最近',
 			'weeksAgo': '几周内',
 			'longTimeAgo': '很久之前',
+			'create a post': '创建新讨论',
+			'signed in as': '用户名为',
 		},
 	},
 };
