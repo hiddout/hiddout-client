@@ -28,8 +28,8 @@ class NavigationBar extends React.Component {
 
 		let rightMenu = null;
 
-		const languageBtn = (
-			<Menu.Item>
+		const createPostBtn = (
+			<Menu.Item as={Nav} to="/submit" >
 				<Popup
 					trigger={<Icon name="signup" />}
 					content={t('create a post')}
@@ -48,24 +48,24 @@ class NavigationBar extends React.Component {
 				{
 					key: 'userId',
 					text: (
-						<span>
+						<span style={{'color':'green'}}>
 							{t('signed in as')} <strong>{this.props.auth.user}</strong>
 						</span>
 					),
-					disabled: true,
+					value: 0,
 				},
-				{ key: 'user', text: 'Account', icon: 'user', value: 0 },
+				{ key: 'user', text: 'Account', icon: 'user', value: 1 },
 				{
 					key: 'settings',
 					text: 'Settings',
 					icon: 'settings',
-					value: 1,
+					value: 2,
 				},
 				{
 					key: 'sign-out',
 					text: 'Sign Out',
 					icon: 'sign out',
-					value: 2,
+					value: 3,
 				},
 			];
 
@@ -80,7 +80,7 @@ class NavigationBar extends React.Component {
 						/>
 					</Menu.Item>
 
-					{languageBtn}
+					{createPostBtn}
 				</React.Fragment>
 			);
 		} else {
@@ -101,7 +101,7 @@ class NavigationBar extends React.Component {
 						/>
 					</Menu.Item>
 
-					{languageBtn}
+					{createPostBtn}
 				</React.Fragment>
 			);
 		}
