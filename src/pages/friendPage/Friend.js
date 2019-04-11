@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import './Friend.css';
+
 import { NavigationBar } from '../../containers/navigationBar/NavigationBar';
 import type {Node} from 'react';
 type Props = {};

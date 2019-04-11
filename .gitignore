@@ -70,3 +70,4 @@ dist
 nwjs-*-win-x64/*
 nwjs-*-osx-x64/*
 /public/js/hiddout.js
+/public

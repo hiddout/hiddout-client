@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import './NoMatch.css';
 
 import type {Node} from 'react';
 
@@ -19,4 +18,4 @@ class NoMatch extends React.Component<Props,State> {
 	}
 }
 
-export {NoMatch};
+export default NoMatch;

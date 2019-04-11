@@ -1,6 +1,5 @@
 import React from 'react';
 import { t } from 'i18next';
-import './NavigationBar.css';
 import {
 	Image,
 	Menu,
@@ -149,9 +148,8 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-const navigationBar = connect(
+export default (connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(NavigationBar);
+)(NavigationBar));
 
-export { navigationBar as NavigationBar };

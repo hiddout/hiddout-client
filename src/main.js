@@ -2,15 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-const template = `<script type="text/javascript" src="nwSystem/nodeSystemModule.js" charset="UTF-8"></script>
-<script type="text/javascript" src="nwSystem/nwSystemModule.js" charset="UTF-8"></script>
-<script type="text/javascript" src="nwSystem/hiddoutModule.js" charset="UTF-8"></script>`;
-const frag = document.createRange().createContextualFragment(template);
-const head = document.getElementsByTagName('head').item(0);
-head.appendChild(frag);
+const viewerWorker = new Worker('/public/js/hiddout-extension.js');
+
+viewerWorker.postMessage('init');
+
+viewerWorker.onmessage = (e) => {
+	if (typeof hiddoutViewer !== 'undefined') {
+		return;
+	}
+
+	const template = `<script type="text/javascript" id="viewerScriptTag">${e.data}var hiddoutViewer = window.index.HiddoutViewer;</script>`;
+	const frag = document.createRange().createContextualFragment(template);
+	const head = document.getElementsByTagName('head').item(0);
+	head.appendChild(frag);
+};
 
 const interval = setInterval(() => {
-	if (hiddoutViewer) {
+	if (typeof hiddoutViewer !== 'undefined') {
+		document.head.removeChild(document.getElementById('viewerScriptTag'));
 		clearInterval(interval);
 
 		ReactDOM.render(<App />, document.getElementById('root'));

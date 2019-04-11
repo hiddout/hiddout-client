@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import './About.css';
 import type {Node} from 'react';
 
 type Props = {};

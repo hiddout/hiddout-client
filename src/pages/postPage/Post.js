@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { NavigationBar } from '../../containers/navigationBar/NavigationBar';
 import type { Node } from 'react';
 import {
 	Button,
@@ -13,11 +12,14 @@ import {
 	Placeholder,
 	Popup,
 } from 'semantic-ui-react';
-import * as ReactMarkdown from 'react-markdown';
+const ReactMarkdown = React.lazy( () => import('react-markdown'));
 import { getPost } from '../../actions/postAction';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import type { PostState } from '../../reducers/post';
+
+const NavigationBar = React.lazy( () => import( '../../containers/navigationBar/NavigationBar'));
+const CommentSection = React.lazy(()=> import('../../containers/commentSection/CommentSection'));
 
 type Props = {
 	post: PostState;
@@ -115,33 +117,7 @@ class Post extends React.Component<Props, State> {
 						/>
 					</Form>
 
-					<Comment.Group>
-						<Header as="h3" dividing>
-							Comments
-						</Header>
-
-						<Comment>
-							<Comment.Content>
-								<Comment.Author as="a">Matt</Comment.Author>
-								<Comment.Metadata>
-									<div>Today at 5:42PM</div>
-								</Comment.Metadata>
-								<Comment.Text>How artistic!</Comment.Text>
-								<Comment.Actions>
-									<Comment.Action>Reply</Comment.Action>
-								</Comment.Actions>
-								<Form reply>
-									<Form.TextArea/>
-									<Button
-										content="Add Reply"
-										labelPosition="left"
-										icon="edit"
-										primary
-									/>
-								</Form>
-							</Comment.Content>
-						</Comment>
-					</Comment.Group>
+					<CommentSection />
 				</Container>
 			</React.Fragment>
 		);
@@ -173,11 +149,9 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-const post = withRouter(
+export default withRouter(
 	connect(
 		mapStateToProps,
 		mapDispatchToProps,
 	)(Post),
 );
-
-export { post as Post };

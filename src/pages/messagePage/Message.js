@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
-import './Message.css';
-import { NavigationBar } from '../../containers/navigationBar/NavigationBar';
+const  NavigationBar = React.lazy( () => import( '../../containers/navigationBar/NavigationBar'))
 import type {Node} from 'react';
 type Props = {};
 

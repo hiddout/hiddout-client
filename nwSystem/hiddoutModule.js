@@ -1,1 +1,0 @@
-var hiddoutViewer = require('hiddout-viewer').HiddoutViewer;

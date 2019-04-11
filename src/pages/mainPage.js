@@ -1,16 +1,22 @@
 // @flow
-import React from 'react';
+import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
-import i18n from 'i18next';
+import { Loader } from 'semantic-ui-react';
 
-import { LoginModal } from '../containers/loginModal/LoginModal';
-import {SignUpModal} from '../containers/signUpModal/SignUpModal';
+const LoginModal = React.lazy(() =>
+	import('../containers/loginModal/LoginModal'),
+);
+const SignUpModal = React.lazy(() =>
+	import('../containers/signUpModal/SignUpModal'),
+);
 
-import { Home } from './homePage/Home';
 import { About } from './aboutPage/About';
 import { Message } from './messagePage/Message';
-import { NoMatch } from './404Page/NoMatch';
+
+const Home = React.lazy(() => import('./homePage/Home'));
+const NoMatch = React.lazy(() => import('./404Page/NoMatch'));
+
 
 import type { Node } from 'react';
 
@@ -21,41 +27,55 @@ type Props = {
 type State = {};
 
 import { resources } from '../i18n/resources';
-import Window from '../modules/window';
-import { Post } from './postPage/Post';
-import { Submit } from './submitPage/Submit';
+const Post = React.lazy(() => import('./postPage/Post'));
+const Submit = React.lazy(() => import('./submitPage/Submit'));
 
 class MainPage extends React.Component<Props, State> {
 	constructor(props) {
 		super(props);
+	}
 
-		i18n.init({
+	async initLanguage(){
+		const i18n = await import('i18next');
+		await i18n.init({
 			resources,
 			lng: this.props.i18n.language,
 		});
 	}
 
+	componentDidMount(){
+		this.initLanguage();
+	}
+
 	componentDidUpdate(prevProps) {
 		if (this.props.i18n.language !== prevProps.i18n.language) {
-			Window.reload();
+			window.location.reload();
 		}
 	}
 
 	render(): Node {
+		const { signUpModalShowed, loginModalShowed } = this.props.modal;
 		return (
-			<React.Fragment>
-				<LoginModal />
-				<SignUpModal />
+			<Suspense fallback={<Loader />}>
+				{ loginModalShowed && <LoginModal />}
+				{ signUpModalShowed && <SignUpModal />}
 				<Switch>
-					<Route exact path="/" component={Home} />
+					<Route
+						exact
+						path="/"
+						component={(props) => <Home {...props} />}
+					/>
 					<Redirect from="/index.html" to="/" />
 					<Route path="/message" component={Message} />
-					<Route path="/submit" component={Submit} />
-					<Route path="/p/:id" component={Post} />
+					<Route path="/submit" component={(props) => <Submit {...props} />} />
+					<Route
+						path="/p/:id"
+						component={(props) => <Post {...props} />}
+					/>
 					<Route path="/about" component={About} />
-					<Route component={NoMatch} />
+					<Route component={(props) => <NoMatch {...props} />} />
 				</Switch>
-			</React.Fragment>
+			</Suspense>
 		);
 	}
 }
@@ -63,6 +83,7 @@ class MainPage extends React.Component<Props, State> {
 const mapStateToProps = (state) => {
 	return {
 		i18n: state.i18n,
+		modal: state.modal,
 	};
 };
 

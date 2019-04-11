@@ -115,9 +115,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-const signUpModal = connect(
+export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
 )(SignUpModal);
-
-export { signUpModal as SignUpModal };

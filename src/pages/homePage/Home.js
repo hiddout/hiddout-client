@@ -1,10 +1,12 @@
 // @flow
 import React from 'react';
-import './Home.css';
-import { NavigationBar } from '../../containers/navigationBar/NavigationBar';
+
+const  NavigationBar = React.lazy( () => import( '../../containers/navigationBar/NavigationBar'));
+
 import type { Node } from 'react';
-import { PostList } from '../../containers/postList/PostList';
+const  PostList = React.lazy( () => import( '../../containers/postList/PostList'));
 import { Container } from 'semantic-ui-react';
+
 
 type Props = {};
 
@@ -24,4 +26,4 @@ class Home extends React.Component<Props, State> {
 	}
 }
 
-export { Home };
+export default  Home ;

@@ -16,7 +16,7 @@ type Props = {
 	modal: Object,
 	closeLoginModal: () => void,
 	openSignUpModal: () => void,
-	userLogin: (...arg:any) => void,
+	userLogin: (...arg: any) => void,
 };
 
 type State = {};
@@ -27,7 +27,6 @@ class LoginModal extends React.Component<Props, State> {
 	};
 
 	onLoginClick = () => {
-
 		const usernameInput: any = document.getElementById('usernameInput'),
 			passwordInput: any = document.getElementById('passwordInput');
 
@@ -115,9 +114,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-const loginModal = connect(
+export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
 )(LoginModal);
-
-export { loginModal as LoginModal };

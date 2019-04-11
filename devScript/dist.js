@@ -1,7 +1,12 @@
-const util = require('./util');
+const path = require('path');
+const fsExtra = require('fs-extra');
 
-util.childProcessRunNPM(['run', 'build-prod'], process.cwd()).then(async () => {
-	await util.dist();
-}).catch(e => {
-	console.log(`ERROR: ${e}`);
-});
+const webFolderSrc = 'public';
+
+const distPath = path.join(process.cwd(), 'dist');
+const webSrc = path.join(process.cwd(), webFolderSrc);
+	// indexSrc = path.join(process.cwd(), indexHTML);
+
+fsExtra.emptyDirSync(distPath);
+fsExtra.copySync(webSrc, path.join(distPath, webFolderSrc));
+// fsExtra.copySync(indexSrc, path.join(distPath, webFolderSrc, indexHTML));

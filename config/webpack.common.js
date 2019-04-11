@@ -1,10 +1,13 @@
 const path = require('path'),
-	CircularDependencyPlugin = require('circular-dependency-plugin');
+	CircularDependencyPlugin = require('circular-dependency-plugin'),
+	HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 	output: {
 		path: path.resolve(__dirname, '../public/js'),
-		filename: 'hiddout.js',
+		publicPath: '/public/js/',
+		filename: 'hiddout.[contenthash].js',
+		chunkFilename: '[name].[contenthash].bundle.js',
 	},
 	module: {
 		rules: [
@@ -27,6 +30,7 @@ module.exports = {
 						plugins: [
 							'@babel/plugin-proposal-class-properties',
 							'@babel/plugin-proposal-object-rest-spread',
+							'@babel/plugin-syntax-dynamic-import',
 						],
 					},
 				},
@@ -41,16 +45,6 @@ module.exports = {
 				test: /\.(png|jpg|jpeg|ico|ttf|otf|eot|svg|woff(2)?)$/,
 				use: ['file-loader'],
 			},
-			{
-				test: /\.html$/,
-				exclude: /node_modules/,
-				use: {
-					loader: 'html-es6-template-loader',
-					options: {
-						transpile: true,
-					},
-				},
-			},
 		],
 	},
 	plugins: [
@@ -58,6 +52,10 @@ module.exports = {
 			exclude: /node_modules/,
 			failOnError: true,
 			cwd: process.cwd(),
+		}),
+		new HtmlWebpackPlugin({
+			filename: '../index.html',
+			template: 'index.html'
 		}),
 	],
 };

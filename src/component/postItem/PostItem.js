@@ -21,7 +21,7 @@ class PostItem extends React.Component<Props, State> {
 			<List.Item>
 				<Image avatar src={boardImgSrc} />
 				<List.Content>
-					<List.Header>
+					<List.Header style={{fontSize: '1.2em'}}>
 						<Link to={`/p/${postId}`}>{title}</Link>
 					</List.Header>
 					<List.Description>
@@ -37,4 +37,4 @@ class PostItem extends React.Component<Props, State> {
 	}
 }
 
-export { PostItem };
+export default PostItem;

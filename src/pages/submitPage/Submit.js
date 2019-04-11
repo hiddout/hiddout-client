@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { NavigationBar } from '../../containers/navigationBar/NavigationBar';
+const  NavigationBar = React.lazy( () => import( '../../containers/navigationBar/NavigationBar'))
 import type { Node } from 'react';
 import { Container } from 'semantic-ui-react';
 
@@ -15,11 +15,11 @@ class Submit extends React.Component<Props, State> {
 			<React.Fragment>
 				<NavigationBar/>
 				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
-					Submit
+					Submit a post
 				</Container>
 			</React.Fragment>
 		);
 	}
 }
 
-export { Submit };
+export default Submit;
