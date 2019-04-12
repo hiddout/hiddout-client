@@ -54,7 +54,7 @@ module.exports = {
 			cwd: process.cwd(),
 		}),
 		new HtmlWebpackPlugin({
-			filename: '../index.html',
+			filename: '../index.[hash].html',
 			template: 'index.html'
 		}),
 	],
