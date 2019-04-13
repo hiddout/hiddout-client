@@ -1,2 +1,2 @@
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/hiddout/hiddout-client.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/hiddout/hiddout-client.svg?style=flat-square)](https://greenkeeper.io/)

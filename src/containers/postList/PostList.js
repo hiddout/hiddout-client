@@ -4,6 +4,7 @@ import { List, Segment, Divider, Placeholder } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getPosts } from '../../actions/postAction';
 import PostItem from '../../component/postItem/PostItem';
+import type { PostState } from '../../reducers/post';
 
 type Props = {
 	post: PostState;
