@@ -22,11 +22,13 @@ import type { Node } from 'react';
 
 type Props = {
 	i18n: Object,
+	modal: ModalState,
 };
 
 type State = {};
 
 import { resources } from '../i18n/resources';
+import type { ModalState } from '../reducers/modal';
 const Post = React.lazy(() => import('./postPage/Post'));
 const Submit = React.lazy(() => import('./submitPage/Submit'));
 

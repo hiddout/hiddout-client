@@ -1,7 +1,7 @@
 // @flow
 import { CLOSE_LOGIN_MODAL, CLOSE_SIGN_UP_MODAL, OPEN_LOGIN_MODAL, OPEN_SIGN_UP_MODAL } from '../actions/actionType';
 
-type State = {
+export type ModalState = {
 	loginModalShowed: boolean,
 	signUpModalShowed: boolean,
 };
@@ -11,7 +11,7 @@ const initState = {
 	signUpModalShowed: false,
 };
 
-const modal = (state: State = initState, action: Action) =>
+const modal = (state: ModalState = initState, action: Action) =>
 	immer.produce(state, (draft) => {
 		switch (action.type) {
 			case OPEN_LOGIN_MODAL:

@@ -14,6 +14,7 @@ declare var hiddoutViewer: any;
 declare module 'i18next' {
 	declare export default any;
 	declare export var t:any;
+	declare export var init:any;
 }
 
 declare module 'semantic-ui-react' {
