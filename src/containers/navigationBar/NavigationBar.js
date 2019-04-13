@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { t } from 'i18next';
 import {
@@ -16,10 +17,19 @@ import {
 } from '../../actions/loginAction';
 import { changeLanguage } from '../../actions/i18nAction';
 import { connect } from 'react-redux';
+import type { AuthState } from '../../reducers/auth';
 
 const Nav = (props) => <NavLink exact {...props} activeClassName="active" />;
 
-class NavigationBar extends React.Component {
+type Props = {
+	auth: AuthState,
+	openLoginModal: (...args:any) => any,
+	openSignUpModal: (...args:any) => any,
+};
+
+type State = {};
+
+class NavigationBar extends React.Component<Props, State> {
 	renderRightMenu() {
 		// const { language } = this.props.i18n;
 		// const nextLanguage = language === 'en' ? 'zh' : 'en';
@@ -47,8 +57,8 @@ class NavigationBar extends React.Component {
 				{
 					key: 'userId',
 					text: (
-						<span style={{'color':'green'}}>
-							{t('signed in as')} <strong>{this.props.auth.user}</strong>
+						<span style={{'color':'gray'}}>
+							{t('signed in as')} <strong style={{'color':'green'}}>{this.props.auth.user}</strong>
 						</span>
 					),
 					value: 0,
@@ -148,8 +158,8 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default (connect(
+export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(NavigationBar));
+)(NavigationBar);
 

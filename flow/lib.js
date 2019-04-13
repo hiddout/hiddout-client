@@ -34,6 +34,9 @@ declare module 'semantic-ui-react' {
 	declare export var Comment: any;
 	declare export var Header: any;
 	declare export var Popup: any;
+	declare export var Dropdown: any;
+	declare export var Menu: any;
+	declare export var Input: any;
 }
 
 declare module 'redux' {
@@ -64,6 +67,7 @@ declare module 'react-router-dom' {
 	declare export var Switch: any;
 	declare export var withRouter: any;
 	declare export var Link: any;
+	declare export var NavLink:any;
 }
 
 declare module 'react-markdown' {

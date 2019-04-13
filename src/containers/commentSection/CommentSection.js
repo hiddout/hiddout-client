@@ -2,7 +2,7 @@
 import React from 'react';
 import { Comment, Header } from 'semantic-ui-react';
 
-const ReplyForm = React.lazy(()=> import('../../component/replyForm/ReplyForm'));
+const SubmitForm = React.lazy(()=> import('../../component/submitForm/SubmitForm'));
 
 type Props = {
 };
@@ -28,7 +28,7 @@ class CommentSection extends React.Component<Props, State> {
 						<Comment.Action>Reply</Comment.Action>
 					</Comment.Actions>
 				</Comment.Content>
-				<ReplyForm />
+				<SubmitForm ButtonText={'Reply'} />
 			</Comment>
 			</Comment.Group>
 		);

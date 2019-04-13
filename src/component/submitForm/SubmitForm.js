@@ -3,17 +3,21 @@ import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 
 type Props = {
+	ButtonText: string;
 };
 
 type State = {};
 
-class ReplyForm extends React.Component<Props, State> {
+class SubmitForm extends React.Component<Props, State> {
 	render() {
+
+		const {ButtonText} = this.props;
+
 		return (
 			<Form reply>
 				<Form.TextArea/>
 				<Button
-					content="Add Reply"
+					content={ButtonText}
 					labelPosition="left"
 					icon="edit"
 					primary
@@ -23,4 +27,4 @@ class ReplyForm extends React.Component<Props, State> {
 	}
 }
 
-export default ReplyForm ;
+export default SubmitForm ;

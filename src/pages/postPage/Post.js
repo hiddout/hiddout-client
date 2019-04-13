@@ -7,7 +7,6 @@ import {
 	Container,
 	Divider,
 	Header,
-	Form,
 	Segment,
 	Placeholder,
 	Popup,
@@ -17,6 +16,7 @@ import { getPost } from '../../actions/postAction';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import type { PostState } from '../../reducers/post';
+import SubmitForm from '../../component/submitForm/SubmitForm';
 
 const NavigationBar = React.lazy( () => import( '../../containers/navigationBar/NavigationBar'));
 const CommentSection = React.lazy(()=> import('../../containers/commentSection/CommentSection'));
@@ -107,15 +107,7 @@ class Post extends React.Component<Props, State> {
 
 					<Divider/>
 
-					<Form reply>
-						<Form.TextArea/>
-						<Button
-							content="Add Reply"
-							labelPosition="left"
-							icon="edit"
-							primary
-						/>
-					</Form>
+					<SubmitForm ButtonText={'Reply'}/>
 
 					<CommentSection />
 				</Container>
