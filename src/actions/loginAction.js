@@ -50,7 +50,7 @@ export const userLogin = (userData) => {
 
 		dispatch({type: REQUEST_LOGIN});
 
-		hiddoutViewer.request(`${config.baseURL}${config.apiV1}login`, {
+		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}login`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
@@ -58,7 +58,6 @@ export const userLogin = (userData) => {
 			body: JSON.stringify({ ...userData }),
 		}).then(res => {
 			checkAuth(res.status, dispatch);
-			dispatch({type: CLOSE_LOGIN_MODAL});
 			dispatch({ type: LOGIN, payload: { token: res.token, user: userData.user }  });
 		}).catch(e => {
 			console.error(e);

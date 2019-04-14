@@ -10,18 +10,28 @@ import {
 	userLogin,
 } from '../../actions/loginAction';
 
+import { Redirect, withRouter } from 'react-router-dom';
+
 import type { Node } from 'react';
+import type { AuthState } from '../../reducers/auth';
+import type { ModalState } from '../../reducers/modal';
 
 type Props = {
-	modal: Object,
+	auth: AuthState,
+	modal: ModalState,
+	location: Object,
 	closeLoginModal: () => void,
 	openSignUpModal: () => void,
 	userLogin: (...arg: any) => void,
 };
 
-type State = {};
+type State = {
+	redirectToReferrer: boolean,
+};
 
 class LoginModal extends React.Component<Props, State> {
+	state = { redirectToReferrer: false };
+
 	close = () => {
 		this.props.closeLoginModal();
 	};
@@ -40,10 +50,24 @@ class LoginModal extends React.Component<Props, State> {
 			user,
 			pwh: md.digest().toHex(),
 		});
+
+		this.setState({ redirectToReferrer: true });
 	};
 
 	render(): Node {
 		const { loginModalShowed } = this.props.modal;
+
+		let { from } = this.props.location.state || {
+			from: { pathname: this.props.location.pathname },
+		};
+
+		let { redirectToReferrer } = this.state;
+
+		if (redirectToReferrer && this.props.auth.isAuth) {
+			this.props.closeLoginModal();
+			return <Redirect to={from} />;
+		}
+
 		return (
 			<Modal
 				open={loginModalShowed}
@@ -96,6 +120,7 @@ class LoginModal extends React.Component<Props, State> {
 
 const mapStateToProps = (state) => {
 	return {
+		auth: state.auth,
 		modal: state.modal,
 	};
 };
@@ -114,7 +139,9 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(LoginModal);
+export default withRouter(
+	connect(
+		mapStateToProps,
+		mapDispatchToProps,
+	)(LoginModal),
+);

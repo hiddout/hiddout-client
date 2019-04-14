@@ -3,6 +3,12 @@ import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
+import { resources } from '../i18n/resources';
+import Settings from './settingsPage/Settings';
+import AuthRoute from '../containers/authRoute/AuthRoute';
+
+const Post = React.lazy(() => import('./postPage/Post'));
+const Submit = React.lazy(() => import('./submitPage/Submit'));
 
 const LoginModal = React.lazy(() =>
 	import('../containers/loginModal/LoginModal'),
@@ -17,7 +23,6 @@ import { Message } from './messagePage/Message';
 const Home = React.lazy(() => import('./homePage/Home'));
 const NoMatch = React.lazy(() => import('./404Page/NoMatch'));
 
-
 import type { Node } from 'react';
 
 type Props = {
@@ -27,17 +32,14 @@ type Props = {
 
 type State = {};
 
-import { resources } from '../i18n/resources';
 import type { ModalState } from '../reducers/modal';
-const Post = React.lazy(() => import('./postPage/Post'));
-const Submit = React.lazy(() => import('./submitPage/Submit'));
 
 class MainPage extends React.Component<Props, State> {
 	constructor(props) {
 		super(props);
 	}
 
-	async initLanguage(){
+	async initLanguage() {
 		const i18n = await import('i18next');
 		await i18n.init({
 			resources,
@@ -45,7 +47,7 @@ class MainPage extends React.Component<Props, State> {
 		});
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		this.initLanguage();
 	}
 
@@ -57,10 +59,11 @@ class MainPage extends React.Component<Props, State> {
 
 	render(): Node {
 		const { signUpModalShowed, loginModalShowed } = this.props.modal;
+
 		return (
 			<Suspense fallback={<Loader />}>
-				{ loginModalShowed && <LoginModal />}
-				{ signUpModalShowed && <SignUpModal />}
+				{loginModalShowed && <LoginModal />}
+				{signUpModalShowed && <SignUpModal />}
 				<Switch>
 					<Route
 						exact
@@ -68,11 +71,19 @@ class MainPage extends React.Component<Props, State> {
 						component={(props) => <Home {...props} />}
 					/>
 					<Redirect from="/index.html" to="/" />
-					<Route path="/message" component={Message} />
-					<Route path="/submit" component={(props) => <Submit {...props} />} />
+					<AuthRoute path="/message" component={Message} />
+					<AuthRoute
+						path="/submit"
+						component={(props) => <Submit {...props} />}
+					/>
+					{/*<AuthRoute path="/friend" component={(props) => <Friend {...props} />} />*/}
 					<Route
 						path="/p/:id"
 						component={(props) => <Post {...props} />}
+					/>
+					<AuthRoute
+						path="/settings"
+						component={(props) => <Settings {...props} />}
 					/>
 					<Route path="/about" component={About} />
 					<Route component={(props) => <NoMatch {...props} />} />

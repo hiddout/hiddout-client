@@ -1,8 +1,10 @@
 // @flow
 import React from 'react';
 
-import NavigationBar from '../../containers/navigationBar/NavigationBar';
+const NavigationBar = React.lazy( () => import( '../../containers/navigationBar/NavigationBar'));
+
 import type {Node} from 'react';
+
 type Props = {};
 
 type State = {};

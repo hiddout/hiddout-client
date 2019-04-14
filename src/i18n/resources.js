@@ -44,7 +44,7 @@ const resources = {
 			'weeksAgo': '几周内',
 			'longTimeAgo': '很久之前',
 			'create a post': '创建新讨论',
-			'signed in as': '用户名为',
+			'signed in as': '你好',
 		},
 	},
 };
