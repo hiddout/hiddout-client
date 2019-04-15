@@ -14,3 +14,5 @@ export const REQUEST_GET_POST = 'REQUEST_GET_POST';
 export const REQUEST_GET_POSTS = 'REQUEST_GET_POSTS';
 export const GET_POST = 'GET_POST';
 export const GET_POSTS = 'GET_POSTS';
+
+export const SUBMIT_POST = 'SUBMIT_POST';

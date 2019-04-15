@@ -50,7 +50,7 @@ export const userLogin = (userData) => {
 
 		dispatch({type: REQUEST_LOGIN});
 
-		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}login`, {
+		hiddoutViewer.request(`${config.baseURL}${config.apiV1}login`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',

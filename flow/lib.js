@@ -60,6 +60,10 @@ declare module 'redux-persist/integration/react' {
 	declare export var PersistGate: any;
 }
 
+declare module 'react-syntax-highlighter' {
+	declare export default any;
+}
+
 declare module 'react-router-dom' {
 	declare export default any;
 	declare export var Route: any;
