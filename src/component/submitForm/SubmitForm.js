@@ -4,6 +4,7 @@ import { Button, Form } from 'semantic-ui-react';
 
 type Props = {
 	ButtonText: string;
+	disabled: boolean;
 	onClick: (...arg:any) => any;
 	onChange: (...arg:any) => any;
 };
@@ -13,7 +14,7 @@ type State = {};
 class SubmitForm extends React.Component<Props, State> {
 	render() {
 
-		const {ButtonText, onClick, onChange} = this.props;
+		const {ButtonText, onClick, onChange, disabled} = this.props;
 
 		return (
 			<Form reply>
@@ -23,6 +24,7 @@ class SubmitForm extends React.Component<Props, State> {
 					labelPosition="left"
 					icon="edit"
 					onClick={()=> onClick()}
+					disabled={disabled}
 					primary
 				/>
 			</Form>

@@ -2,13 +2,20 @@
 import React from 'react';
 
 import type {Node} from 'react';
+import { withRouter } from 'react-router-dom';
 import { Container, Header, Segment } from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import { PAGE_404 } from '../../actions/actionType';
 
 type Props = {};
 
 type State = {};
 
 class NoMatch extends React.Component<Props,State> {
+
+	static getDerivedStateFromProps(props){
+		props.page404();
+	}
 
 	render(): Node {
 		return (
@@ -29,4 +36,17 @@ class NoMatch extends React.Component<Props,State> {
 	}
 }
 
-export default NoMatch;
+const mapDispatchToProps = (dispatch) => {
+	return {
+		page404: () => {
+			dispatch({type: PAGE_404});
+		},
+	};
+};
+
+export default withRouter(
+	connect(
+		null,
+		mapDispatchToProps,
+	)(NoMatch),
+);

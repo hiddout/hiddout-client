@@ -28,7 +28,7 @@ class CommentSection extends React.Component<Props, State> {
 						<Comment.Action>Reply</Comment.Action>
 					</Comment.Actions>
 				</Comment.Content>
-				<SubmitForm ButtonText={'Reply'}  onClick={()=>{}} onChange={()=>{}} />
+				<SubmitForm ButtonText={'Reply'}  onClick={()=>{}} onChange={()=>{}} disabled={false}/>
 			</Comment>
 			</Comment.Group>
 		);

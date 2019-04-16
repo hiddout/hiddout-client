@@ -1,5 +1,5 @@
 import React from 'react';
-import connect from 'react-redux/es/connect/connect';
+import {connect} from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import { openLoginModal } from '../../actions/loginAction';
 

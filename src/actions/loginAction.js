@@ -3,7 +3,7 @@ import {
 	CLOSE_SIGN_UP_MODAL,
 	LOGIN, LOGOUT,
 	OPEN_LOGIN_MODAL,
-	OPEN_SIGN_UP_MODAL, REQUEST_LOGIN,
+	OPEN_SIGN_UP_MODAL, TO_PAGE_404, REQUEST_LOGIN,
 	SIGNUP,
 } from './actionType';
 import { config } from '../config';
@@ -38,6 +38,9 @@ export const checkAuth = (status, dispatch) => {
 			dispatch({ type: LOGOUT });
 			dispatch({ type: OPEN_LOGIN_MODAL });
 			throw new Error('token invalid');
+		case 404:
+			dispatch({type: TO_PAGE_404});
+			throw new Error('page not found');
 		case 200:
 		default:
 			break;

@@ -36,7 +36,7 @@ class NavigationBar extends React.Component<Props, State> {
 			case ACCOUNT:
 				break;
 			case SETTINGS:
-				this.props.history.replace('/settings');
+				this.props.history.push('/settings');
 				break;
 			case LOGOUT:
 				this.props.logout();

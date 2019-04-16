@@ -26,13 +26,16 @@ const NoMatch = React.lazy(() => import('./404Page/NoMatch'));
 import type { Node } from 'react';
 
 type Props = {
+	auth: AuthState,
 	i18n: Object,
 	modal: ModalState,
+	history: Object,
 };
 
 type State = {};
 
 import type { ModalState } from '../reducers/modal';
+import type { AuthState } from '../reducers/auth';
 
 class MainPage extends React.Component<Props, State> {
 	constructor(props) {
@@ -55,9 +58,14 @@ class MainPage extends React.Component<Props, State> {
 		if (this.props.i18n.language !== prevProps.i18n.language) {
 			window.location.reload();
 		}
+
+		if(this.props.auth.show404 !== prevProps.auth.show404 && this.props.auth.show404){
+			this.props.history.replace('/404');
+		}
 	}
 
 	render(): Node {
+
 		const { signUpModalShowed, loginModalShowed } = this.props.modal;
 
 		return (
@@ -95,6 +103,7 @@ class MainPage extends React.Component<Props, State> {
 
 const mapStateToProps = (state) => {
 	return {
+		auth: state.auth,
 		i18n: state.i18n,
 		modal: state.modal,
 	};

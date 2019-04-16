@@ -1,7 +1,7 @@
 // @flow
 import { GET_POST, GET_POSTS, REQUEST_GET_POST } from '../actions/actionType';
 
-export type PostState = { posts: Array<any>, currentPost: Object};
+export type PostState = { posts: Array<any>, currentPost: Object };
 
 const post = (state: PostState = { posts: [], currentPost:null }, action: Action) =>
 	immer.produce(state, draft => {

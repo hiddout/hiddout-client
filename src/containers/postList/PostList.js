@@ -4,6 +4,9 @@ import { List, Segment, Divider, Placeholder } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getPosts } from '../../actions/postAction';
 import PostItem from '../../component/postItem/PostItem';
+
+import {getHiddoutTime} from '../../utils/dataUtil';
+
 import type { PostState } from '../../reducers/post';
 
 type Props = {
@@ -45,7 +48,7 @@ class PostList extends React.Component<Props, State> {
 							boardImgSrc={
 								'https://react.semantic-ui.com/images/wireframe/image.png'
 							}
-							createdAt={p.createTime}
+							createdAt={getHiddoutTime(p.createTime)}
 							postId={hiddoutViewer.encodeId(p._id)}
 						/>
 						<Divider/>

@@ -14,16 +14,25 @@ const NavigationBar = React.lazy(() =>
 import type { Node } from 'react';
 import { submitPost } from '../../actions/submitActions';
 import type { AuthState } from '../../reducers/auth';
+import type { SubmitState } from '../../reducers/submit';
 
 type Props = {
 	auth: AuthState,
+	submit: SubmitState,
+	history: Object,
 	submitPost: (Object) => any,
 };
 
-type State = { title: string, content: string, boardSelected: string };
+type State = {
+	submitting: boolean,
+	title: string,
+	content: string,
+	boardSelected: string,
+};
 
 class Submit extends React.Component<Props, State> {
 	state = {
+		submitting: false,
 		title: '',
 		content: '',
 		boardSelected: 'life',
@@ -34,6 +43,8 @@ class Submit extends React.Component<Props, State> {
 	}
 
 	onSubmitPost() {
+		this.setState({ submitting: true });
+
 		const postData = {
 			title: this.state.title,
 			content: this.state.content,
@@ -41,6 +52,16 @@ class Submit extends React.Component<Props, State> {
 			userId: this.props.auth.user,
 		};
 		this.props.submitPost(postData);
+	}
+
+	componentDidUpdate(prevProps) {
+		const cratedPostId = this.props.submit.cratedPostId;
+
+		if (cratedPostId !== prevProps.submit.cratedPostId) {
+			this.props.history.replace(
+				`/p/${hiddoutViewer.encodeId(cratedPostId)}`,
+			);
+		}
 	}
 
 	render(): Node {
@@ -63,6 +84,7 @@ class Submit extends React.Component<Props, State> {
 						/>
 						<Divider hidden />
 						<SubmitForm
+							disabled={this.state.submitting}
 							ButtonText={'Submit'}
 							onClick={this.onSubmitPost.bind(this)}
 							onChange={(e, data) =>
@@ -79,6 +101,7 @@ class Submit extends React.Component<Props, State> {
 const mapStateToProps = (state) => {
 	return {
 		auth: state.auth,
+		submit: state.submit,
 	};
 };
 

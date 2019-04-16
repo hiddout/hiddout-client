@@ -3,7 +3,8 @@ import { connectRouter } from 'connected-react-router';
 import { auth } from './auth';
 import { modal } from './modal';
 import { i18n } from './i18n';
-import {post} from './post';
+import { post } from './post';
+import {submit} from './submit';
 
 export default (history) =>
 	combineReducers({
@@ -12,4 +13,5 @@ export default (history) =>
 		modal,
 		i18n,
 		post,
+		submit,
 	});

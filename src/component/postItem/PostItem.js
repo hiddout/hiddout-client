@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { t } from 'i18next';
 import { List, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -25,11 +26,11 @@ class PostItem extends React.Component<Props, State> {
 						<Link to={`/p/${postId}`}>{title}</Link>
 					</List.Header>
 					<List.Description>
-						post by{' '}
+						{t('postBy')}
 						<a>
 							<b>{author}</b>
-						</a>{' '}
-						{createdAt} ago
+						</a>
+						{createdAt}
 					</List.Description>
 				</List.Content>
 			</List.Item>

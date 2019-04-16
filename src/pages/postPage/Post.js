@@ -146,6 +146,7 @@ class Post extends React.Component<Props, State> {
 						ButtonText={'Reply'}
 						onClick={() => {}}
 						onChange={() => {}}
+						disabled={false}
 					/>
 
 					<CommentSection />
