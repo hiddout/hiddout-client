@@ -1,20 +1,19 @@
 // @flow
 import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
+import { Redirect, Switch, withRouter } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 import { resources } from '../i18n/resources';
 import Settings from './settingsPage/Settings';
+
+import PageRoute from '../containers/pageRoute/PageRoute';
 import AuthRoute from '../containers/authRoute/AuthRoute';
 
 const Post = React.lazy(() => import('./postPage/Post'));
 const Submit = React.lazy(() => import('./submitPage/Submit'));
 
-const LoginModal = React.lazy(() =>
-	import('../containers/loginModal/LoginModal'),
-);
-const SignUpModal = React.lazy(() =>
-	import('../containers/signUpModal/SignUpModal'),
+const LoginSignInModal = React.lazy(() =>
+	import('../containers/loginSignInModal/LoginSignInModal'),
 );
 
 import { About } from './aboutPage/About';
@@ -36,6 +35,7 @@ type State = {};
 
 import type { ModalState } from '../reducers/modal';
 import type { AuthState } from '../reducers/auth';
+
 
 class MainPage extends React.Component<Props, State> {
 	constructor(props) {
@@ -68,12 +68,13 @@ class MainPage extends React.Component<Props, State> {
 
 		const { signUpModalShowed, loginModalShowed } = this.props.modal;
 
+		const isLoginSign = (signUpModalShowed || loginModalShowed);
+
 		return (
 			<Suspense fallback={<Loader />}>
-				{loginModalShowed && <LoginModal />}
-				{signUpModalShowed && <SignUpModal />}
+				{isLoginSign && <LoginSignInModal />}
 				<Switch>
-					<Route
+					<PageRoute
 						exact
 						path="/"
 						component={(props) => <Home {...props} />}
@@ -85,7 +86,7 @@ class MainPage extends React.Component<Props, State> {
 						component={(props) => <Submit {...props} />}
 					/>
 					{/*<AuthRoute path="/friend" component={(props) => <Friend {...props} />} />*/}
-					<Route
+					<PageRoute
 						path="/p/:id"
 						component={(props) => <Post {...props} />}
 					/>
@@ -93,8 +94,8 @@ class MainPage extends React.Component<Props, State> {
 						path="/settings"
 						component={(props) => <Settings {...props} />}
 					/>
-					<Route path="/about" component={About} />
-					<Route component={(props) => <NoMatch {...props} />} />
+					<PageRoute path="/about" component={About} />
+					<PageRoute component={(props) => <NoMatch {...props} />} />
 				</Switch>
 			</Suspense>
 		);

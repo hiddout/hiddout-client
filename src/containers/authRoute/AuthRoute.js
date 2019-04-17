@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { Route, Redirect, withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { openLoginModal } from '../../actions/loginAction';
+import PageRoute from '../pageRoute/PageRoute';
 
 class AuthRoute extends React.Component {
 	redirectToLogin() {
@@ -20,7 +21,7 @@ class AuthRoute extends React.Component {
 		const { component: Component, auth, ...rest } = this.props;
 
 		return (
-			<Route
+			<PageRoute
 				{...rest}
 				render={(props) =>
 					auth.isAuth ? (

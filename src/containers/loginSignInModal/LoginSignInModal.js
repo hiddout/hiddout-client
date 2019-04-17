@@ -1,13 +1,16 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Form, Icon } from 'semantic-ui-react';
+import { Button, Modal, Form, Icon, Input } from 'semantic-ui-react';
 import { t } from 'i18next';
 
 import {
 	closeLoginModal,
+	closeSignUpModal,
+	openLoginModal,
 	openSignUpModal,
 	userLogin,
+	userSignUp,
 } from '../../actions/loginAction';
 
 import { Redirect, withRouter } from 'react-router-dom';
@@ -23,39 +26,67 @@ type Props = {
 	closeLoginModal: () => void,
 	openSignUpModal: () => void,
 	userLogin: (...arg: any) => void,
+	openLoginMdoal:() => void,
+	closeSignUpModal: () => void,
+	userSignUp: (...arg: any) => void,
 };
 
 type State = {
 	redirectToReferrer: boolean,
+	user: string,
+	password: string,
 };
 
-class LoginModal extends React.Component<Props, State> {
-	state = { redirectToReferrer: false };
+class LoginSignInModal extends React.Component<Props, State> {
+	state = { redirectToReferrer: false, user: '', password: '' };
 
-	close = () => {
+	close() {
 		this.props.closeLoginModal();
-	};
+		this.props.closeSignUpModal();
+	}
 
-	onLoginClick = () => {
-		const usernameInput: any = document.getElementById('usernameInput'),
-			passwordInput: any = document.getElementById('passwordInput');
-
-		const user = usernameInput.value,
-			password = passwordInput.value;
+	onLoginSignInClick() {
+		const { userLogin, userSignUp } = this.props;
 
 		const md: Object = forge.md.sha256.create();
-		md.update(password);
+		md.update(this.state.password);
 
-		this.props.userLogin({
-			user,
+		const userData = {
+			user: this.state.user,
 			pwh: md.digest().toHex(),
-		});
+		};
 
-		this.setState({ redirectToReferrer: true });
-	};
+		if (this.props.modal.loginModalShowed) {
+			userLogin(userData);
+			this.setState({ redirectToReferrer: true });
+		} else {
+			userSignUp(userData);
+		}
+	}
+
+	onActionButtonClick() {
+		const {
+			openSignUpModal,
+			openLoginMdoal,
+		} = this.props;
+
+		if(this.props.modal.loginModalShowed){
+			openSignUpModal();
+		}else {
+			openLoginMdoal();
+		}
+	}
+
+	onUserNameChange(e, { value }) {
+		this.setState({ user: value });
+	}
+
+	onPasswordChange(e, { value }) {
+		this.setState({ password: value });
+	}
 
 	render(): Node {
-		const { loginModalShowed } = this.props.modal;
+		const { loginModalShowed, signUpModalShowed } = this.props.modal;
 
 		let { from } = this.props.location.state || {
 			from: { pathname: this.props.location.pathname },
@@ -70,46 +101,50 @@ class LoginModal extends React.Component<Props, State> {
 
 		return (
 			<Modal
-				open={loginModalShowed}
+				open={loginModalShowed || signUpModalShowed}
 				closeOnDimmerClick={false}
-				onClose={this.close}
+				onClose={this.close.bind(this)}
 				closeIcon
 			>
-				<Modal.Header>{t('loginBtn')}</Modal.Header>
+				<Modal.Header>
+					{loginModalShowed ? t('loginBtn') : t('signupBtn')}
+				</Modal.Header>
 				<Modal.Content>
 					<Form>
 						<Form.Field>
 							<label>{t('USERNAME')}</label>
-							<input
-								id={'usernameInput'}
+							<Input
 								placeholder={t('USERNAME')}
+								onChange={this.onUserNameChange.bind(this)}
 							/>
 						</Form.Field>
 						<Form.Field>
 							<label>{t('PASSWORD')}</label>
-							<input
-								id={'passwordInput'}
+							<Input
 								placeholder={t('PASSWORD')}
 								type={'password'}
+								onChange={this.onPasswordChange.bind(this)}
 							/>
 						</Form.Field>
 						<Button
 							type={'submit'}
 							primary
-							onClick={this.onLoginClick}
+							onClick={this.onLoginSignInClick.bind(this)}
 						>
-							{t('loginBtn')}
+							{loginModalShowed ? t('loginBtn') : t('signupBtn')}
 						</Button>
 					</Form>
 				</Modal.Content>
 				<Modal.Actions>
-					{t('new to hiddout?')}
+					{loginModalShowed
+						? t('new to hiddout?')
+						: t('already have hiddout account?')}
 					<Button
 						positive
 						icon
-						onClick={() => this.props.openSignUpModal()}
+						onClick={this.onActionButtonClick.bind(this)}
 					>
-						{t('signupBtn')}
+						{loginModalShowed ? t('signupBtn') : t('loginBtn')}
 						<Icon name="right chevron" />
 					</Button>
 				</Modal.Actions>
@@ -136,6 +171,15 @@ const mapDispatchToProps = (dispatch) => {
 		userLogin: (userData) => {
 			dispatch(userLogin(userData));
 		},
+		openLoginMdoal: () => {
+			dispatch(openLoginModal());
+		},
+		closeSignUpModal: () => {
+			dispatch(closeSignUpModal());
+		},
+		userSignUp: (userData) => {
+			dispatch(userSignUp(userData));
+		},
 	};
 };
 
@@ -143,5 +187,5 @@ export default withRouter(
 	connect(
 		mapStateToProps,
 		mapDispatchToProps,
-	)(LoginModal),
+	)(LoginSignInModal),
 );

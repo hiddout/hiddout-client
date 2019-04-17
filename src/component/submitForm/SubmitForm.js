@@ -9,21 +9,30 @@ type Props = {
 	onChange: (...arg:any) => any;
 };
 
-type State = {};
+type State = {
+	formData:string,
+};
 
 class SubmitForm extends React.Component<Props, State> {
+	state = {formData: ''};
+
+	onTextAreaChange(e: Object,data: Object){
+		this.setState({formData: data.value});
+		this.props.onChange(e,data);
+	}
+
 	render() {
 
-		const {ButtonText, onClick, onChange, disabled} = this.props;
+		const {ButtonText, onClick, disabled} = this.props;
 
 		return (
 			<Form reply>
-				<Form.TextArea onChange={(e,data) => onChange(e,data)}/>
+				<Form.TextArea onChange={this.onTextAreaChange.bind(this)}/>
 				<Button
 					content={ButtonText}
 					labelPosition="left"
 					icon="edit"
-					onClick={()=> onClick()}
+					onClick={()=> onClick(this.state.formData)}
 					disabled={disabled}
 					primary
 				/>

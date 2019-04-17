@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 const ReactMarkdown = React.lazy(() => import('react-markdown'));
 import { getPost } from '../../actions/postAction';
+import {submitComment} from '../../actions/submitActions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import type { PostState } from '../../reducers/post';
@@ -28,13 +29,16 @@ const CommentSection = React.lazy(() =>
 type Props = {
 	post: PostState,
 	getPost: (string) => void,
+	submitComment: (Object) => void,
 	match: { params: { id: string } },
 };
 
-type State = {};
+type State = {
+};
 
 class Post extends React.Component<Props, State> {
-	componentDidMount() {
+
+	componentWillMount() {
 		this.props.getPost(this.props.match.params.id);
 	}
 
@@ -101,7 +105,7 @@ class Post extends React.Component<Props, State> {
 									basic: true,
 									color: 'green',
 									pointing: 'left',
-									content: '2,048',
+									content: currentPost.up,
 								}}
 							/>
 						}
@@ -117,7 +121,7 @@ class Post extends React.Component<Props, State> {
 									basic: true,
 									color: 'red',
 									pointing: 'left',
-									content: '2,048',
+									content: currentPost.down,
 								}}
 							/>
 						}
@@ -133,7 +137,7 @@ class Post extends React.Component<Props, State> {
 									basic: true,
 									color: 'black',
 									pointing: 'left',
-									content: '2,048',
+									content: currentPost.lol,
 								}}
 							/>
 						}
@@ -144,7 +148,16 @@ class Post extends React.Component<Props, State> {
 
 					<SubmitForm
 						ButtonText={'Reply'}
-						onClick={() => {}}
+						onClick={(formData) => {
+							const commentData = {
+								replyTo: 0,
+								content: formData,
+								userId: 'nobody',
+								postId: this.props.match.params.id,
+							};
+
+							this.props.submitComment(commentData);
+						}}
 						onChange={() => {}}
 						disabled={false}
 					/>
@@ -175,6 +188,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		submitComment: (commentData) => {
+			dispatch(submitComment(commentData));
+		},
 		getPost: (id) => {
 			dispatch(getPost(id));
 		},
