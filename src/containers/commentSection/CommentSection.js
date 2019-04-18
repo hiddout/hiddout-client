@@ -3,21 +3,17 @@ import React from 'react';
 import { Comment, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import type { PostState } from '../../reducers/post';
-
-const SubmitForm = React.lazy(() =>
-	import('../../component/submitForm/SubmitForm'),
-);
+import { replyTo } from '../../actions/postAction';
 
 type Props = {
 	post: PostState,
+	replyTo: (number) => void,
 };
 
 type State = {
-	isReplying: boolean,
 };
 
 class CommentSection extends React.Component<Props, State> {
-	state = { isReplying: false };
 
 	render() {
 		const { comments } = this.props.post;
@@ -42,10 +38,7 @@ class CommentSection extends React.Component<Props, State> {
 								<Comment.Actions>
 									<Comment.Action
 										onClick={() => {
-											this.setState({
-												isReplying: !this.state
-													.isReplying,
-											});
+											this.props.replyTo(i+1);
 										}}
 									>
 										Reply
@@ -54,15 +47,6 @@ class CommentSection extends React.Component<Props, State> {
 							</Comment.Content>
 						</Comment>
 					))}
-
-				{this.state.isReplying && (
-					<SubmitForm
-						ButtonText={'Reply'}
-						onClick={() => {}}
-						onChange={() => {}}
-						disabled={false}
-					/>
-				)}
 			</Comment.Group>
 		);
 	}
@@ -74,4 +58,10 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(CommentSection);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		replyTo: (level) => dispatch(replyTo(level)),
+	};
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(CommentSection);

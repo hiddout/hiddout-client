@@ -1,7 +1,7 @@
 import {
 	GET_COMMENTS,
 	GET_POST,
-	GET_POSTS,
+	GET_POSTS, REPLY_TO,
 	REQUEST_GET_COMMENTS,
 	REQUEST_GET_POST,
 	REQUEST_GET_POSTS,
@@ -59,4 +59,8 @@ export const getPost = (id) => {
 			console.error(e);
 		});
 	};
+};
+
+export const replyTo = (number) => {
+	return {type: REPLY_TO, payload:{level: number}};
 };

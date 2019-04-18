@@ -76,7 +76,7 @@ class Post extends React.Component<Props, State> {
 	}
 
 	getContent(): Node {
-		const { currentPost } = this.props.post;
+		const { currentPost, comments, replyTo } = this.props.post;
 
 		if (!currentPost) {
 			return this.getPlaceholderContent();
@@ -145,6 +145,8 @@ class Post extends React.Component<Props, State> {
 					/>
 
 					<Divider />
+
+					{!!comments.length && !!replyTo && <div>re: {comments[replyTo - 1].content}</div>}
 
 					<SubmitForm
 						ButtonText={'Reply'}
