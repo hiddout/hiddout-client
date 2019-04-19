@@ -46,7 +46,7 @@ class PostList extends React.Component<Props, State> {
 							title={p.title}
 							author={p.userId}
 							boardImgSrc={
-								'https://react.semantic-ui.com/images/wireframe/image.png'
+								`/public/static/images/avatar/board/${p.board}.jpg`
 							}
 							createdAt={getHiddoutTime(p.createTime)}
 							postId={hiddoutViewer.encodeId(p._id)}
