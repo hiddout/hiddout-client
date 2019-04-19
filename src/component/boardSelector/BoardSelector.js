@@ -20,19 +20,19 @@ class BoardSelector extends React.Component<Props, State> {
 				key: 'lifeBoard',
 				text: t('lifeBoard'),
 				value: 'life',
-				image: { avatar: true, src: '/images/avatar/board/life.jpg' },
+				image: { avatar: true, src: '/public/static/images/avatar/board/life.jpg' },
 			},
 			{
 				key: 'gameBoard',
 				text: t('gameBoard'),
 				value: 'game',
-				image: { avatar: true, src: '/images/avatar/board/game.jpg' },
+				image: { avatar: true, src: '/public/static/images/avatar/board/game.jpg' },
 			},
 			{
 				key: 'workBoard',
 				text: t('workBoard'),
 				value: 'work',
-				image: { avatar: true, src: '/images/avatar/board/work.jpg' },
+				image: { avatar: true, src: '/public/static/images/avatar/board/work.jpg' },
 			},
 			{
 				key: 'spamBoard',
@@ -40,7 +40,7 @@ class BoardSelector extends React.Component<Props, State> {
 				value: 'spam',
 				image: {
 					avatar: true,
-					src: '/images/avatar/board/spam.jpg',
+					src: '/public/static/images/avatar/board/spam.jpg',
 				},
 			},
 		];
