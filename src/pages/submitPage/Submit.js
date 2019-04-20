@@ -70,9 +70,13 @@ class Submit extends React.Component<Props, State> {
 				<NavigationBar />
 				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
 					<Segment>
+						<Header>
+							Put post in{' '}
 						<BoardSelector
+							exclude={'home'}
 							onSelectChange={this.onBoardSelect.bind(this)}
 						/>
+						</Header>
 						<Header floated={'right'}>Submit a post</Header>
 						<Divider clearing />
 						<Input

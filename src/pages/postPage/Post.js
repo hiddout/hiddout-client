@@ -13,7 +13,7 @@ import {
 } from 'semantic-ui-react';
 const ReactMarkdown = React.lazy(() => import('react-markdown'));
 import { getPost } from '../../actions/postAction';
-import {submitComment} from '../../actions/submitActions';
+import { submitComment } from '../../actions/submitActions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import type { PostState } from '../../reducers/post';
@@ -33,11 +33,9 @@ type Props = {
 	match: { params: { id: string } },
 };
 
-type State = {
-};
+type State = {};
 
 class Post extends React.Component<Props, State> {
-
 	componentWillMount() {
 		this.props.getPost(this.props.match.params.id);
 	}
@@ -91,10 +89,12 @@ class Post extends React.Component<Props, State> {
 					b/{currentPost.board}. Post by {currentPost.userId}
 				</Container>
 				<Header as="h1">{currentPost.title}</Header>
-				<Container textAlign="justified">
-					<MarkdownComponent
-						source={markdown}
-					/>
+				<Container>
+					<Container textAlign="justified" style={{overflowX:'auto'}}>
+						<MarkdownComponent source={markdown} />
+					</Container>
+
+					<Divider hidden />
 
 					<Popup
 						trigger={
@@ -146,7 +146,9 @@ class Post extends React.Component<Props, State> {
 
 					<Divider />
 
-					{!!comments.length && !!replyTo && <div>re: {comments[replyTo - 1].content}</div>}
+					{!!comments.length && !!replyTo && (
+						<div>re: {comments[replyTo - 1].content}</div>
+					)}
 
 					<SubmitForm
 						ButtonText={'Reply'}

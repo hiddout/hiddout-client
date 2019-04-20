@@ -22,6 +22,7 @@ const resources = {
 			'longTimeAgo': ' long time ago',
 			'create a post': 'create a new post',
 			'signed in as': 'Signed in as',
+			'allPost': 'All',
 		},
 	},
 	zh: {
@@ -47,6 +48,7 @@ const resources = {
 			'longTimeAgo': ' 于很久之前',
 			'create a post': '创建新讨论',
 			'signed in as': '你好',
+			'allPost': '所有主题',
 		},
 	},
 };

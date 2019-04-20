@@ -1,24 +1,28 @@
 // @flow
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 const  NavigationBar = React.lazy( () => import( '../../containers/navigationBar/NavigationBar'));
 
 import type { Node } from 'react';
 const  PostList = React.lazy( () => import( '../../containers/postList/PostList'));
-import { Container } from 'semantic-ui-react';
+import { Container, Segment, Image } from 'semantic-ui-react';
 
 
-type Props = {};
+type Props = {
+	match: Object,
+};
 
 type State = {};
 
-class Home extends React.Component<Props, State> {
+class BoardPage extends React.Component<Props, State> {
 
 	render(): Node {
 		return (
 			<React.Fragment>
-				<NavigationBar board={'life'}/>
+				<NavigationBar/>
 				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
+					<Segment inverted><Image src={`/public/static/images/avatar/board/${this.props.match.params.id}.jpg`} circular /></Segment>
 					<PostList/>
 				</Container>
 			</React.Fragment>
@@ -26,4 +30,4 @@ class Home extends React.Component<Props, State> {
 	}
 }
 
-export default  Home ;
+export default withRouter(BoardPage);

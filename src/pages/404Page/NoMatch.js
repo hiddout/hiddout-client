@@ -22,12 +22,18 @@ class NoMatch extends React.Component<Props,State> {
 			<React.Fragment>
 				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
 					<Segment>
-						<Header as='h2'>Nothing to see here</Header>
+						<Header as='h3'> Nothing to see here 来晚了</Header>
 						<p>
 							The link is out of date, try to go back to home page to refresh again. We are refreshing url regularly in order to keep some necessary privacy.
 						</p>
 						<p>
-							If someone or some website is sharing this link to you, the guy who does this might not be a really trustworthy person.
+							这个链接已经过期失效了，我们会定期更换刷新链接来保证一定的隐私。
+						</p>
+						<p>
+							If someone or some website is sharing this link to you, the guy who does this might not very good.
+						</p>
+						<p>
+							如果你是从其他人或者网站上查找到该链接，这么做的人可能并不是出于好意。
 						</p>
 					</Segment>
 				</Container>

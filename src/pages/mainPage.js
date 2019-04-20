@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { Redirect, Switch, withRouter } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 import { resources } from '../i18n/resources';
-import Settings from './settingsPage/Settings';
 
 import PageRoute from '../containers/pageRoute/PageRoute';
 import AuthRoute from '../containers/authRoute/AuthRoute';
 
 const Post = React.lazy(() => import('./postPage/Post'));
 const Submit = React.lazy(() => import('./submitPage/Submit'));
+const BoardPage = React.lazy( ()=>import('./boardPage/BoardPage') );
+
+const Settings = React.lazy(() => import('./settingsPage/Settings'));
 
 const LoginSignInModal = React.lazy(() =>
 	import('../containers/loginSignInModal/LoginSignInModal'),
@@ -86,6 +88,10 @@ class MainPage extends React.Component<Props, State> {
 						component={(props) => <Submit {...props} />}
 					/>
 					{/*<AuthRoute path="/friend" component={(props) => <Friend {...props} />} />*/}
+					<PageRoute
+						path="/b/:id"
+						component={(props) => <BoardPage {...props} />}
+					/>
 					<PageRoute
 						path="/p/:id"
 						component={(props) => <Post {...props} />}

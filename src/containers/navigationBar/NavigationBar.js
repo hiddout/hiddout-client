@@ -12,6 +12,8 @@ import { changeLanguage } from '../../actions/i18nAction';
 import { connect } from 'react-redux';
 import type { AuthState } from '../../reducers/auth';
 
+import BoardSelector from '../../component/boardSelector/BoardSelector';
+
 const Nav = (props) => <NavLink exact {...props} activeClassName="active" />;
 
 type Props = {
@@ -29,9 +31,7 @@ const SETTINGS = 2;
 const LOGOUT = 3;
 
 class NavigationBar extends React.Component<Props, State> {
-
 	onDropdownClick(e, { value }) {
-
 		switch (value) {
 			case ACCOUNT:
 				break;
@@ -143,13 +143,25 @@ class NavigationBar extends React.Component<Props, State> {
 	}
 
 	render() {
+		const {isAuth} = this.props.auth;
 		return (
 			<Menu fixed="top">
+				{!isAuth &&
 				<Menu.Item>
 					<Image src="/public/static/Hiddout.png" avatar />
-				</Menu.Item>
+				</Menu.Item>}
 
-				<Menu.Item name={t('homeMenu')} as={Nav} to="/" />
+				{!isAuth && <Menu.Item name={t('homeMenu')} as={Nav} to="/" />}
+				{isAuth && (
+					<Menu.Item>
+						<BoardSelector onSelectChange={(value) => {
+							if(value === 'home'){
+								this.props.history.push('/');
+							}
+						}} />
+					</Menu.Item>
+				)}
+
 				<Menu.Item name={t('messagesMenu')} as={Nav} to="/message" />
 				<Menu.Item name={t('friendsMenu')} as={Nav} to="/friend" />
 				<Menu.Menu position="right">{this.renderRightMenu()}</Menu.Menu>
@@ -182,7 +194,9 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default withRouter(connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(NavigationBar));
+export default withRouter(
+	connect(
+		mapStateToProps,
+		mapDispatchToProps,
+	)(NavigationBar),
+);
