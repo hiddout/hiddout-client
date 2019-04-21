@@ -9,7 +9,7 @@ export const submitPost = (postData) => {
 
 		dispatch({type: SUBMIT_POST});
 
-		hiddoutViewer.request(`${config.baseURL}${config.apiV1}posts`, {
+		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}posts`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
@@ -18,7 +18,7 @@ export const submitPost = (postData) => {
 			body: JSON.stringify(postData),
 		}).then(res => {
 			checkAuth(res.status, dispatch);
-			dispatch({ type: POST_CREATED, payload: { cratedPostId: res.insertedId }  });
+			return dispatch({ type: POST_CREATED, payload: { cratedPostId: res.insertedId }  });
 		}).catch(e => {
 			console.error(e);
 		});

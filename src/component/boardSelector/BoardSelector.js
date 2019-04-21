@@ -4,11 +4,13 @@ import { t } from 'i18next';
 import React from 'react';
 
 type Props = {
-	exclude?: string,
+	value?: string,
+	exclude?: Array<string>,
 	onSelectChange: (string) => any,
 };
 
 type State = {
+	options: Array<Object>,
 	value: string,
 };
 
@@ -16,16 +18,6 @@ type State = {
 class BoardSelector extends React.Component<Props, State> {
 	constructor(props: Props){
 		super(props);
-		this.state = {
-			value: props.exclude === 'home' ? 'life' : 'home',
-		};
-	}
-
-	onDropdownClick(e: Object, { value }: Object) {
-		this.setState({ value }, () => this.props.onSelectChange(value));
-	}
-
-	render() {
 
 		const allOptions = [
 			{
@@ -77,22 +69,37 @@ class BoardSelector extends React.Component<Props, State> {
 
 		let filterOptions = allOptions;
 
-		if(this.props.exclude){
-			filterOptions = allOptions.filter(option => option.value !== this.props.exclude );
+		const exclude = this.props.exclude;
+
+		if(exclude){
+			filterOptions = allOptions.filter(option => {
+				return exclude.indexOf(option.value) < 0;
+			});
 		}
 
+		this.state = {
+			options: filterOptions,
+			value: filterOptions[0].value,
+		};
+	}
+
+	onDropdownClick(e: Object, { value }: Object) {
+		this.setState({ value }, () => this.props.onSelectChange(value));
+	}
+
+	render() {
 		return (
 			<span>
 				<Image
 					src={`/public/static/images/avatar/board/${
-						this.state.value
+						this.props.value? this.props.value : this.state.value
 					}.jpg`}
 					avatar
 				/>
 				<Dropdown
 					inline
-					options={filterOptions}
-					defaultValue={filterOptions[0].value}
+					options={this.state.options}
+					value={this.props.value? this.props.value : this.state.value}
 					onChange={this.onDropdownClick.bind(this)}
 				/>
 			</span>

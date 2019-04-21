@@ -36,7 +36,7 @@ type Props = {
 type State = {};
 
 class Post extends React.Component<Props, State> {
-	componentWillMount() {
+	componentDidMount() {
 		this.props.getPost(this.props.match.params.id);
 	}
 
@@ -173,9 +173,11 @@ class Post extends React.Component<Props, State> {
 	}
 
 	render(): Node {
+		const {currentPost} = this.props.post;
+
 		return (
 			<React.Fragment>
-				<NavigationBar />
+				<NavigationBar boardValue={currentPost? currentPost.board : null}/>
 				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
 					<Segment>{this.getContent()}</Segment>
 				</Container>

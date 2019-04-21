@@ -15,6 +15,7 @@ import type { Node } from 'react';
 import { submitPost } from '../../actions/submitActions';
 import type { AuthState } from '../../reducers/auth';
 import type { SubmitState } from '../../reducers/submit';
+import { POST_CREATED } from '../../actions/actionType';
 
 type Props = {
 	auth: AuthState,
@@ -51,17 +52,14 @@ class Submit extends React.Component<Props, State> {
 			board: this.state.boardSelected,
 			userId: this.props.auth.user,
 		};
-		this.props.submitPost(postData);
-	}
 
-	componentDidUpdate(prevProps) {
-		const cratedPostId = this.props.submit.cratedPostId;
-
-		if (cratedPostId !== prevProps.submit.cratedPostId) {
-			this.props.history.replace(
-				`/p/${hiddoutViewer.encodeId(cratedPostId)}`,
-			);
-		}
+		this.props.submitPost(postData).then((response: Object) => {
+			if(response.type === POST_CREATED) {
+				this.props.history.replace(
+					`/p/${hiddoutViewer.encodeId(response.payload.cratedPostId)}`,
+				);
+			}
+		});
 	}
 
 	render(): Node {
@@ -73,7 +71,7 @@ class Submit extends React.Component<Props, State> {
 						<Header>
 							Put post in{' '}
 						<BoardSelector
-							exclude={'home'}
+							exclude={['home','spam']}
 							onSelectChange={this.onBoardSelect.bind(this)}
 						/>
 						</Header>
@@ -111,9 +109,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		submitPost: (post) => {
-			dispatch(submitPost(post));
-		},
+		submitPost: (post) => dispatch(submitPost(post)),
 	};
 };
 

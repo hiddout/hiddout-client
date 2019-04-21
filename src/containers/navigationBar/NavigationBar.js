@@ -19,6 +19,7 @@ const Nav = (props) => <NavLink exact {...props} activeClassName="active" />;
 type Props = {
 	auth: AuthState,
 	history: Object,
+	boardValue?: string,
 	logout: (...args: any) => any,
 	openLoginModal: (...args: any) => any,
 	openSignUpModal: (...args: any) => any,
@@ -157,8 +158,10 @@ class NavigationBar extends React.Component<Props, State> {
 						<BoardSelector onSelectChange={(value) => {
 							if(value === 'home'){
 								this.props.history.push('/');
+							} else {
+								this.props.history.push(`/b/${value}`);
 							}
-						}} />
+						}} value={this.props.boardValue} />
 					</Menu.Item>
 				)}
 

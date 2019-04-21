@@ -22,7 +22,7 @@ class NoMatch extends React.Component<Props,State> {
 			<React.Fragment>
 				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
 					<Segment>
-						<Header as='h3'> Nothing to see here 来晚了</Header>
+						<Header as='h3'> Nothing to see here 页面迷路了</Header>
 						<p>
 							The link is out of date, try to go back to home page to refresh again. We are refreshing url regularly in order to keep some necessary privacy.
 						</p>

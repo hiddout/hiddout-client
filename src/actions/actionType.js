@@ -27,4 +27,6 @@ export const COMMENT_SUBMITTED = 'COMMENT_SUBMITTED';
 export const SUBMIT_POST = 'SUBMIT_POST';
 export const POST_CREATED = 'POST_CREATED';
 
+export const SUB_EXIST = 'SUB_EXIST';
+
 export const REPLY_TO = 'REPLY_TO';
