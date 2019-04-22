@@ -173,11 +173,9 @@ class Post extends React.Component<Props, State> {
 	}
 
 	render(): Node {
-		const {currentPost} = this.props.post;
-
 		return (
 			<React.Fragment>
-				<NavigationBar boardValue={currentPost? currentPost.board : null}/>
+				<NavigationBar showBackBtn={true}/>
 				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
 					<Segment>{this.getContent()}</Segment>
 				</Container>

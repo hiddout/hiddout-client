@@ -79,7 +79,7 @@ class MainPage extends React.Component<Props, State> {
 					<PageRoute
 						exact
 						path="/"
-						component={(props) => <Home {...props} />}
+						render={(props) => <Home {...props} />}
 					/>
 					<Redirect from="/index.html" to="/" />
 					<AuthRoute path="/message" component={Message} />
@@ -90,18 +90,18 @@ class MainPage extends React.Component<Props, State> {
 					{/*<AuthRoute path="/friend" component={(props) => <Friend {...props} />} />*/}
 					<PageRoute
 						path="/b/:id"
-						component={(props) => <BoardPage {...props} />}
+						render={(props) => <BoardPage {...props} />}
 					/>
 					<PageRoute
 						path="/p/:id"
-						component={(props) => <Post {...props} />}
+						render={(props) => <Post {...props} />}
 					/>
 					<AuthRoute
 						path="/settings"
 						component={(props) => <Settings {...props} />}
 					/>
-					<PageRoute path="/about" component={About} />
-					<PageRoute component={(props) => <NoMatch {...props} />} />
+					<PageRoute path="/about" render={About} />
+					<PageRoute render={(props) => <NoMatch {...props} />} />
 				</Switch>
 			</Suspense>
 		);

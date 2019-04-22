@@ -1,9 +1,16 @@
 // @flow
-import { GET_COMMENTS, GET_POST, GET_POSTS, REPLY_TO, REQUEST_GET_POST } from '../actions/actionType';
+import {
+	GET_COMMENTS,
+	GET_POST,
+	GET_POSTS,
+	REPLY_TO,
+	REQUEST_GET_POST,
+	REQUEST_GET_POSTS,
+} from '../actions/actionType';
 
-export type PostState = { posts: Array<Object>, comments: Array<Object>, currentPost: Object|null, replyTo: number };
+export type PostState = { isLoading: boolean, posts: Array<Object>, comments: Array<Object>, currentPost: Object|null, replyTo: number };
 
-const post = (state: PostState = { posts: [], comments:[], currentPost: null, replyTo: 0 }, action: Action) =>
+const post = (state: PostState = { isLoading: false, posts: [], comments:[], currentPost: null, replyTo: 0 }, action: Action) =>
 	immer.produce(state, draft => {
 
 		const payload = action.payload || {};
@@ -12,12 +19,18 @@ const post = (state: PostState = { posts: [], comments:[], currentPost: null, re
 			case REQUEST_GET_POST:
 				draft.currentPost = null;
 				draft.comments = [];
+				draft.isLoading = true;
+				break;
+			case REQUEST_GET_POSTS:
+				draft.isLoading = true;
 				break;
 			case GET_POSTS:
 				draft.posts = payload.posts;
+				draft.isLoading = false;
 				break;
 			case GET_COMMENTS:
 				draft.comments = payload.comments;
+				draft.isLoading = false;
 				break;
 			case GET_POST:
 				draft.currentPost = payload.post;

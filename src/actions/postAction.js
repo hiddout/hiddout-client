@@ -9,19 +9,21 @@ import {
 import { config } from '../config';
 import { checkAuth } from './loginAction';
 
-export const getPosts = () => {
+export const getPosts = (boardId) => {
 	return (dispatch) => {
 
 		dispatch({type: REQUEST_GET_POSTS});
 
-		hiddoutViewer.request(`${config.baseURL}${config.apiV1}posts`, {
+		const board = boardId? `?board=${boardId}` : '';
+
+		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}posts${board}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
 			},
 		}).then(res => {
 			checkAuth(res.status, dispatch);
-			dispatch({ type: GET_POSTS, payload: { posts: res.posts }  });
+			return dispatch({ type: GET_POSTS, payload: { posts: res.posts }  });
 		}).catch(e => {
 			console.error(e);
 		});

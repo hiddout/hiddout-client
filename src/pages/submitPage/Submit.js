@@ -65,7 +65,7 @@ class Submit extends React.Component<Props, State> {
 	render(): Node {
 		return (
 			<React.Fragment>
-				<NavigationBar />
+				<NavigationBar showBackBtn={true} />
 				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
 					<Segment>
 						<Header>

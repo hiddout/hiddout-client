@@ -19,6 +19,7 @@ const Nav = (props) => <NavLink exact {...props} activeClassName="active" />;
 type Props = {
 	auth: AuthState,
 	history: Object,
+	showBackBtn?: boolean,
 	boardValue?: string,
 	logout: (...args: any) => any,
 	openLoginModal: (...args: any) => any,
@@ -144,24 +145,43 @@ class NavigationBar extends React.Component<Props, State> {
 	}
 
 	render() {
-		const {isAuth} = this.props.auth;
+		const { showBackBtn } = this.props;
+		const { isAuth } = this.props.auth;
 		return (
 			<Menu fixed="top">
-				{!isAuth &&
-				<Menu.Item>
-					<Image src="/public/static/Hiddout.png" avatar />
-				</Menu.Item>}
+				{!isAuth && (
+					<Menu.Item>
+						<Image src="/public/static/Hiddout.png" avatar />
+					</Menu.Item>
+				)}
 
 				{!isAuth && <Menu.Item name={t('homeMenu')} as={Nav} to="/" />}
-				{isAuth && (
+				{isAuth && !showBackBtn && (
 					<Menu.Item>
-						<BoardSelector onSelectChange={(value) => {
-							if(value === 'home'){
-								this.props.history.push('/');
-							} else {
-								this.props.history.push(`/b/${value}`);
-							}
-						}} value={this.props.boardValue} />
+						<BoardSelector
+							onSelectChange={(value) => {
+								if (value === 'home') {
+									this.props.history.push('/');
+								} else {
+									this.props.history.push(`/b/${value}`);
+								}
+							}}
+							value={this.props.boardValue}
+						/>
+					</Menu.Item>
+				)}
+
+				{isAuth && showBackBtn && (
+					<Menu.Item>
+						<Button
+							icon
+							color="blue"
+							onClick={() => {
+								this.props.history.goBack();
+							}}
+						>
+							<Icon name="left arrow" />
+						</Button>
 					</Menu.Item>
 				)}
 
