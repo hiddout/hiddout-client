@@ -2,10 +2,12 @@
 import React from 'react';
 import { Comment, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import type { PostState } from '../../reducers/post';
 import { replyTo } from '../../actions/postAction';
+import type { PostState } from '../../reducers/post';
+import type { AuthState } from '../../reducers/auth';
 
 type Props = {
+	auth: AuthState,
 	post: PostState,
 	replyTo: (number) => void,
 };
@@ -38,6 +40,9 @@ class CommentSection extends React.Component<Props, State> {
 								<Comment.Actions>
 									<Comment.Action
 										onClick={() => {
+											if(!this.props.auth.isAuth){
+												return;
+											}
 											this.props.replyTo(i+1);
 										}}
 									>
@@ -54,6 +59,7 @@ class CommentSection extends React.Component<Props, State> {
 
 const mapStateToProps = (state) => {
 	return {
+		auth: state.auth,
 		post: state.post,
 	};
 };

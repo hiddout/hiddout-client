@@ -12,12 +12,15 @@ import {
 	Popup,
 } from 'semantic-ui-react';
 const ReactMarkdown = React.lazy(() => import('react-markdown'));
-import { getPost } from '../../actions/postAction';
+import { getComments, getPost } from '../../actions/postAction';
 import { submitComment } from '../../actions/submitActions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import type { PostState } from '../../reducers/post';
 import SubmitForm from '../../component/submitForm/SubmitForm';
+import { COMMENT_SUBMITTED } from '../../actions/actionType';
+
+import type { PostState } from '../../reducers/post';
+import type { AuthState } from '../../reducers/auth';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -27,15 +30,24 @@ const CommentSection = React.lazy(() =>
 );
 
 type Props = {
+	auth: AuthState,
 	post: PostState,
-	getPost: (string) => void,
-	submitComment: (Object) => void,
+	getPost: (string) => any,
+	getComments: (string) => any,
+	submitComment: (Object) => any,
 	match: { params: { id: string } },
 };
 
-type State = {};
+type State = {
+	submitting: boolean,
+};
 
 class Post extends React.Component<Props, State> {
+
+	state = {
+		submitting: false,
+	};
+
 	componentDidMount() {
 		this.props.getPost(this.props.match.params.id);
 	}
@@ -90,7 +102,10 @@ class Post extends React.Component<Props, State> {
 				</Container>
 				<Header as="h1">{currentPost.title}</Header>
 				<Container>
-					<Container textAlign="justified" style={{overflowX:'auto'}}>
+					<Container
+						textAlign="justified"
+						style={{ overflowX: 'auto' }}
+					>
 						<MarkdownComponent source={markdown} />
 					</Container>
 
@@ -150,21 +165,37 @@ class Post extends React.Component<Props, State> {
 						<div>re: {comments[replyTo - 1].content}</div>
 					)}
 
-					<SubmitForm
-						ButtonText={'Reply'}
-						onClick={(formData) => {
-							const commentData = {
-								replyTo: 0,
-								content: formData,
-								userId: 'nobody',
-								postId: this.props.match.params.id,
-							};
+					{this.props.auth.isAuth && (
+						<SubmitForm
+							disabled={this.state.submitting}
+							ButtonText={'Reply'}
+							onClick={(formData) => {
+								const commentData = {
+									replyTo: 0,
+									content: formData,
+									userId: 'nobody',
+									postId: this.props.match.params.id,
+								};
 
-							this.props.submitComment(commentData);
-						}}
-						onChange={() => {}}
-						disabled={false}
-					/>
+								this.setState({submitting: true},() => {
+									this.props
+										.submitComment(commentData)
+										.then((response: Object) => {
+											if (
+												response.type === COMMENT_SUBMITTED
+											) {
+												this.props.getComments(this.props.match.params.id);
+												this.setState({submitting: false},()=>{
+
+												});
+											}
+										});
+								});
+
+
+							}}
+						/>
+					)}
 
 					<CommentSection />
 				</Container>
@@ -175,7 +206,7 @@ class Post extends React.Component<Props, State> {
 	render(): Node {
 		return (
 			<React.Fragment>
-				<NavigationBar showBackBtn={true}/>
+				<NavigationBar showBackBtn={true} />
 				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
 					<Segment>{this.getContent()}</Segment>
 				</Container>
@@ -186,18 +217,18 @@ class Post extends React.Component<Props, State> {
 
 const mapStateToProps = (state) => {
 	return {
+		auth: state.auth,
 		post: state.post,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		submitComment: (commentData) => {
-			dispatch(submitComment(commentData));
-		},
+		submitComment: (commentData) => dispatch(submitComment(commentData)),
 		getPost: (id) => {
 			dispatch(getPost(id));
 		},
+		getComments: (id) => dispatch(getComments(id)),
 	};
 };
 

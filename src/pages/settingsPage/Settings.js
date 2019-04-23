@@ -12,8 +12,8 @@ class Settings extends React.Component<Props, State> {
 
 	render(){
 		return (<React.Fragment>
-			<NavigationBar/>
-			<Container textAlign={'left'} style={{ marginTop: '7em' }}>
+			<NavigationBar showBackBtn={true}/>
+			<Container textAlign={'left'} style={{ marginTop: '7em', marginBottom:'3em' }}>
 				<Segment>Settings</Segment>
 			</Container>
 		</React.Fragment>);

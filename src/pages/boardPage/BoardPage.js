@@ -54,7 +54,7 @@ class BoardPage extends React.Component<Props, State> {
 			<React.Fragment>
 				<NavigationBar boardValue={params.id} />
 
-					<Container textAlign={'left'} style={{ marginTop: '7em' }}>
+					<Container textAlign={'left'} style={{ marginTop: '7em', marginBottom:'3em' }}>
 						{this.state.showPage && (<Segment inverted>
 							<Image
 								src={`/public/static/images/avatar/board/${

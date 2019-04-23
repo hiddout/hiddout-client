@@ -4,9 +4,9 @@ import { Button, Form } from 'semantic-ui-react';
 
 type Props = {
 	ButtonText: string;
-	disabled: boolean;
+	disabled?: boolean;
 	onClick: (...arg:any) => any;
-	onChange: (...arg:any) => any;
+	onChange?: (...arg:any) => any;
 };
 
 type State = {
@@ -17,22 +17,39 @@ class SubmitForm extends React.Component<Props, State> {
 	state = {formData: ''};
 
 	onTextAreaChange(e: Object,data: Object){
+		const { onChange } = this.props;
+
+		if(onChange){
+			onChange(e,data);
+		}
+
 		this.setState({formData: data.value});
-		this.props.onChange(e,data);
+	}
+
+	onClick() {
+		if(!this.state.formData.length){
+			return;
+		}
+
+		const { onClick } = this.props;
+
+		onClick(this.state.formData);
+
+		this.setState({formData: ''});
 	}
 
 	render() {
 
-		const {ButtonText, onClick, disabled} = this.props;
+		const {ButtonText, disabled} = this.props;
 
 		return (
 			<Form reply>
-				<Form.TextArea onChange={this.onTextAreaChange.bind(this)}/>
+				<Form.TextArea value={this.state.formData} onChange={this.onTextAreaChange.bind(this)}/>
 				<Button
 					content={ButtonText}
 					labelPosition="left"
 					icon="edit"
-					onClick={()=> onClick(this.state.formData)}
+					onClick={this.onClick.bind(this)}
 					disabled={disabled}
 					primary
 				/>
