@@ -16,9 +16,11 @@ import { submitPost } from '../../actions/submitActions';
 import type { AuthState } from '../../reducers/auth';
 import type { SubmitState } from '../../reducers/submit';
 import { POST_CREATED } from '../../actions/actionType';
+import type { AccountState } from '../../reducers/account';
 
 type Props = {
 	auth: AuthState,
+	account: AccountState,
 	submit: SubmitState,
 	history: Object,
 	submitPost: (Object) => any,
@@ -50,7 +52,7 @@ class Submit extends React.Component<Props, State> {
 			title: this.state.title,
 			content: this.state.content,
 			board: this.state.boardSelected,
-			userId: this.props.auth.user,
+			userId: this.props.account.user,
 		};
 
 		this.props.submitPost(postData).then((response: Object) => {
@@ -103,6 +105,7 @@ class Submit extends React.Component<Props, State> {
 const mapStateToProps = (state) => {
 	return {
 		auth: state.auth,
+		account: state.account,
 		submit: state.submit,
 	};
 };

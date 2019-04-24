@@ -14,9 +14,7 @@ const BoardPage = React.lazy( ()=>import('./boardPage/BoardPage') );
 
 const Settings = React.lazy(() => import('./settingsPage/Settings'));
 
-const LoginSignInModal = React.lazy(() =>
-	import('../containers/loginSignInModal/LoginSignInModal'),
-);
+import LoginSignInModal from '../containers/loginSignInModal/LoginSignInModal';
 
 import { About } from './aboutPage/About';
 import { Message } from './messagePage/Message';

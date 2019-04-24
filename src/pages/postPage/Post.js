@@ -10,8 +10,9 @@ import {
 	Segment,
 	Placeholder,
 	Popup,
+	Message,
 } from 'semantic-ui-react';
-const ReactMarkdown = React.lazy(() => import('react-markdown'));
+
 import { getComments, getPost } from '../../actions/postAction';
 import { submitComment } from '../../actions/submitActions';
 import { withRouter } from 'react-router-dom';
@@ -19,8 +20,11 @@ import { connect } from 'react-redux';
 import SubmitForm from '../../component/submitForm/SubmitForm';
 import { COMMENT_SUBMITTED } from '../../actions/actionType';
 
+const ReactMarkdown = React.lazy(() => import('react-markdown'));
+
 import type { PostState } from '../../reducers/post';
 import type { AuthState } from '../../reducers/auth';
+import type { AccountState } from '../../reducers/account';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -31,6 +35,7 @@ const CommentSection = React.lazy(() =>
 
 type Props = {
 	auth: AuthState,
+	account: AccountState,
 	post: PostState,
 	getPost: (string) => any,
 	getComments: (string) => any,
@@ -162,7 +167,7 @@ class Post extends React.Component<Props, State> {
 					<Divider />
 
 					{!!comments.length && !!replyTo && (
-						<div>re: {comments[replyTo - 1].content}</div>
+						<Message floating color='yellow' content={`re: @${comments[replyTo - 1].userId} - ${comments[replyTo - 1].content}`} />
 					)}
 
 					{this.props.auth.isAuth && (
@@ -171,9 +176,9 @@ class Post extends React.Component<Props, State> {
 							ButtonText={'Reply'}
 							onClick={(formData) => {
 								const commentData = {
-									replyTo: 0,
+									replyTo: this.props.post.replyTo,
 									content: formData,
-									userId: 'nobody',
+									userId: this.props.account.user,
 									postId: this.props.match.params.id,
 								};
 
@@ -207,7 +212,7 @@ class Post extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar showBackBtn={true} />
-				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
+				<Container textAlign={'left'} style={{ marginTop: '7em', marginBottom:'3em' }}>
 					<Segment>{this.getContent()}</Segment>
 				</Container>
 			</React.Fragment>
@@ -218,6 +223,7 @@ class Post extends React.Component<Props, State> {
 const mapStateToProps = (state) => {
 	return {
 		auth: state.auth,
+		account: state.account,
 		post: state.post,
 	};
 };

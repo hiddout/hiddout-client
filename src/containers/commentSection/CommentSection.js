@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Comment, Header } from 'semantic-ui-react';
+import { Comment, Header, Message, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { replyTo } from '../../actions/postAction';
 import type { PostState } from '../../reducers/post';
@@ -36,8 +36,9 @@ class CommentSection extends React.Component<Props, State> {
 								<Comment.Metadata>
 									<div>{c.createTime}</div>
 								</Comment.Metadata>
+								{!!c.replyTo && <Message floating color='yellow' content={`re: @${comments[c.replyTo - 1].userId} - ${comments[c.replyTo - 1].content}`} />}
 								<Comment.Text>{c.content}</Comment.Text>
-								<Comment.Actions>
+								{this.props.auth.isAuth && <Comment.Actions>
 									<Comment.Action
 										onClick={() => {
 											if(!this.props.auth.isAuth){
@@ -48,8 +49,9 @@ class CommentSection extends React.Component<Props, State> {
 									>
 										Reply
 									</Comment.Action>
-								</Comment.Actions>
+								</Comment.Actions>}
 							</Comment.Content>
+							<Divider />
 						</Comment>
 					))}
 			</Comment.Group>

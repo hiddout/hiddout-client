@@ -13,11 +13,13 @@ import { connect } from 'react-redux';
 import type { AuthState } from '../../reducers/auth';
 
 import BoardSelector from '../../component/boardSelector/BoardSelector';
+import type { AccountState } from '../../reducers/account';
 
 const Nav = (props) => <NavLink exact {...props} activeClassName="active" />;
 
 type Props = {
 	auth: AuthState,
+	account: AccountState,
 	history: Object,
 	showBackBtn?: boolean,
 	boardValue?: string,
@@ -68,7 +70,7 @@ class NavigationBar extends React.Component<Props, State> {
 			const trigger = (
 				<span>
 					<Image avatar src={'/public/static/Hiddout.png'} />{' '}
-					{this.props.auth.user}
+					{this.props.account.user}
 				</span>
 			);
 			const options = [
@@ -78,7 +80,7 @@ class NavigationBar extends React.Component<Props, State> {
 						<span style={{ color: 'gray' }}>
 							{t('signed in as')}{' '}
 							<strong style={{ color: 'green' }}>
-								{this.props.auth.user}
+								{this.props.account.user}
 							</strong>
 						</span>
 					),
@@ -197,6 +199,7 @@ const mapStateToProps = (state) => {
 	return {
 		i18n: state.i18n,
 		auth: state.auth,
+		account: state.account,
 	};
 };
 

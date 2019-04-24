@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import { auth } from './auth';
+import {account} from './account';
 import { modal } from './modal';
 import { i18n } from './i18n';
 import { post } from './post';
@@ -10,6 +11,7 @@ export default (history) =>
 	combineReducers({
 		router: connectRouter(history),
 		auth,
+		account,
 		modal,
 		i18n,
 		post,
