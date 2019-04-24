@@ -37,6 +37,7 @@ declare module 'semantic-ui-react' {
 	declare export var Dropdown: any;
 	declare export var Menu: any;
 	declare export var Input: any;
+	declare export var Message: any;
 }
 
 declare module 'redux' {
