@@ -14,7 +14,7 @@ import {
 } from 'semantic-ui-react';
 
 import { getComments, getPost } from '../../actions/postAction';
-import { submitComment } from '../../actions/submitActions';
+import { submitComment, submitReaction } from '../../actions/submitActions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import SubmitForm from '../../component/submitForm/SubmitForm';
@@ -40,12 +40,17 @@ type Props = {
 	getPost: (string) => any,
 	getComments: (string) => any,
 	submitComment: (Object) => any,
+	submitReaction: (Object) => any,
 	match: { params: { id: string } },
 };
 
 type State = {
 	submitting: boolean,
 };
+
+const REACT_UP = 'up';
+const REACT_DOWN = 'down';
+const REACT_LOL = 'lol';
 
 class Post extends React.Component<Props, State> {
 
@@ -90,6 +95,76 @@ class Post extends React.Component<Props, State> {
 		);
 	}
 
+	reactPost(reaction: string) {
+		if(!this.props.auth.isAuth){
+			return;
+		}
+
+		this.props.submitReaction({postId:this.props.match.params.id, userId: this.props.account.user, reaction });
+	}
+
+	getReactionButtons(): Node {
+
+		const { currentPost } = this.props.post;
+
+		if(!currentPost){
+			return null;
+		}
+
+		return (<React.Fragment>
+			<Popup
+				trigger={
+					<Button
+						color="green"
+						icon="arrow alternate circle up outline"
+						label={{
+							basic: true,
+							color: 'green',
+							pointing: 'left',
+							content: currentPost.up,
+						}}
+						onClick={()=>{this.reactPost(REACT_UP);}}
+					/>
+				}
+				content={REACT_UP}
+			/>
+
+			<Popup
+				trigger={
+					<Button
+						color="red"
+						icon="arrow alternate circle down outline"
+						label={{
+							basic: true,
+							color: 'red',
+							pointing: 'left',
+							content: currentPost.down,
+						}}
+						onClick={()=>{this.reactPost(REACT_DOWN);}}
+					/>
+				}
+				content={REACT_DOWN}
+			/>
+
+			<Popup
+				trigger={
+					<Button
+						color="black"
+						icon="child"
+						label={{
+							basic: true,
+							color: 'black',
+							pointing: 'left',
+							content: currentPost.lol,
+						}}
+						onClick={()=>{this.reactPost(REACT_LOL);}}
+					/>
+				}
+				content={REACT_LOL}
+			/>
+		</React.Fragment>);
+	}
+
 	getContent(): Node {
 		const { currentPost, comments, replyTo } = this.props.post;
 
@@ -116,53 +191,7 @@ class Post extends React.Component<Props, State> {
 
 					<Divider hidden />
 
-					<Popup
-						trigger={
-							<Button
-								color="green"
-								icon="arrow alternate circle up outline"
-								label={{
-									basic: true,
-									color: 'green',
-									pointing: 'left',
-									content: currentPost.up,
-								}}
-							/>
-						}
-						content="up"
-					/>
-
-					<Popup
-						trigger={
-							<Button
-								color="red"
-								icon="arrow alternate circle down outline"
-								label={{
-									basic: true,
-									color: 'red',
-									pointing: 'left',
-									content: currentPost.down,
-								}}
-							/>
-						}
-						content="down"
-					/>
-
-					<Popup
-						trigger={
-							<Button
-								color="black"
-								icon="child"
-								label={{
-									basic: true,
-									color: 'black',
-									pointing: 'left',
-									content: currentPost.lol,
-								}}
-							/>
-						}
-						content="lol"
-					/>
+					{this.getReactionButtons()}
 
 					<Divider />
 
@@ -231,6 +260,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		submitComment: (commentData) => dispatch(submitComment(commentData)),
+		submitReaction: (reactionData) => dispatch(submitReaction(reactionData)),
 		getPost: (id) => {
 			dispatch(getPost(id));
 		},
