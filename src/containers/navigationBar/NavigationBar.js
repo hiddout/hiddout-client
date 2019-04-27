@@ -8,7 +8,6 @@ import {
 	openSignUpModal,
 	logout,
 } from '../../actions/loginAction';
-import { changeLanguage } from '../../actions/i18nAction';
 import { connect } from 'react-redux';
 import type { AuthState } from '../../reducers/auth';
 
@@ -51,8 +50,6 @@ class NavigationBar extends React.Component<Props, State> {
 	}
 
 	renderRightMenu() {
-		// const { language } = this.props.i18n;
-		// const nextLanguage = language === 'en' ? 'zh' : 'en';
 		const { isAuth } = this.props.auth;
 
 		let rightMenu = null;
@@ -197,7 +194,6 @@ class NavigationBar extends React.Component<Props, State> {
 
 const mapStateToProps = (state) => {
 	return {
-		i18n: state.i18n,
 		auth: state.auth,
 		account: state.account,
 	};
@@ -213,9 +209,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		openSignUpModal: () => {
 			dispatch(openSignUpModal());
-		},
-		changeLanguage: (lng) => {
-			dispatch(changeLanguage(lng));
 		},
 	};
 };

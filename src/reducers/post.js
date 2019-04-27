@@ -31,6 +31,7 @@ const post = (state: PostState = { isLoading: false, posts: [], comments:[], cur
 			case GET_COMMENTS:
 				draft.comments = payload.comments;
 				draft.isLoading = false;
+				draft.replyTo = 0;
 				break;
 			case GET_POST:
 				draft.currentPost = payload.post;

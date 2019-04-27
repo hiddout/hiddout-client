@@ -1,6 +1,8 @@
 const resources = {
 	en: {
 		translation: {
+			'en': 'English',
+			'zh': '中文',
 			'homeMenu': 'Home',
 			'messagesMenu': 'Messages',
 			'friendsMenu': 'Friends',
@@ -27,6 +29,8 @@ const resources = {
 	},
 	zh: {
 		translation: {
+			'en': 'English',
+			'zh': '中文',
 			'homeMenu': '主页',
 			'messagesMenu': '消息',
 			'friendsMenu': '好友',
