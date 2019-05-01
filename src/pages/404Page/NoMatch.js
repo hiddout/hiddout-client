@@ -13,8 +13,11 @@ type State = {};
 
 class NoMatch extends React.Component<Props,State> {
 
+	state = {};
+
 	static getDerivedStateFromProps(props){
 		props.page404();
+		return null;
 	}
 
 	render(): Node {

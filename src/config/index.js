@@ -1,8 +1,7 @@
 const port = 1234;
-const isHttps = false;
 
 const config = {
-	baseURL:`http${isHttps? 's': ''}://www.hiddout.com:${port}/`,
+	baseURL:(process.env.NODE_ENV === 'production') ? 'https://hiddout.com/' : `http://www.hiddout.com:${port}/`,
 	apiV1: `api/v1/`,
 };
 

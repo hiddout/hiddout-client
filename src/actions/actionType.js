@@ -15,8 +15,10 @@ export const PAGE_404 = 'PAGE_404';
 
 export const REQUEST_GET_POST = 'REQUEST_GET_POST';
 export const REQUEST_GET_POSTS = 'REQUEST_GET_POSTS';
+export const REQUEST_REACTIONS = 'REQUEST_REACTIONS';
 export const GET_POST = 'GET_POST';
 export const GET_POSTS = 'GET_POSTS';
+export const GET_REACTIONS = 'GET_REACTIONS';
 
 export const REQUEST_GET_COMMENTS = 'REQUEST_GET_COMMENTS';
 export const GET_COMMENTS = 'GET_COMMENTS';

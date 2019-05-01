@@ -60,7 +60,7 @@ export const submitReaction = (reactionData) => {
 		const {auth} = getState();
 		dispatch({type:SUBMIT_REACTION});
 
-		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}post/${reactionData.postId}/react`, {
+		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}post/${reactionData.postId}/reactions`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
