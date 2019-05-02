@@ -41,6 +41,7 @@
     "@babel/preset-flow": "7.0.0",
     "@babel/preset-react": "7.0.0",
     "@babel/register": "7.4.4",
+    "archiver": "^3.0.0",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.5",
     "circular-dependency-plugin": "5.0.2",
@@ -70,7 +71,7 @@
   },
   "dependencies": {
     "connected-react-router": "6.4.0",
-    "hiddout-viewer": "0.1.8",
+    "hiddout-viewer": "0.1.10",
     "i18next": "15.0.10",
     "react": "16.8.6",
     "react-dom": "16.8.6",
