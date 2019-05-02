@@ -60,7 +60,7 @@
     "nw-gyp": "3.6.3",
     "plist": "3.0.1",
     "prettier": "1.17.0",
-    "rcedit": "1.1.1",
+    "rcedit": "1.1.2",
     "redux-devtools-extension": "^2.13.8",
     "style-loader": "0.23.1",
     "webpack": "4.30.0",
