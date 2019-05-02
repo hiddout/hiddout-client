@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "connected-react-router": "6.4.0",
-    "hiddout-viewer": "0.1.8",
+    "hiddout-viewer": "0.1.10",
     "i18next": "15.0.10",
     "react": "16.8.6",
     "react-dom": "16.8.6",
