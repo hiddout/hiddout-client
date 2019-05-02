@@ -122,7 +122,7 @@ class Post extends React.Component<Props, State> {
 
 		if (
 			!auth.isAuth ||
-			!post.reactions || account.user === post.currentPost.userId
+			!post.reactions || (post.currentPost && account.user === post.currentPost.userId)
 		) {
 			return;
 		}
