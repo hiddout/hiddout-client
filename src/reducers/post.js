@@ -10,7 +10,7 @@ import {
 
 export type PostState = { isLoading: boolean, posts: Array<Object>, reactions: null | Array<Object>, comments: Array<Object>, currentPost: Object|null, replyTo: number };
 
-const post = (state: PostState = { isLoading: false, posts: [], reactions:null, comments:[], currentPost: null, replyTo: 0 }, action: Action) =>
+const post = (state: PostState = { isLoading: false, posts: [], reactions: null, comments: [], currentPost: null, replyTo: 0 }, action: Action) =>
 	immer.produce(state, draft => {
 
 		const payload = action.payload || {};

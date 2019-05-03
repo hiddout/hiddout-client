@@ -11,12 +11,14 @@ import {
 	Placeholder,
 	Popup,
 	Message,
+	Label,
 } from 'semantic-ui-react';
 
-import { getComments, getPost, getReactions } from '../../actions/postAction';
+import { getComments, getPost, getReactions, replyTo } from '../../actions/postAction';
 import { submitComment, submitReaction } from '../../actions/submitActions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { t } from 'i18next';
 import SubmitForm from '../../component/submitForm/SubmitForm';
 import {
 	COMMENT_SUBMITTED,
@@ -45,6 +47,7 @@ type Props = {
 	getPost: (string) => any,
 	getComments: (string) => any,
 	getReactions: (string) => any,
+	replyTo: (number) => any,
 	submitComment: (Object) => any,
 	submitReaction: (Object) => any,
 	match: { params: { id: string } },
@@ -108,7 +111,7 @@ class Post extends React.Component<Props, State> {
 
 				<Comment.Group>
 					<Header as="h3" dividing>
-						Comments
+						{t('comments')}
 					</Header>
 
 					{placeholderContent}
@@ -122,7 +125,8 @@ class Post extends React.Component<Props, State> {
 
 		if (
 			!auth.isAuth ||
-			!post.reactions || (post.currentPost && account.user === post.currentPost.userId)
+			!post.reactions ||
+			(post.currentPost && account.user === post.currentPost.userId)
 		) {
 			return;
 		}
@@ -209,7 +213,7 @@ class Post extends React.Component<Props, State> {
 							}}
 						/>
 					}
-					content={REACT_UP}
+					content={t(REACT_UP)}
 				/>
 
 				<Popup
@@ -233,7 +237,7 @@ class Post extends React.Component<Props, State> {
 							}}
 						/>
 					}
-					content={REACT_DOWN}
+					content={t(REACT_DOWN)}
 				/>
 
 				<Popup
@@ -255,7 +259,7 @@ class Post extends React.Component<Props, State> {
 							}}
 						/>
 					}
-					content={REACT_LOL}
+					content={t(REACT_LOL)}
 				/>
 			</React.Fragment>
 		);
@@ -274,7 +278,9 @@ class Post extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<Container textAlign="left">
-					b/{currentPost.board}. Post by {currentPost.userId}
+					<Label color={'teal'} size={'large'}>
+						{`${t('b/')} ${t(`${currentPost.board}Board`)}.   ${t('postBy')}  ${currentPost.userId}`}
+						</Label>
 				</Container>
 				<Header as="h1">{currentPost.title}</Header>
 				<Container>
@@ -295,7 +301,8 @@ class Post extends React.Component<Props, State> {
 						<Message
 							floating
 							color="yellow"
-							content={`re: @${comments[replyTo - 1].userId} - ${
+							onDismiss={()=>{this.props.replyTo(replyTo);}}
+							content={`@${comments[replyTo - 1].userId} - ${
 								comments[replyTo - 1].content
 							}`}
 						/>
@@ -304,7 +311,7 @@ class Post extends React.Component<Props, State> {
 					{this.props.auth.isAuth && (
 						<SubmitForm
 							disabled={this.state.submitting}
-							ButtonText={'Reply'}
+							ButtonText={t('reply')}
 							onClick={(formData) => {
 								const commentData = {
 									replyTo: this.props.post.replyTo,
@@ -313,23 +320,23 @@ class Post extends React.Component<Props, State> {
 									postId: this.props.match.params.id,
 								};
 
-								this.setState({ submitting: true }, () => {
-									this.props
-										.submitComment(commentData)
-										.then((response: Object) => {
-											if (
-												response.type ===
-												COMMENT_SUBMITTED
-											) {
-												this.props.getComments(
-													this.props.match.params.id,
-												);
-												this.setState({
-													submitting: false,
-												});
-											}
-										});
-								});
+								this.setState(
+									{ submitting: true },
+									async () => {
+										const response = await this.props.submitComment(
+											commentData,
+										);
+
+										if (response.type === COMMENT_SUBMITTED) {
+											this.props.getComments(
+												this.props.match.params.id,
+											);
+											this.setState({
+												submitting: false,
+											});
+										}
+									},
+								);
 							}}
 						/>
 					)}
@@ -371,6 +378,7 @@ const mapDispatchToProps = (dispatch) => {
 		getPost: (id) => dispatch(getPost(id)),
 		getReactions: (id) => dispatch(getReactions(id)),
 		getComments: (id) => dispatch(getComments(id)),
+		replyTo: (level) => dispatch(replyTo(level)),
 	};
 };
 

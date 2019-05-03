@@ -2,9 +2,11 @@
 import React from 'react';
 import { Comment, Header, Message, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { t } from 'i18next';
 import { replyTo } from '../../actions/postAction';
 import type { PostState } from '../../reducers/post';
 import type { AuthState } from '../../reducers/auth';
+import { getHiddoutTime } from '../../utils/dataUtil';
 
 type Props = {
 	auth: AuthState,
@@ -12,18 +14,16 @@ type Props = {
 	replyTo: (number) => void,
 };
 
-type State = {
-};
+type State = {};
 
 class CommentSection extends React.Component<Props, State> {
-
 	render() {
 		const { comments } = this.props.post;
 
 		return (
 			<Comment.Group>
 				<Header as="h3" dividing>
-					Comments
+					{t('comments')}
 				</Header>
 
 				{!!comments.length &&
@@ -31,25 +31,36 @@ class CommentSection extends React.Component<Props, State> {
 						<Comment key={i}>
 							<Comment.Content>
 								<Comment.Author as="a">
-									{c.userId}
+									{`@${c.userId}`}
 								</Comment.Author>
 								<Comment.Metadata>
-									<div>{c.createTime}</div>
+									<div>{getHiddoutTime(c.createTime)}</div>
 								</Comment.Metadata>
-								{!!c.replyTo && <Message floating color='yellow' content={`re: @${comments[c.replyTo - 1].userId} - ${comments[c.replyTo - 1].content}`} />}
+								{!!c.replyTo && (
+									<Message
+										floating
+										color="yellow"
+										content={`@${
+											comments[c.replyTo - 1].userId
+										} - ${comments[c.replyTo - 1].content}`}
+									/>
+								)}
 								<Comment.Text>{c.content}</Comment.Text>
-								{this.props.auth.isAuth && <Comment.Actions>
-									<Comment.Action
-										onClick={() => {
-											if(!this.props.auth.isAuth){
-												return;
-											}
-											this.props.replyTo(i+1);
-										}}
-									>
-										Reply
-									</Comment.Action>
-								</Comment.Actions>}
+								{this.props.auth.isAuth && (
+									<Comment.Actions>
+										<Comment.Action
+											onClick={() => {
+												if (!this.props.auth.isAuth) {
+													return;
+												}
+												this.props.replyTo(i + 1);
+												window.scrollTo(0, 0);
+											}}
+										>
+											{t('reply')}
+										</Comment.Action>
+									</Comment.Actions>
+								)}
 							</Comment.Content>
 							<Divider />
 						</Comment>
@@ -72,4 +83,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(CommentSection);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(CommentSection);
