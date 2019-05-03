@@ -48,6 +48,7 @@ class PostList extends React.Component<Props, State> {
 						{posts.map((p) => (
 							<React.Fragment key={p._id}>
 								<PostItem
+									history={history}
 									title={p.title}
 									author={p.userId}
 									boardImgSrc={`/public/static/images/avatar/board/${
