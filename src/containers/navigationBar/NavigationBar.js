@@ -34,9 +34,11 @@ const SETTINGS = 2;
 const LOGOUT = 3;
 
 class NavigationBar extends React.Component<Props, State> {
+
 	onDropdownClick(e, { value }) {
 		switch (value) {
 			case ACCOUNT:
+				this.props.history.push(`/u/${hiddoutViewer.encodeId(this.props.account.user)}`);
 				break;
 			case SETTINGS:
 				this.props.history.push('/settings');
@@ -84,20 +86,20 @@ class NavigationBar extends React.Component<Props, State> {
 					value: 0,
 				},
 				{
-					key: 'user',
-					text: 'Account',
-					icon: 'user',
+					key: 'visitUser',
+					text: t('accountBtn'),
+					icon: 'visitUser',
 					value: ACCOUNT,
 				},
 				{
 					key: 'settings',
-					text: 'Settings',
+					text: t('settingsBtn'),
 					icon: 'settings',
 					value: SETTINGS,
 				},
 				{
 					key: 'sign-out',
-					text: 'Sign Out',
+					text: t('signOutBtn'),
 					icon: 'sign out',
 					value: LOGOUT,
 				},
@@ -147,7 +149,7 @@ class NavigationBar extends React.Component<Props, State> {
 		const { showBackBtn } = this.props;
 		const { isAuth } = this.props.auth;
 		return (
-			<Menu fixed="top">
+			<Menu fixed="top" style={{backgroundColor:'ghostwhite'}}>
 				{!isAuth && (
 					<Menu.Item>
 						<Image src="/public/static/Hiddout.png" avatar />
@@ -185,7 +187,6 @@ class NavigationBar extends React.Component<Props, State> {
 				)}
 
 				<Menu.Item name={t('messagesMenu')} as={Nav} to="/message" />
-				<Menu.Item name={t('friendsMenu')} as={Nav} to="/friend" />
 				<Menu.Menu position="right">{this.renderRightMenu()}</Menu.Menu>
 			</Menu>
 		);

@@ -17,9 +17,10 @@ const Settings = React.lazy(() => import('./settingsPage/Settings'));
 import LoginSignInModal from '../containers/loginSignInModal/LoginSignInModal';
 
 import { About } from './aboutPage/About';
-import { Message } from './messagePage/Message';
 
 const Home = React.lazy(() => import('./homePage/Home'));
+const User = React.lazy(() => import('./visitUserPage/VisitUser'));
+const Message = React.lazy(() => import('./messagePage/Message'));
 const NoMatch = React.lazy(() => import('./404Page/NoMatch'));
 
 import type { Node } from 'react';
@@ -80,12 +81,14 @@ class MainPage extends React.Component<Props, State> {
 						render={(props) => <Home {...props} />}
 					/>
 					<Redirect from="/index.html" to="/" />
-					<AuthRoute path="/message" component={Message} />
+					<AuthRoute
+						path="/message"
+						component={(props) => <Message {...props} />}
+					/>
 					<AuthRoute
 						path="/submit"
 						component={(props) => <Submit {...props} />}
 					/>
-					{/*<AuthRoute path="/friend" component={(props) => <Friend {...props} />} />*/}
 					<PageRoute
 						path="/b/:id"
 						render={(props) => <BoardPage {...props} />}
@@ -93,6 +96,10 @@ class MainPage extends React.Component<Props, State> {
 					<PageRoute
 						path="/p/:id"
 						render={(props) => <Post {...props} />}
+					/>
+					<PageRoute
+						path="/u/:id"
+						render={(props) => <User {...props} />}
 					/>
 					<AuthRoute
 						path="/settings"

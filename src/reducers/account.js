@@ -11,10 +11,10 @@ const account = (state: AccountState = {user: '' }, action: Action) =>
 		switch (action.type) {
 			case SIGNUP :
 			case LOGIN:
-				draft.user = payload.user;
+				draft.visitUser = payload.user;
 				break;
 			case LOGOUT:
-				draft.user = '';
+				draft.visitUser = '';
 				break;
 		}
 	});
