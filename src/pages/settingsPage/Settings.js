@@ -90,7 +90,7 @@ class Settings extends React.Component<Props, State> {
 					style={{ marginTop: '7em', marginBottom: '3em' }}
 				>
 					<Segment>
-						<Header as="h3">Settings</Header>
+						<Header as="h3">{t('settingsBtn')}</Header>
 
 						<Container>
 							<Divider horizontal>

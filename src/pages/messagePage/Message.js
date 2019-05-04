@@ -12,11 +12,11 @@ class Message extends React.Component<Props, State> {
 	render(): Node {
 		return (
 			<React.Fragment>
-				<NavigationBar />
+				<NavigationBar showBackBtn={true} />
 				<h2>Messages</h2>
 			</React.Fragment>
 		);
 	}
 }
 
-export { Message };
+export default Message ;

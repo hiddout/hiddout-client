@@ -6,6 +6,7 @@ import { modal } from './modal';
 import { i18n } from './i18n';
 import { post } from './post';
 import {submit} from './submit';
+import {visitUser} from './visitUser';
 
 export default (history) =>
 	combineReducers({
@@ -16,4 +17,5 @@ export default (history) =>
 		i18n,
 		post,
 		submit,
+		visitUser,
 	});

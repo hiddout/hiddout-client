@@ -5,6 +5,7 @@ import {
 	REQUEST_GET_COMMENTS,
 	REQUEST_GET_POST,
 	REQUEST_GET_POSTS,
+	REQUEST_GET_REACTIONS,
 } from './actionType';
 import { config } from '../config';
 import { checkAuth } from './loginAction';
@@ -52,7 +53,7 @@ export const getPost = (id) => {
 export const getReactions = (id) => {
 	return (dispatch) => {
 
-		dispatch({type: REQUEST_GET_COMMENTS});
+		dispatch({type: REQUEST_GET_REACTIONS});
 
 		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}post/${id}/reactions`, {
 			method: 'GET',
