@@ -131,7 +131,6 @@ class Post extends React.Component<Props, State> {
 			async () => {
 				const response = await this.props.submitReaction({
 					postId: this.props.match.params.id,
-					userId: account.user,
 					reaction,
 				});
 
@@ -330,7 +329,6 @@ class Post extends React.Component<Props, State> {
 								const commentData = {
 									replyTo: this.props.post.replyTo,
 									content: formData,
-									userId: this.props.account.user,
 									postId: this.props.match.params.id,
 								};
 

@@ -57,7 +57,6 @@ class Submit extends React.Component<Props, State> {
 			title: this.state.title,
 			content: this.state.content,
 			board: this.state.boardSelected,
-			userId: this.props.account.user,
 		};
 
 		this.props.submitPost(postData).then((response: Object) => {

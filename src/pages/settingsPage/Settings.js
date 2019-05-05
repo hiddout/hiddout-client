@@ -7,6 +7,8 @@ import {
 	Dropdown,
 	Menu,
 	Divider,
+	Statistic,
+	Grid,
 } from 'semantic-ui-react';
 import { t } from 'i18next';
 import { connect } from 'react-redux';
@@ -82,6 +84,12 @@ class Settings extends React.Component<Props, State> {
 	}
 
 	render() {
+
+		const options = [
+			{ key: 'en', text: 'English', value: 'en' },
+			{ key: 'zh', text: '中文', value: 'zh' },
+		];
+
 		return (
 			<React.Fragment>
 				<NavigationBar showBackBtn={true} />
@@ -96,7 +104,23 @@ class Settings extends React.Component<Props, State> {
 							<Divider horizontal>
 								<Header as="h4">Language</Header>
 							</Divider>
-							{this.getLaguageSelector()}
+
+							<Grid centered columns={3}>
+							<Grid.Row >
+								<Grid.Column>
+									<Statistic size='mini'>
+										<Statistic.Label>{t('interface')}</Statistic.Label>
+									</Statistic>
+									{this.getLaguageSelector()}
+								</Grid.Column>
+								<Grid.Column>
+									<Statistic size='mini'>
+										<Statistic.Label>{t('prefer')}</Statistic.Label>
+									</Statistic>
+									<Dropdown placeholder={t('allLanguagePost')} fluid multiple selection options={options} />
+								</Grid.Column>
+							</Grid.Row>
+							</Grid>
 						</Container>
 					</Segment>
 				</Container>

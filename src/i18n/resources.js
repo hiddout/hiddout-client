@@ -37,6 +37,9 @@ const resources = {
 			'down': 'down vote',
 			'lol': 'WTF',
 			'b/': 'board/',
+			'interface': 'interface',
+			'prefer': 'prefer',
+			'allLanguagePost': 'do not filter language',
 		},
 	},
 	zh: {
@@ -76,6 +79,9 @@ const resources = {
 			'down': '反对',
 			'lol': '什么鬼',
 			'b/': '板块/',
+			'interface': '界面',
+			'prefer': '偏好',
+			'allLanguagePost': '显示所有语言讨论',
 		},
 	},
 };
