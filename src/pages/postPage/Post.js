@@ -12,6 +12,7 @@ import {
 	Popup,
 	Message,
 	Label,
+	Icon,
 } from 'semantic-ui-react';
 
 import { getComments, getPost, getReactions, replyTo } from '../../actions/postAction';
@@ -286,7 +287,29 @@ class Post extends React.Component<Props, State> {
 
 					{this.getReactionButtons()}
 
+					<Divider hidden />
+
+					<Container textAlign='right'>
+						<Label as='a'>
+							<Icon name='bell outline' />
+							Subscribe
+						</Label>
+						<Label as='a'>
+							<Icon name='ticket alternate' />
+							Reward
+						</Label>
+						<Label as='a'>
+							<Icon name='ban' />
+							Hide
+						</Label>
+						<Label as='a'>
+							<Icon name='flag' />
+							Report
+						</Label>
+					</Container>
+
 					<Divider />
+
 
 					{!!comments.length && !!replyTo && (
 						<Message

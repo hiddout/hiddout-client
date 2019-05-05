@@ -86,9 +86,9 @@ class NavigationBar extends React.Component<Props, State> {
 					value: 0,
 				},
 				{
-					key: 'visitUser',
+					key: 'user',
 					text: t('accountBtn'),
-					icon: 'visitUser',
+					icon: 'user',
 					value: ACCOUNT,
 				},
 				{
