@@ -40,6 +40,10 @@ const resources = {
 			'interface': 'interface',
 			'prefer': 'prefer',
 			'allLanguagePost': 'do not filter language',
+			'signUpInfoViolation': 'username/password is not allowed or username is already token',
+			'userOrPwdNotCorrect': 'username and password do not match in system',
+			'userNameViolation': 'maximum 36 characters, no special character except _',
+			'passwordViolation': 'minimum eight characters, at least one uppercase letter, one lowercase letter and one number',
 		},
 	},
 	zh: {
@@ -82,6 +86,10 @@ const resources = {
 			'interface': '界面',
 			'prefer': '偏好',
 			'allLanguagePost': '显示所有语言讨论',
+			'userOrPwdNotCorrect': '用户名密码不匹配',
+			'signUpInfoViolation': '注册用户名不合法或用户名已存在',
+			'userNameViolation': '最多36个应为字符，请避免使用除开_符号的其它特殊字符',
+			'passwordViolation': '最少8位，至少包含一个大写一个小写一个数字',
 		},
 	},
 };
