@@ -4,6 +4,7 @@ const resources = {
 		translation: {
 			'en': 'English',
 			'zh': '中文',
+			'sv': 'Svenska'
 			'homeMenu': 'Home',
 			'messagesMenu': 'Messages',
 			'loginBtn': 'LOG IN',
@@ -40,7 +41,7 @@ const resources = {
 			'interface': 'interface',
 			'prefer': 'prefer',
 			'allLanguagePost': 'do not filter language',
-			'signUpInfoViolation': 'username/password is not allowed or username is already token',
+			'signUpInfoViolation': 'username/password is not allowed or username is already taken',
 			'userOrPwdNotCorrect': 'username and password do not match in system',
 			'userNameViolation': 'maximum 36 characters, no special character except _',
 			'passwordViolation': 'minimum eight characters, at least one uppercase letter, one lowercase letter and one number',
@@ -50,6 +51,7 @@ const resources = {
 		translation: {
 			'en': 'English',
 			'zh': '中文',
+			'sv': 'Svenska'
 			'homeMenu': '主页',
 			'messagesMenu': '消息',
 			'loginBtn': '登录',
@@ -92,6 +94,56 @@ const resources = {
 			'passwordViolation': '最少8位，至少包含一个大写一个小写一个数字',
 		},
 	},
+	se: {
+		translation: {
+			'en': 'English',
+			'zh': '中文',
+			'sv': 'Svenska'
+			'homeMenu': 'Hem',
+			'messagesMenu': 'Meddelanden',
+			'loginBtn': 'Logga in',
+			'signOutBtn': 'Logga ut',
+			'accountBtn': 'Konto',
+			'settingsBtn': 'Inställning',
+			'signupBtn': 'Skapa konto',
+			'USERNAME': 'Användarnamn',
+			'PASSWORD': 'Lösenord',
+			'new to hiddout?': 'Har inte hiddout-konto?',
+			'already have hiddout account?': 'Har redan hiddout-konto?',
+			'change Language': 'Byta språk',
+			'lifeBoard': 'Livstil',
+			'gameBoard': 'Spel',
+			'workBoard': 'Jobb',
+			'spamBoard': 'Spam',
+			'putPostIn': 'Postat in',
+			'postBy': 'Postat av ',
+			'title': 'Rubrik',
+			'submit': 'Skicka',
+			'submitAPost': 'Meddelande',
+			'recentAgo': 'Nyligen',
+			'weeksAgo': 'Inom några veckor',
+			'longTimeAgo': 'Länge sedan',
+			'create a post': 'Skapa ett ämne',
+			'signed in as': 'Inloggad som',
+			'allPost': 'Alla ämnen',
+			'comments': 'Kommentarer',
+			'reply': 'Svara',
+			'up': 'Jag gillar det',
+			'down': 'Jag gillar inte det',
+			'lol': 'lol',
+			'b/': 'Kategori/',
+			'interface': 'Gränsnitt',
+			'prefer': 'Preferens',
+			'allLanguagePost': 'Visa alla språk',
+			'userOrPwdNotCorrect': 'Felaktigt användarnamn eller lösenord',
+			'signUpInfoViolation': 'Användarnamnet är ogiltigt eller redan upptaget',
+			'userNameViolation': 'Mest 36 tecken, inget speciellt tecken förutom _',
+			'passwordViolation': 'Minst 8 tecken, minst en stor bokstav, minst en liten bokstav samt minst en siffra',
+		},
+	},	
+	
+	
+	
 };
 
 export { resources };
