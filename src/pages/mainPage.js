@@ -83,11 +83,11 @@ class MainPage extends React.Component<Props, State> {
 					<Redirect from="/index.html" to="/" />
 					<AuthRoute
 						path="/message"
-						component={(props) => <Message {...props} />}
+						render={(props) => <Message {...props} />}
 					/>
 					<AuthRoute
 						path="/submit"
-						component={(props) => <Submit {...props} />}
+						render={(props) => <Submit {...props} />}
 					/>
 					<PageRoute
 						path="/b/:id"
@@ -103,7 +103,7 @@ class MainPage extends React.Component<Props, State> {
 					/>
 					<AuthRoute
 						path="/settings"
-						component={(props) => <Settings {...props} />}
+						render={(props) => <Settings {...props} />}
 					/>
 					<PageRoute path="/about" render={About} />
 					<PageRoute render={(props) => <NoMatch {...props} />} />

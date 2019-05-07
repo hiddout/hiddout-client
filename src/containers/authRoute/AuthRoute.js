@@ -18,7 +18,7 @@ class AuthRoute extends React.Component {
 	}
 
 	render() {
-		const { component: Component, auth, ...rest } = this.props;
+		const { render: Component, auth, ...rest } = this.props;
 
 		return (
 			<PageRoute
