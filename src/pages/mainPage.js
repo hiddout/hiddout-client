@@ -121,6 +121,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mainPage = withRouter(connect(mapStateToProps)(MainPage));
-
-export { mainPage as MainPage };
+export default withRouter(connect(mapStateToProps)(MainPage));

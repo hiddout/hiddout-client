@@ -1,15 +1,16 @@
 // @flow
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import configureStore, { history } from './configureStore';
-import { MainPage } from './pages/mainPage';
 import { Loader } from 'semantic-ui-react';
 
 import type { Node } from 'react';
 
 const { store, persistor } = configureStore();
+
+const MainPage = React.lazy(() => import('./pages/mainPage'));
 
 import './App.css';
 
@@ -24,7 +25,9 @@ class App extends React.Component<Props, State> {
 				<PersistGate loading={<Loader />} persistor={persistor}>
 					<ConnectedRouter history={history}>
 						<div className="App">
-							<MainPage />
+							<Suspense fallback={<Loader />}>
+								<MainPage />
+							</Suspense>
 						</div>
 					</ConnectedRouter>
 				</PersistGate>
