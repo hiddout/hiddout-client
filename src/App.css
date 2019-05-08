@@ -3,4 +3,9 @@ body{
 }
 
 .App {
+
+}
+
+.segment {
+    background-color: ghostwhite !important;
 }

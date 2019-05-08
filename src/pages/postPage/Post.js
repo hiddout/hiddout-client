@@ -12,10 +12,11 @@ import {
 	Popup,
 	Message,
 	Label,
+	Icon,
 } from 'semantic-ui-react';
 
 import { getComments, getPost, getReactions, replyTo } from '../../actions/postAction';
-import { submitComment, submitReaction } from '../../actions/submitActions';
+import { submitComment, submitReaction } from '../../actions/submitAction';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { t } from 'i18next';
@@ -91,16 +92,7 @@ class Post extends React.Component<Props, State> {
 		const placeholderContent = (
 			<Placeholder>
 				<Placeholder.Paragraph>
-					<Placeholder.Line />
-					<Placeholder.Line />
-					<Placeholder.Line />
-					<Placeholder.Line />
-					<Placeholder.Line />
-				</Placeholder.Paragraph>
-				<Placeholder.Paragraph>
-					<Placeholder.Line />
-					<Placeholder.Line />
-					<Placeholder.Line />
+					<Placeholder.Image rectangular />
 				</Placeholder.Paragraph>
 			</Placeholder>
 		);
@@ -139,7 +131,6 @@ class Post extends React.Component<Props, State> {
 			async () => {
 				const response = await this.props.submitReaction({
 					postId: this.props.match.params.id,
-					userId: account.user,
 					reaction,
 				});
 
@@ -244,7 +235,7 @@ class Post extends React.Component<Props, State> {
 					trigger={
 						<Button
 							color="black"
-							icon="child"
+							icon="loading child"
 							label={{
 								basic: true,
 								color: 'black',
@@ -295,7 +286,29 @@ class Post extends React.Component<Props, State> {
 
 					{this.getReactionButtons()}
 
+					<Divider hidden />
+
+					<Container textAlign='right'>
+						<Label as='a'>
+							<Icon name='bell outline' />
+							Subscribe
+						</Label>
+						<Label as='a'>
+							<Icon name='ticket alternate' />
+							Reward
+						</Label>
+						<Label as='a'>
+							<Icon name='ban' />
+							Hide
+						</Label>
+						<Label as='a'>
+							<Icon name='flag' />
+							Report
+						</Label>
+					</Container>
+
 					<Divider />
+
 
 					{!!comments.length && !!replyTo && (
 						<Message
@@ -316,7 +329,6 @@ class Post extends React.Component<Props, State> {
 								const commentData = {
 									replyTo: this.props.post.replyTo,
 									content: formData,
-									userId: this.props.account.user,
 									postId: this.props.match.params.id,
 								};
 
@@ -331,10 +343,11 @@ class Post extends React.Component<Props, State> {
 											this.props.getComments(
 												this.props.match.params.id,
 											);
-											this.setState({
-												submitting: false,
-											});
 										}
+
+										this.setState({
+											submitting: false,
+										});
 									},
 								);
 							}}
@@ -350,7 +363,7 @@ class Post extends React.Component<Props, State> {
 	render(): Node {
 		return (
 			<React.Fragment>
-				<NavigationBar showBackBtn={true} />
+				<NavigationBar showBackBtn={'back'} />
 				<Container
 					textAlign={'left'}
 					style={{ marginTop: '7em', marginBottom: '3em' }}

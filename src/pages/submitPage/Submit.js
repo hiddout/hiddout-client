@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Container, Segment, Header, Divider, Input } from 'semantic-ui-react';
-
+import { t } from 'i18next';
 import SubmitForm from '../../component/submitForm/SubmitForm';
 import BoardSelector from '../../component/boardSelector/BoardSelector';
 
@@ -12,7 +12,7 @@ const NavigationBar = React.lazy(() =>
 );
 
 import type { Node } from 'react';
-import { submitPost } from '../../actions/submitActions';
+import { submitPost } from '../../actions/submitAction';
 import type { AuthState } from '../../reducers/auth';
 import type { SubmitState } from '../../reducers/submit';
 import { POST_CREATED } from '../../actions/actionType';
@@ -46,13 +46,17 @@ class Submit extends React.Component<Props, State> {
 	}
 
 	onSubmitPost() {
+
+		if(!this.state.title.length){
+			return;
+		}
+
 		this.setState({ submitting: true });
 
 		const postData = {
 			title: this.state.title,
 			content: this.state.content,
 			board: this.state.boardSelected,
-			userId: this.props.account.user,
 		};
 
 		this.props.submitPost(postData).then((response: Object) => {
@@ -71,16 +75,16 @@ class Submit extends React.Component<Props, State> {
 				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
 					<Segment>
 						<Header>
-							Put post in{' '}
+							{`${t('putPostIn')} `}
 						<BoardSelector
 							exclude={['home','spam']}
 							onSelectChange={this.onBoardSelect.bind(this)}
 						/>
 						</Header>
-						<Header floated={'right'}>Submit a post</Header>
+						<Header floated={'right'}>{t('submitAPost')}</Header>
 						<Divider clearing />
 						<Input
-							placeholder="Title"
+							placeholder={t('title')}
 							size={'large'}
 							onChange={(e, data) =>
 								this.setState({ title: data.value })
@@ -89,7 +93,7 @@ class Submit extends React.Component<Props, State> {
 						<Divider hidden />
 						<SubmitForm
 							disabled={this.state.submitting}
-							ButtonText={'Submit'}
+							ButtonText={t('submit')}
 							onClick={this.onSubmitPost.bind(this)}
 							onChange={(e, data) =>
 								this.setState({ content: data.value })

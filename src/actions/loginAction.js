@@ -53,7 +53,7 @@ export const userLogin = (userData) => {
 
 		dispatch({type: REQUEST_LOGIN});
 
-		hiddoutViewer.request(`${config.baseURL}${config.apiV1}login`, {
+		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}login`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
@@ -61,7 +61,7 @@ export const userLogin = (userData) => {
 			body: JSON.stringify({ ...userData }),
 		}).then(res => {
 			checkAuth(res.status, dispatch);
-			dispatch({ type: LOGIN, payload: { token: res.token, user: userData.user }  });
+			return dispatch({ type: LOGIN, payload: { token: res.token, user: userData.user }  });
 		}).catch(e => {
 			console.error(e);
 		});
@@ -70,7 +70,7 @@ export const userLogin = (userData) => {
 
 export const userSignUp = (userData) => {
 	return (dispatch) => {
-		hiddoutViewer.request(`${config.baseURL}${config.apiV1}signup`, {
+		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}signup`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
@@ -78,13 +78,8 @@ export const userSignUp = (userData) => {
 			body: JSON.stringify({ ...userData }),
 		}).then(res => {
 			checkAuth(res.status);
-			if(res.isUsed){
-				console.log('isUsed');
-				return;
-			}
-
 			dispatch({type: CLOSE_SIGN_UP_MODAL});
-			dispatch({ type: SIGNUP, payload: { token: res.token, user: userData.user } });
+			return dispatch({ type: SIGNUP, payload: { token: res.token, user: userData.user } });
 		}).catch(e => console.error(e));
 	};
 };

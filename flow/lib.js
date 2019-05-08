@@ -39,6 +39,8 @@ declare module 'semantic-ui-react' {
 	declare export var Input: any;
 	declare export var Message: any;
 	declare export var Label: any;
+	declare export var Statistic: any;
+	declare export var Grid: any;
 }
 
 declare module 'redux' {

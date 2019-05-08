@@ -23,7 +23,7 @@ class CommentSection extends React.Component<Props, State> {
 		return (
 			<Comment.Group>
 				<Header as="h3" dividing>
-					{t('comments')}
+					{`${t('comments')} (${!comments || !comments.length? 0: comments.length})`}
 				</Header>
 
 				{!!comments.length &&
@@ -58,6 +58,15 @@ class CommentSection extends React.Component<Props, State> {
 											}}
 										>
 											{t('reply')}
+										</Comment.Action>
+										<Comment.Action>
+											{t('up')}
+										</Comment.Action>
+										<Comment.Action>
+											{t('down')}
+										</Comment.Action>
+										<Comment.Action>
+											{t('lol')}
 										</Comment.Action>
 									</Comment.Actions>
 								)}
