@@ -30,7 +30,7 @@ class VisitUser extends React.Component<Props, State> {
 
 		return (
 			<React.Fragment>
-				<NavigationBar showBackBtn={true} />
+				<NavigationBar showBackBtn={'back'} />
 				<Container textAlign={'left'} style={{ marginTop: '7em', marginBottom:'3em' }}>
 					<Grid columns={2}>
 						<Grid.Row stretched>

@@ -363,7 +363,7 @@ class Post extends React.Component<Props, State> {
 	render(): Node {
 		return (
 			<React.Fragment>
-				<NavigationBar showBackBtn={true} />
+				<NavigationBar showBackBtn={'back'} />
 				<Container
 					textAlign={'left'}
 					style={{ marginTop: '7em', marginBottom: '3em' }}
