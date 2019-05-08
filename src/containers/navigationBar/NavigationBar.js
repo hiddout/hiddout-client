@@ -178,7 +178,12 @@ class NavigationBar extends React.Component<Props, State> {
 							icon
 							color="blue"
 							onClick={() => {
-								this.props.history.goBack();
+								if(showBackBtn === 'back'){
+									this.props.history.goBack();
+								}else {
+									this.props.history.replace('/');
+								}
+
 							}}
 						>
 							<Icon name="left arrow" />
