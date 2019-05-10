@@ -13,9 +13,16 @@ import {
 	Message,
 	Label,
 	Icon,
+	Dropdown,
+	Responsive,
 } from 'semantic-ui-react';
 
-import { getComments, getPost, getReactions, replyTo } from '../../actions/postAction';
+import {
+	getComments,
+	getPost,
+	getReactions,
+	replyTo,
+} from '../../actions/postAction';
 import { submitComment, submitReaction } from '../../actions/submitAction';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -256,6 +263,60 @@ class Post extends React.Component<Props, State> {
 		);
 	}
 
+	getOtherActionsGroup() {
+		return (
+			<Container textAlign="right">
+				<Responsive
+					as={Dropdown}
+					pointing='top left'
+					trigger={
+						<span>
+							<Icon
+								name={'ellipsis vertical'}
+								style={{ cursor: 'pointer' }}
+							/>
+						</span>
+					}
+					options={[
+						{
+							key: 'moreAction',
+							text: (
+								<span style={{ color: 'gray' }}>
+									{t('moreAction')}
+									</span>
+							),
+							value: 0,
+						},
+						{ key: 'hide', text: t('hide'), icon: 'ban' },
+						{ key: 'report', text: t('report'), icon: 'flag' },
+					]
+					}
+					icon={null}
+					maxWidth={470}
+				/>
+				<Label as="a" color={'blue'}>
+					<Icon name="bell outline" />
+					{t('subscribe')}
+				</Label>
+				<Label as="a" color={'yellow'}>
+					<Icon name="ticket alternate" />
+					{t('reward')}
+				</Label>
+
+				<Responsive as={React.Fragment} minWidth={471}>
+				<Label as="a" color={'orange'}>
+					<Icon name="ban" />
+					{t('hide')}
+				</Label>
+				<Label as="a" color={'violet'}>
+					<Icon name="flag" />
+					{t('report')}
+				</Label>
+				</Responsive>
+			</Container>
+		);
+	}
+
 	getContent(): Node {
 		const { currentPost, comments, replyTo } = this.props.post;
 
@@ -270,10 +331,14 @@ class Post extends React.Component<Props, State> {
 			<React.Fragment>
 				<Container textAlign="left">
 					<Label color={'teal'} size={'large'}>
-						{`${t('b/')} ${t(`${currentPost.board}Board`)}.   ${t('postBy')}  ${currentPost.userId}`}
-						</Label>
+						{`${t('b/')} ${t(`${currentPost.board}Board`)}.   ${t(
+							'postBy',
+						)}  ${currentPost.userId}`}
+					</Label>
 				</Container>
+
 				<Header as="h1">{currentPost.title}</Header>
+
 				<Container>
 					<Container
 						textAlign="justified"
@@ -288,33 +353,17 @@ class Post extends React.Component<Props, State> {
 
 					<Divider hidden />
 
-					<Container textAlign='right'>
-						<Label as='a'>
-							<Icon name='bell outline' />
-							Subscribe
-						</Label>
-						<Label as='a'>
-							<Icon name='ticket alternate' />
-							Reward
-						</Label>
-						<Label as='a'>
-							<Icon name='ban' />
-							Hide
-						</Label>
-						<Label as='a'>
-							<Icon name='flag' />
-							Report
-						</Label>
-					</Container>
+					{this.getOtherActionsGroup()}
 
 					<Divider />
-
 
 					{!!comments.length && !!replyTo && (
 						<Message
 							floating
 							color="yellow"
-							onDismiss={()=>{this.props.replyTo(replyTo);}}
+							onDismiss={() => {
+								this.props.replyTo(replyTo);
+							}}
 							content={`@${comments[replyTo - 1].userId} - ${
 								comments[replyTo - 1].content
 							}`}
@@ -339,7 +388,9 @@ class Post extends React.Component<Props, State> {
 											commentData,
 										);
 
-										if (response.type === COMMENT_SUBMITTED) {
+										if (
+											response.type === COMMENT_SUBMITTED
+										) {
 											this.props.getComments(
 												this.props.match.params.id,
 											);

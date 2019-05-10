@@ -1,7 +1,15 @@
 // @flow
 import React from 'react';
 import { t } from 'i18next';
-import { Image, Menu, Button, Icon, Popup, Dropdown } from 'semantic-ui-react';
+import {
+	Image,
+	Menu,
+	Button,
+	Icon,
+	Popup,
+	Dropdown,
+	Responsive,
+} from 'semantic-ui-react';
 import { NavLink, withRouter } from 'react-router-dom';
 import {
 	openLoginModal,
@@ -34,11 +42,12 @@ const SETTINGS = 2;
 const LOGOUT = 3;
 
 class NavigationBar extends React.Component<Props, State> {
-
 	onDropdownClick(e, { value }) {
 		switch (value) {
 			case ACCOUNT:
-				this.props.history.push(`/u/${hiddoutViewer.encodeId(this.props.account.user)}`);
+				this.props.history.push(
+					`/u/${hiddoutViewer.encodeId(this.props.account.user)}`,
+				);
 				break;
 			case SETTINGS:
 				this.props.history.push('/settings');
@@ -53,6 +62,7 @@ class NavigationBar extends React.Component<Props, State> {
 
 	renderRightMenu() {
 		const { isAuth } = this.props.auth;
+		const { user } = this.props.account;
 
 		let rightMenu = null;
 
@@ -69,7 +79,7 @@ class NavigationBar extends React.Component<Props, State> {
 			const trigger = (
 				<span>
 					<Image avatar src={'/public/static/Hiddout.png'} />{' '}
-					{this.props.account.user}
+					{user.length > 6 ? `${user.substring(0,6)}...`: user}
 				</span>
 			);
 			const options = [
@@ -79,7 +89,7 @@ class NavigationBar extends React.Component<Props, State> {
 						<span style={{ color: 'gray' }}>
 							{t('signed in as')}{' '}
 							<strong style={{ color: 'green' }}>
-								{this.props.account.user}
+								{user}
 							</strong>
 						</span>
 					),
@@ -122,13 +132,13 @@ class NavigationBar extends React.Component<Props, State> {
 		} else {
 			rightMenu = (
 				<React.Fragment>
-					<Menu.Item>
+					<Responsive as={Menu.Item} minWidth={375}>
 						<Button
 							content={t('loginBtn')}
 							primary
 							onClick={() => this.props.openLoginModal()}
 						/>
-					</Menu.Item>
+					</Responsive>
 					<Menu.Item>
 						<Button
 							content={t('signupBtn')}
@@ -136,7 +146,6 @@ class NavigationBar extends React.Component<Props, State> {
 							onClick={() => this.props.openSignUpModal()}
 						/>
 					</Menu.Item>
-
 					{createPostBtn}
 				</React.Fragment>
 			);
@@ -149,14 +158,17 @@ class NavigationBar extends React.Component<Props, State> {
 		const { showBackBtn } = this.props;
 		const { isAuth } = this.props.auth;
 		return (
-			<Menu fixed="top" style={{backgroundColor:'ghostwhite'}}>
+			<Menu fixed="top" style={{ backgroundColor: 'ghostwhite' }}>
 				{!isAuth && (
-					<Menu.Item>
+					<Menu.Item
+						onClick={() => {
+							this.props.history.push('/');
+						}}
+					>
 						<Image src="/public/static/Hiddout.png" avatar />
 					</Menu.Item>
 				)}
 
-				{!isAuth && <Menu.Item name={t('homeMenu')} as={Nav} to="/" />}
 				{isAuth && !showBackBtn && (
 					<Menu.Item>
 						<BoardSelector
@@ -178,12 +190,11 @@ class NavigationBar extends React.Component<Props, State> {
 							icon
 							color="blue"
 							onClick={() => {
-								if(showBackBtn === 'back'){
+								if (showBackBtn === 'back') {
 									this.props.history.goBack();
-								}else {
+								} else {
 									this.props.history.replace('/');
 								}
-
 							}}
 						>
 							<Icon name="left arrow" />
@@ -191,7 +202,6 @@ class NavigationBar extends React.Component<Props, State> {
 					</Menu.Item>
 				)}
 
-				<Menu.Item name={t('messagesMenu')} as={Nav} to="/message" />
 				<Menu.Menu position="right">{this.renderRightMenu()}</Menu.Menu>
 			</Menu>
 		);

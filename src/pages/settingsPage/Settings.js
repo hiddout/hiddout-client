@@ -27,6 +27,7 @@ type Props = {
 type State = {};
 
 const CHINESE = '中文',
+	SWEDISH = 'Svenska',
 	ENGLISH = 'English';
 
 class Settings extends React.Component<Props, State> {
@@ -37,6 +38,9 @@ class Settings extends React.Component<Props, State> {
 				break;
 			case ENGLISH:
 				this.props.changeLanguage('en');
+				break;
+			case SWEDISH:
+				this.props.changeLanguage('sv');
 				break;
 			default:
 				break;
@@ -70,6 +74,11 @@ class Settings extends React.Component<Props, State> {
 				text: ENGLISH,
 				value: ENGLISH,
 			},
+			{
+				key: SWEDISH,
+				text: SWEDISH,
+				value: SWEDISH,
+			},
 		];
 
 		return (
@@ -88,6 +97,7 @@ class Settings extends React.Component<Props, State> {
 		const options = [
 			{ key: 'en', text: 'English', value: 'en' },
 			{ key: 'zh', text: '中文', value: 'zh' },
+			{ key: 'sv', text: 'Svenska', value: 'sv' },
 		];
 
 		return (

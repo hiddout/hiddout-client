@@ -41,6 +41,7 @@ declare module 'semantic-ui-react' {
 	declare export var Label: any;
 	declare export var Statistic: any;
 	declare export var Grid: any;
+	declare export var Responsive: any;
 }
 
 declare module 'redux' {

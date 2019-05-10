@@ -1,7 +1,15 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Form, Icon, Input, Label, Message } from 'semantic-ui-react';
+import {
+	Button,
+	Modal,
+	Form,
+	Icon,
+	Input,
+	Label,
+	Message,
+} from 'semantic-ui-react';
 import { t } from 'i18next';
 
 import {
@@ -35,15 +43,27 @@ type Props = {
 type State = {
 	userNameViolation: boolean,
 	passwordViolation: boolean,
+	passwordVerification: boolean,
 	userOrPwdNotCorrect: boolean,
 	signUpInfoViolation: boolean,
 	redirectToReferrer: boolean,
 	user: string,
 	password: string,
+	passwordVerify:string,
 };
 
 class LoginSignInModal extends React.Component<Props, State> {
-	state = { redirectToReferrer: false, user: '', password: '', userNameViolation: false, passwordViolation: false, userOrPwdNotCorrect: false, signUpInfoViolation: false };
+	state = {
+		redirectToReferrer: false,
+		user: '',
+		password: '',
+		passwordVerify: '',
+		userNameViolation: false,
+		passwordViolation: false,
+		userOrPwdNotCorrect: false,
+		signUpInfoViolation: false,
+		passwordVerification: true,
+	};
 
 	close() {
 		this.props.closeLoginModal();
@@ -64,40 +84,49 @@ class LoginSignInModal extends React.Component<Props, State> {
 		if (this.props.modal.loginModalShowed) {
 			const loginRes = await userLogin(userData);
 
-			if(loginRes && loginRes.type === LOGIN){
+			if (loginRes && loginRes.type === LOGIN) {
 				this.setState({ redirectToReferrer: true });
 			} else {
 				this.setState({ userOrPwdNotCorrect: true });
 			}
-
 		} else {
-
-			if(!this.state.user.length){
+			if (!this.state.user.length) {
 				this.setState({ userNameViolation: true });
+				return;
+			} else if (!this.state.password.length) {
+				this.setState({ passwordViolation: true });
+				return;
+			} else if(this.state.password !== this.state.passwordVerify){
+				this.setState({passwordVerification: false});
 				return;
 			}
 
-			const {userNameViolation, passwordViolation} = this.state;
+			const {
+				userNameViolation,
+				passwordViolation,
+				passwordVerification,
+			} = this.state;
 
-			if(userNameViolation || passwordViolation){
+			if (
+				userNameViolation ||
+				passwordViolation ||
+				!passwordVerification
+			) {
 				return;
 			}
 
 			const signUpRes = await userSignUp(userData);
 
-			if(signUpRes) {
+			if (signUpRes) {
 				return;
 			}
 
-			this.setState({signUpInfoViolation: true});
+			this.setState({ signUpInfoViolation: true });
 		}
 	}
 
 	onActionButtonClick() {
-		const {
-			openSignUpModal,
-			openLoginMdoal,
-		} = this.props;
+		const { openSignUpModal, openLoginMdoal } = this.props;
 
 		if (this.props.modal.loginModalShowed) {
 			openSignUpModal();
@@ -107,23 +136,34 @@ class LoginSignInModal extends React.Component<Props, State> {
 	}
 
 	onUserNameChange(e, { value }) {
-
 		if (/[^a-zA-Z0-9_]/.test(value) || !value.length || value.length > 36) {
 			this.setState({ userNameViolation: true });
 			return;
 		}
 
-		this.setState({ user: value, userNameViolation:false });
+		this.setState({ user: value, userNameViolation: false });
 	}
 
 	onPasswordChange(e, { value }) {
-
-		if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/.test(value)){
+		if (
+			!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/.test(
+				value,
+			)
+		) {
 			this.setState({ passwordViolation: true });
 			return;
 		}
 
-		this.setState({ password: value, passwordViolation: false});
+		this.setState({ password: value, passwordViolation: false });
+	}
+
+	onVerifyPasswordChange(e, { value }) {
+		if (value !== this.state.password) {
+			this.setState({ passwordVerify: value, passwordVerification: false });
+			return;
+		}
+
+		this.setState({ passwordVerify: value, passwordVerification: true });
 	}
 
 	render(): Node {
@@ -137,7 +177,7 @@ class LoginSignInModal extends React.Component<Props, State> {
 
 		if (redirectToReferrer && this.props.auth.isAuth) {
 			this.props.closeLoginModal();
-			return <Redirect to={from}/>;
+			return <Redirect to={from} />;
 		}
 
 		return (
@@ -151,12 +191,16 @@ class LoginSignInModal extends React.Component<Props, State> {
 					{loginModalShowed ? t('loginBtn') : t('signupBtn')}
 				</Modal.Header>
 				<Modal.Content>
-					{loginModalShowed && this.state.userOrPwdNotCorrect && <Message color='red'>
-						{t('userOrPwdNotCorrect')}
-						</Message>}
-					{!loginModalShowed && this.state.signUpInfoViolation && <Message color='red'>
-						{t('signUpInfoViolation')}
-					</Message>}
+					{loginModalShowed && this.state.userOrPwdNotCorrect && (
+						<Message color="red">
+							{t('userOrPwdNotCorrect')}
+						</Message>
+					)}
+					{!loginModalShowed && this.state.signUpInfoViolation && (
+						<Message color="red">
+							{t('signUpInfoViolation')}
+						</Message>
+					)}
 					<Form>
 						<Form.Field>
 							<label>{t('USERNAME')}</label>
@@ -164,9 +208,11 @@ class LoginSignInModal extends React.Component<Props, State> {
 								placeholder={t('USERNAME')}
 								onChange={this.onUserNameChange.bind(this)}
 							/>
-							{!loginModalShowed && this.state.userNameViolation && <Label basic color='red' pointing>
-								{t('userNameViolation')}
-							</Label>}
+							{!loginModalShowed && this.state.userNameViolation && (
+								<Label basic color="red" pointing>
+									{t('userNameViolation')}
+								</Label>
+							)}
 						</Form.Field>
 						<Form.Field>
 							<label>{t('PASSWORD')}</label>
@@ -175,13 +221,33 @@ class LoginSignInModal extends React.Component<Props, State> {
 								type={'password'}
 								onChange={this.onPasswordChange.bind(this)}
 							/>
-							{!loginModalShowed && this.state.passwordViolation && <Label basic color='red' pointing>
-								{t('passwordViolation')}
-							</Label>}
+							{!loginModalShowed && this.state.passwordViolation && (
+								<Label basic color="red" pointing>
+									{t('passwordViolation')}
+								</Label>
+							)}
 						</Form.Field>
+						{!loginModalShowed && (
+							<Form.Field>
+								<label>{t('VERIFY PASSWORD')}</label>
+								<Input
+									placeholder={t('VERIFY PASSWORD')}
+									type={'password'}
+									onChange={this.onVerifyPasswordChange.bind(
+										this,
+									)}
+								/>
+								{!loginModalShowed &&
+									!this.state.passwordVerification && (
+										<Label basic color="red" pointing>
+											{t('passwordVerification')}
+										</Label>
+									)}
+							</Form.Field>
+						)}
 						<Button
 							type={'submit'}
-							primary
+							color={loginModalShowed ? 'blue' : 'green'}
 							onClick={this.onLoginSignInClick.bind(this)}
 						>
 							{loginModalShowed ? t('loginBtn') : t('signupBtn')}
@@ -193,12 +259,12 @@ class LoginSignInModal extends React.Component<Props, State> {
 						? t('new to hiddout?')
 						: t('already have hiddout account?')}
 					<Button
-						positive
+						color={loginModalShowed ? 'green' : 'blue'}
 						icon
 						onClick={this.onActionButtonClick.bind(this)}
 					>
 						{loginModalShowed ? t('signupBtn') : t('loginBtn')}
-						<Icon name="right chevron"/>
+						<Icon name="right chevron" />
 					</Button>
 				</Modal.Actions>
 			</Modal>

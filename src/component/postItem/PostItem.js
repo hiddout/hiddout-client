@@ -9,7 +9,7 @@ type Props = {
 	author: string,
 	postId: string,
 	boardImgSrc: string,
-	createdAt: number,
+	createdAt: string,
 };
 
 type State = {};
