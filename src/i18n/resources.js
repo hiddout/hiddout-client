@@ -4,7 +4,7 @@ const resources = {
 		translation: {
 			'en': 'English',
 			'zh': '中文',
-			'sv': 'Svenska'
+			'sv': 'Svenska',
 			'homeMenu': 'Home',
 			'messagesMenu': 'Messages',
 			'loginBtn': 'LOG IN',
@@ -51,7 +51,7 @@ const resources = {
 		translation: {
 			'en': 'English',
 			'zh': '中文',
-			'sv': 'Svenska'
+			'sv': 'Svenska',
 			'homeMenu': '主页',
 			'messagesMenu': '消息',
 			'loginBtn': '登录',
@@ -98,7 +98,7 @@ const resources = {
 		translation: {
 			'en': 'English',
 			'zh': '中文',
-			'sv': 'Svenska'
+			'sv': 'Svenska',
 			'homeMenu': 'Hem',
 			'messagesMenu': 'Meddelanden',
 			'loginBtn': 'Logga in',
