@@ -6,6 +6,7 @@ const  NavigationBar = React.lazy( () => import( '../../containers/navigationBar
 import type { Node } from 'react';
 const  PostList = React.lazy( () => import( '../../containers/postList/PostList'));
 import { Container } from 'semantic-ui-react';
+import ListFooter from '../../containers/listFooter/ListFooter';
 
 
 type Props = {};
@@ -20,8 +21,9 @@ class Home extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar board={'life'}/>
-				<Container textAlign={'left'} style={{ marginTop: '7em', marginBottom:'3em' }}>
+				<Container className={'pageContent'} textAlign={'left'}>
 					<PostList/>
+					<ListFooter/>
 				</Container>
 			</React.Fragment>
 		);

@@ -79,7 +79,7 @@ class NavigationBar extends React.Component<Props, State> {
 			const trigger = (
 				<span>
 					<Image avatar src={'/public/static/Hiddout.png'} />{' '}
-					{user.length > 6 ? `${user.substring(0,6)}...`: user}
+					{user.length > 10 ? `${user.substring(0, 6)}...` : user}
 				</span>
 			);
 			const options = [
@@ -88,9 +88,7 @@ class NavigationBar extends React.Component<Props, State> {
 					text: (
 						<span style={{ color: 'gray' }}>
 							{t('signed in as')}{' '}
-							<strong style={{ color: 'green' }}>
-								{user}
-							</strong>
+							<strong style={{ color: 'green' }}>{user}</strong>
 						</span>
 					),
 					value: 0,
@@ -185,20 +183,22 @@ class NavigationBar extends React.Component<Props, State> {
 				)}
 
 				{isAuth && showBackBtn && (
-					<Menu.Item>
-						<Button
-							icon
-							color="blue"
-							onClick={() => {
-								if (showBackBtn === 'back') {
-									this.props.history.goBack();
-								} else {
-									this.props.history.replace('/');
-								}
-							}}
-						>
-							<Icon name="left arrow" />
-						</Button>
+					<Menu.Item
+						onClick={() => {
+							if (showBackBtn === 'back') {
+								this.props.history.goBack();
+							} else {
+								this.props.history.replace('/');
+							}
+						}}
+					>
+						{ showBackBtn !== 'back' ? (
+							<Image src="/public/static/Hiddout.png" avatar />
+						) : (
+							<Button icon color="blue">
+								<Icon name="left arrow" />
+							</Button>
+						)}
 					</Menu.Item>
 				)}
 

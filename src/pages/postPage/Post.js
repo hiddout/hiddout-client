@@ -264,6 +264,7 @@ class Post extends React.Component<Props, State> {
 	}
 
 	getOtherActionsGroup() {
+
 		return (
 			<Container textAlign="right">
 				<Responsive
@@ -319,6 +320,7 @@ class Post extends React.Component<Props, State> {
 
 	getContent(): Node {
 		const { currentPost, comments, replyTo } = this.props.post;
+		const {isAuth} = this.props.auth;
 
 		if (!currentPost) {
 			return this.getPlaceholderContent();
@@ -353,7 +355,7 @@ class Post extends React.Component<Props, State> {
 
 					<Divider hidden />
 
-					{this.getOtherActionsGroup()}
+					{isAuth && this.getOtherActionsGroup()}
 
 					<Divider />
 
@@ -370,7 +372,7 @@ class Post extends React.Component<Props, State> {
 						/>
 					)}
 
-					{this.props.auth.isAuth && (
+					{isAuth && (
 						<SubmitForm
 							disabled={this.state.submitting}
 							ButtonText={t('reply')}
@@ -416,8 +418,8 @@ class Post extends React.Component<Props, State> {
 			<React.Fragment>
 				<NavigationBar showBackBtn={'back'} />
 				<Container
+					className={'pageContent'}
 					textAlign={'left'}
-					style={{ marginTop: '7em', marginBottom: '3em' }}
 				>
 					<Segment>{this.getContent()}</Segment>
 				</Container>

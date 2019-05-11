@@ -1,13 +1,16 @@
 // @flow
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
 );
+
+import { t } from 'i18next';
 import type { Node } from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../../actions/visitUserAction';
-import { Container, Statistic, Image, Icon, Segment, Grid, Loader } from 'semantic-ui-react';
+import { Container, Statistic, Image, Segment, Grid, Loader, Divider } from 'semantic-ui-react';
 import type { UserState } from '../../reducers/visitUser';
 
 type Props = {
@@ -26,63 +29,48 @@ class VisitUser extends React.Component<Props, State> {
 
 	render(): Node {
 
-		const {visitingUser} = this.props.visitUser;
+		const { visitingUser } = this.props.visitUser;
 
 		return (
 			<React.Fragment>
-				<NavigationBar showBackBtn={'back'} />
-				<Container textAlign={'left'} style={{ marginTop: '7em', marginBottom:'3em' }}>
-					<Grid columns={2}>
-						<Grid.Row stretched>
-							<Grid.Column>
-								<Segment>1</Segment>
-								<Segment>2</Segment>
-								<Segment>3</Segment>
+				<NavigationBar showBackBtn={'back'}/>
+				<Container className={'pageContent'} textAlign={'left'} >
+					<Segment>
+						<Grid>
+							<Grid.Column width={4}>
+								<Image src='/public/static/Hiddout.png'/>
 							</Grid.Column>
-							<Grid.Column>
-								<Segment>
-									<Statistic size='mini'>
-										<Statistic.Label>Name</Statistic.Label>
-										<Statistic.Value>{visitingUser? visitingUser.userId : <Loader active inline='centered' /> }</Statistic.Value>
-									</Statistic>
-								</Segment>
+							<Grid.Column width={12}>
+								<Statistic size='mini'>
+									<Statistic.Label>N/A</Statistic.Label>
+									<Statistic.Value>{visitingUser ? visitingUser.userId :
+										<Loader active inline='centered'/>}</Statistic.Value>
+								</Statistic>
+								<Divider horizontal> {t('statistic')} </Divider>
 								<Segment>
 									<Statistic.Group>
-									<Statistic>
-										<Statistic.Value>22</Statistic.Value>
-										<Statistic.Label>Saves</Statistic.Label>
-									</Statistic>
-
-									<Statistic>
-										<Statistic.Value text>
-											Three<br />
-											Thousand
-										</Statistic.Value>
-										<Statistic.Label>Signups</Statistic.Label>
-									</Statistic>
-
-									<Statistic>
-										<Statistic.Value>
-											<Icon name='plane' />
-											5
-										</Statistic.Value>
-										<Statistic.Label>Flights</Statistic.Label>
-									</Statistic>
-
-									<Statistic>
-										<Statistic.Value>
-											<Image src='/public/static/Hiddout.png' inline circular />
-											42
-										</Statistic.Value>
-										<Statistic.Label>Team Members</Statistic.Label>
-									</Statistic>
-								</Statistic.Group>
+										<Statistic>
+											<Statistic.Value>N/A</Statistic.Value>
+											<Statistic.Label>Rewards</Statistic.Label>
+										</Statistic>
+										<Statistic>
+											<Statistic.Value>N/A</Statistic.Value>
+											<Statistic.Label>Views</Statistic.Label>
+										</Statistic>
+										<Statistic>
+											<Statistic.Value>N/A</Statistic.Value>
+											<Statistic.Label>Topics</Statistic.Label>
+										</Statistic>
+									</Statistic.Group>
 								</Segment>
 							</Grid.Column>
+						</Grid>
+					</Segment>
 
-						</Grid.Row>
-					</Grid>
+
+
 				</Container>
+
 			</React.Fragment>
 		);
 	}
