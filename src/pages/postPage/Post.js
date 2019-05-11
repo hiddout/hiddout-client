@@ -339,7 +339,7 @@ class Post extends React.Component<Props, State> {
 					</Label>
 				</Container>
 
-				<Header as="h1">{currentPost.title}</Header>
+				<Header as="h1" style={{wordBreak:'break-word'}}>{currentPost.title}</Header>
 
 				<Container>
 					<Container
