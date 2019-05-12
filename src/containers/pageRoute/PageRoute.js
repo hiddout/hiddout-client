@@ -5,7 +5,8 @@ import { Route, withRouter } from 'react-router-dom';
 class PageRoute extends React.Component {
 
 	componentDidUpdate(prevProps) {
-		if (this.props.location !== prevProps.location && this.props.location.pathname !== '/') {
+		const {location, pageMarker} = this.props;
+		if (location !== prevProps.location && location.pathname !== '/' || pageMarker.currentPage !== prevProps.pageMarker.currentPage) {
 			window.scrollTo(0, 0);
 		}
 	}
@@ -23,6 +24,7 @@ class PageRoute extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		auth: state.auth,
+		pageMarker: state.pageMarker,
 	};
 };
 
