@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { t } from 'i18next';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -15,8 +16,8 @@ class ListFooter extends React.Component<Props, State> {
 
 		return (
 			<React.Fragment>
-				<Button secondary floated='left'>Previous</Button>
-				<Button color='green' floated='right'>Next</Button>
+				<Button secondary floated='left'>{t('previousPage')}</Button>
+				<Button color='green' floated='right'>{t('nextPage')}</Button>
 			</React.Fragment>
 		);
 	}
