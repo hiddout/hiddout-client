@@ -16,12 +16,11 @@ const Settings = React.lazy(() => import('./settingsPage/Settings'));
 
 import LoginSignInModal from '../containers/loginSignInModal/LoginSignInModal';
 
-import { About } from './aboutPage/About';
-
 const Home = React.lazy(() => import('./homePage/Home'));
 const User = React.lazy(() => import('./visitUserPage/VisitUser'));
 const Message = React.lazy(() => import('./messagePage/Message'));
 const NoMatch = React.lazy(() => import('./404Page/NoMatch'));
+const About = React.lazy(() => import('./aboutPage/About'));
 
 import type { Node } from 'react';
 
@@ -105,7 +104,7 @@ class MainPage extends React.Component<Props, State> {
 						path="/settings"
 						render={(props) => <Settings {...props} />}
 					/>
-					<PageRoute path="/about" render={About} />
+					<PageRoute path="/about" render={(props) => <About {...props} />} />
 					<PageRoute render={(props) => <NoMatch {...props} />} />
 				</Switch>
 				<Segment inverted vertical style={{ padding: '5em 0em' }}>
@@ -115,27 +114,23 @@ class MainPage extends React.Component<Props, State> {
 								<Grid.Column width={3}>
 									<Header inverted as='h4' content='About' />
 									<List link inverted>
-										<List.Item as='a'>Sitemap</List.Item>
+										<List.Item as='a'>What is Hiddout</List.Item>
 										<List.Item as='a'>Contact Us</List.Item>
-										<List.Item as='a'>Religious Ceremonies</List.Item>
-										<List.Item as='a'>Gazebo Plans</List.Item>
 									</List>
 								</Grid.Column>
 								<Grid.Column width={3}>
 									<Header inverted as='h4' content='Services' />
 									<List link inverted>
-										<List.Item as='a'>Banana Pre-Order</List.Item>
-										<List.Item as='a'>DNA FAQ</List.Item>
-										<List.Item as='a'>How To Access</List.Item>
-										<List.Item as='a'>Favorite X-Men</List.Item>
+										<List.Item as='a'>GDPR</List.Item>
+										<List.Item as='a'>Content Policy</List.Item>
 									</List>
 								</Grid.Column>
 								<Grid.Column width={7}>
 									<Header as='h4' inverted>
-										Footer Header
+										Hiddout for a hideout
 									</Header>
 									<p>
-										Extra space for a call to action inside the footer that could help re-engage users.
+										We shall meet in the place where there is no darkness.
 									</p>
 								</Grid.Column>
 							</Grid.Row>

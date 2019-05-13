@@ -13,7 +13,7 @@ export const history = createBrowserHistory();
 const persistConfig = {
 	key: 'root',
 	storage,
-	blacklist: ['router', 'modal'],
+	blacklist: ['router', 'modal', 'pageMarker'],
 };
 
 const persistedReducer = persistReducer(persistConfig, createRootReducer(history));

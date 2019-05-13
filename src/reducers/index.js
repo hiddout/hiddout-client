@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import { auth } from './auth';
-import {account} from './account';
+import { account } from './account';
 import { modal } from './modal';
 import { i18n } from './i18n';
 import { post } from './post';
-import {submit} from './submit';
-import {visitUser} from './visitUser';
+import { submit } from './submit';
+import { visitUser } from './visitUser';
+import { pageMarker } from './pageMarker';
 
 export default (history) =>
 	combineReducers({
@@ -18,4 +19,5 @@ export default (history) =>
 		post,
 		submit,
 		visitUser,
+		pageMarker,
 	});

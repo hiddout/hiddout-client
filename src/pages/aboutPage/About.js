@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { Container } from 'semantic-ui-react';
 import type {Node} from 'react';
 
 type Props = {};
@@ -11,10 +12,11 @@ class About extends React.Component<Props,State> {
 	render(): Node {
 		return (
 			<React.Fragment>
-				<h2>About</h2>
+				<Container className={'pageContent'}  textAlign={'left'}>
+				</Container>
 			</React.Fragment>
 		);
 	}
 }
 
-export {About};
+export default About;

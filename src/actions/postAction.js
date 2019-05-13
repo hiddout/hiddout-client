@@ -1,7 +1,10 @@
 import {
+	CHANGE_PAGE,
 	GET_COMMENTS,
 	GET_POST,
-	GET_POSTS, GET_REACTIONS, REPLY_TO,
+	GET_POSTS,
+	GET_REACTIONS,
+	REPLY_TO,
 	REQUEST_GET_COMMENTS,
 	REQUEST_GET_POST,
 	REQUEST_GET_POSTS,
@@ -11,84 +14,112 @@ import { config } from '../config';
 import { checkAuth } from './loginAction';
 
 export const getPosts = (boardId) => {
-	return (dispatch) => {
+	return (dispatch, getState) => {
+		const { pageMarker } = getState();
 
-		dispatch({type: REQUEST_GET_POSTS});
+		dispatch({ type: REQUEST_GET_POSTS });
 
-		const board = boardId? `?board=${boardId}` : '';
+		const page = pageMarker.currentPage;
+		const board = boardId ? `&board=${boardId}` : '';
 
-		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}posts${board}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json; charset=utf-8',
-			},
-		}).then(res => {
-			checkAuth(res.status, dispatch);
-			return dispatch({ type: GET_POSTS, payload: { posts: res.posts }  });
-		}).catch(e => {
-			console.error(e);
-		});
+		const query = `?page=${page}${board}`;
+
+		return hiddoutViewer
+			.request(`${config.baseURL}${config.apiV1}posts${query}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json; charset=utf-8',
+				},
+			})
+			.then((res) => {
+				checkAuth(res.status, dispatch);
+				return dispatch({
+					type: GET_POSTS,
+					payload: { posts: res.posts, isLatest: res.isLatest },
+				});
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	};
 };
 
 export const getPost = (id) => {
 	return (dispatch) => {
+		dispatch({ type: REQUEST_GET_POST });
 
-		dispatch({type: REQUEST_GET_POST});
-
-		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}post/${id}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json; charset=utf-8',
-			},
-		}).then(res => {
-			checkAuth(res.status, dispatch);
-			return dispatch({ type: GET_POST, payload: { post: res.post }  });
-		}).catch(e => {
-			console.error(e);
-		});
+		return hiddoutViewer
+			.request(`${config.baseURL}${config.apiV1}post/${id}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json; charset=utf-8',
+				},
+			})
+			.then((res) => {
+				checkAuth(res.status, dispatch);
+				return dispatch({
+					type: GET_POST,
+					payload: { post: res.post },
+				});
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	};
 };
 
 export const getReactions = (id) => {
 	return (dispatch) => {
+		dispatch({ type: REQUEST_GET_REACTIONS });
 
-		dispatch({type: REQUEST_GET_REACTIONS});
-
-		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}post/${id}/reactions`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json; charset=utf-8',
-			},
-		}).then(res => {
-			checkAuth(res.status, dispatch);
-			return dispatch({ type: GET_REACTIONS, payload: { reactions: res.reactions }  });
-		}).catch(e => {
-			console.error(e);
-		});
+		return hiddoutViewer
+			.request(`${config.baseURL}${config.apiV1}post/${id}/reactions`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json; charset=utf-8',
+				},
+			})
+			.then((res) => {
+				checkAuth(res.status, dispatch);
+				return dispatch({
+					type: GET_REACTIONS,
+					payload: { reactions: res.reactions },
+				});
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	};
 };
 
 export const getComments = (id) => {
-
 	return (dispatch) => {
+		dispatch({ type: REQUEST_GET_COMMENTS });
 
-		dispatch({type: REQUEST_GET_COMMENTS});
-
-		return hiddoutViewer.request(`${config.baseURL}${config.apiV1}post/${id}/comments`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json; charset=utf-8',
-			},
-		}).then(res => {
-			checkAuth(res.status, dispatch);
-			return dispatch({ type: GET_COMMENTS, payload: { comments: res.comments }  });
-		}).catch(e => {
-			console.error(e);
-		});
+		return hiddoutViewer
+			.request(`${config.baseURL}${config.apiV1}post/${id}/comments`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json; charset=utf-8',
+				},
+			})
+			.then((res) => {
+				checkAuth(res.status, dispatch);
+				return dispatch({
+					type: GET_COMMENTS,
+					payload: { comments: res.comments },
+				});
+			})
+			.catch((e) => {
+				console.error(e);
+			});
 	};
 };
 
 export const replyTo = (number) => {
-	return {type: REPLY_TO, payload:{level: number}};
+	return { type: REPLY_TO, payload: { level: number } };
+};
+
+export const goPage = (number) => {
+	return { type: CHANGE_PAGE, payload: { pageNumber: number } };
 };

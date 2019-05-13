@@ -8,9 +8,12 @@ import PostItem from '../../component/postItem/PostItem';
 import { getHiddoutTime } from '../../utils/dataUtil';
 
 import type { PostState } from '../../reducers/post';
+import type { PageMarkerState } from '../../reducers/pageMarker';
+import ListFooter from '../listFooter/ListFooter';
 
 type Props = {
 	post: PostState,
+	pageMarker: PageMarkerState,
 	boardId?: string,
 	getPosts: (string | typeof undefined) => any,
 };
@@ -23,8 +26,9 @@ class PostList extends React.Component<Props, State> {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.boardId !== prevProps.boardId) {
-			this.props.getPosts(this.props.boardId);
+		const {boardId, pageMarker} = this.props;
+		if (boardId !== prevProps.boardId || pageMarker.currentPage !== prevProps.pageMarker.currentPage) {
+			this.props.getPosts(boardId);
 		}
 	}
 
@@ -62,6 +66,8 @@ class PostList extends React.Component<Props, State> {
 						))}
 					</List>
 				</Segment>
+
+				<ListFooter/>
 			</React.Fragment>
 		);
 	}
@@ -70,6 +76,7 @@ class PostList extends React.Component<Props, State> {
 const mapStateToProps = (state) => {
 	return {
 		post: state.post,
+		pageMarker: state.pageMarker,
 	};
 };
 
