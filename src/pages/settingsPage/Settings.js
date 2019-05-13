@@ -104,8 +104,8 @@ class Settings extends React.Component<Props, State> {
 			<React.Fragment>
 				<NavigationBar showBackBtn={true} />
 				<Container
+					className={'pageContent'}
 					textAlign={'left'}
-					style={{ marginTop: '7em', marginBottom: '3em' }}
 				>
 					<Segment>
 						<Header as="h3">{t('settingsBtn')}</Header>

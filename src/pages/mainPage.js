@@ -2,7 +2,7 @@
 import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Switch, withRouter } from 'react-router-dom';
-import { Loader } from 'semantic-ui-react';
+import { Container, Header, Loader, Segment, Grid, List } from 'semantic-ui-react';
 import { resources } from '../i18n/resources';
 
 import PageRoute from '../containers/pageRoute/PageRoute';
@@ -16,12 +16,11 @@ const Settings = React.lazy(() => import('./settingsPage/Settings'));
 
 import LoginSignInModal from '../containers/loginSignInModal/LoginSignInModal';
 
-import { About } from './aboutPage/About';
-
 const Home = React.lazy(() => import('./homePage/Home'));
 const User = React.lazy(() => import('./visitUserPage/VisitUser'));
 const Message = React.lazy(() => import('./messagePage/Message'));
 const NoMatch = React.lazy(() => import('./404Page/NoMatch'));
+const About = React.lazy(() => import('./aboutPage/About'));
 
 import type { Node } from 'react';
 
@@ -105,9 +104,39 @@ class MainPage extends React.Component<Props, State> {
 						path="/settings"
 						render={(props) => <Settings {...props} />}
 					/>
-					<PageRoute path="/about" render={About} />
+					<PageRoute path="/about" render={(props) => <About {...props} />} />
 					<PageRoute render={(props) => <NoMatch {...props} />} />
 				</Switch>
+				<Segment inverted vertical style={{ padding: '5em 0em' }}>
+					<Container>
+						<Grid divided inverted stackable>
+							<Grid.Row>
+								<Grid.Column width={3}>
+									<Header inverted as='h4' content='About' />
+									<List link inverted>
+										<List.Item as='a'>What is Hiddout</List.Item>
+										<List.Item as='a'>Contact Us</List.Item>
+									</List>
+								</Grid.Column>
+								<Grid.Column width={3}>
+									<Header inverted as='h4' content='Services' />
+									<List link inverted>
+										<List.Item as='a'>GDPR</List.Item>
+										<List.Item as='a'>Content Policy</List.Item>
+									</List>
+								</Grid.Column>
+								<Grid.Column width={7}>
+									<Header as='h4' inverted>
+										Hiddout for a hideout
+									</Header>
+									<p>
+										We shall meet in the place where there is no darkness.
+									</p>
+								</Grid.Column>
+							</Grid.Row>
+						</Grid>
+					</Container>
+				</Segment>
 			</Suspense>
 		);
 	}

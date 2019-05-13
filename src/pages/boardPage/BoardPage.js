@@ -36,9 +36,12 @@ class BoardPage extends React.Component<Props, State> {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.match.params.id !== prevProps.match.params.id) {
+
+		const {match} = this.props;
+
+		if (match.params.id !== prevProps.match.params.id) {
 			this.props
-				.getBoard(this.props.match.params.id)
+				.getBoard(match.params.id)
 				.then((response: Object) => {
 					if (response.type === SUB_EXIST) {
 						this.setState({ showPage: true });
@@ -54,7 +57,10 @@ class BoardPage extends React.Component<Props, State> {
 			<React.Fragment>
 				<NavigationBar boardValue={params.id} />
 
-					<Container textAlign={'left'} style={{ marginTop: '7em', marginBottom:'3em' }}>
+					<Container
+						className={'pageContent'}
+						textAlign={'left'}
+					>
 						{this.state.showPage && (<Segment>
 							<Image
 								src={`/public/static/images/avatar/board/${

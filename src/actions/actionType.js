@@ -8,7 +8,8 @@ export const OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL';
 export const CLOSE_LOGIN_MODAL = 'CLOSE_LOGIN_MODAL';
 export const OPEN_SIGN_UP_MODAL = 'OPEN_SIGN_UP_MODAL';
 export const CLOSE_SIGN_UP_MODAL = 'CLOSE_SIGN_UP_MODAL';
-export const CHANG_LANGUAGE = 'CHANG_LANGUAGE';
+export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
+export const CHANGE_PAGE = 'CHANGE_PAGE';
 
 export const TO_PAGE_404 = 'TO_PAGE_404';
 export const PAGE_404 = 'PAGE_404';

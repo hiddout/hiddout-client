@@ -1,11 +1,29 @@
 body{
     background-color: lightslategray;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+#root {
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
 .App {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
 
+.pageContent {
+    margin-top: 7em;
+    margin-bottom: 3em;
+    min-height: 70%;
+    padding-bottom:3em;
 }
 
 .segment {
-    background-color: ghostwhite !important;
+    background-color: ghostwhite ;
 }

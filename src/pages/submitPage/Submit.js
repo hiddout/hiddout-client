@@ -72,7 +72,7 @@ class Submit extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar showBackBtn={true} />
-				<Container textAlign={'left'} style={{ marginTop: '7em' }}>
+				<Container className={'pageContent'}  textAlign={'left'}>
 					<Segment>
 						<Header>
 							{`${t('putPostIn')} `}
