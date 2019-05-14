@@ -98,7 +98,7 @@ const resources = {
 			'lol': '什么鬼',
 			'moreAction': '更多操作',
 			'hide':'隐藏',
-			'report': '上报滥用行为',
+			'report': '报告问题',
 			'subscribe':'订阅此主题',
 			'reward':'奖励',
 			'b/': '板块/',
