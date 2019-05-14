@@ -1,9 +1,9 @@
 // @flow
 import { LOGIN, LOGOUT, TO_PAGE_404, SIGNUP, PAGE_404 } from '../actions/actionType';
 
-export type AuthState = { token: string, isAuth: boolean, show404: boolean };
+export type AuthState = { token: string, isAuth: boolean, show404: boolean, isFounder: boolean, isModerator:boolean };
 
-const auth = (state: AuthState = { token: '',isAuth: false, show404: false }, action: Action) =>
+const auth = (state: AuthState = { token: '',isAuth: false, show404: false, isFounder: false, isModerator: false }, action: Action) =>
 	immer.produce(state, draft => {
 
 		const payload = action.payload;

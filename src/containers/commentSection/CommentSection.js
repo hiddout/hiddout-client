@@ -30,7 +30,7 @@ class CommentSection extends React.Component<Props, State> {
 					comments.map((c, i) => (
 						<Comment key={i}>
 							<Comment.Content>
-								<Comment.Author as="a">
+								<Comment.Author as="a" href={`/u/${hiddoutViewer.encodeId(c.userId)}`}>
 									{`@${c.userId}`}
 								</Comment.Author>
 								<Comment.Metadata>
@@ -67,6 +67,9 @@ class CommentSection extends React.Component<Props, State> {
 										</Comment.Action>
 										<Comment.Action>
 											{t('lol')}
+										</Comment.Action>
+										<Comment.Action>
+											{t('reward')}
 										</Comment.Action>
 									</Comment.Actions>
 								)}
