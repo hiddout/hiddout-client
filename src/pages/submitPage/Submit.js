@@ -57,6 +57,7 @@ class Submit extends React.Component<Props, State> {
 			title: this.state.title,
 			content: this.state.content,
 			board: this.state.boardSelected,
+			language: 'en',
 		};
 
 		this.props.submitPost(postData).then((response: Object) => {
