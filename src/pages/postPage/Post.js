@@ -31,7 +31,7 @@ import SubmitForm from '../../component/submitForm/SubmitForm';
 import {
 	COMMENT_SUBMITTED,
 	GET_COMMENTS,
-	GET_POST,
+	GET_POST, LOCK_POST,
 	REACTION_REACTED,
 } from '../../actions/actionType';
 
@@ -40,6 +40,7 @@ const ReactMarkdown = React.lazy(() => import('react-markdown'));
 import type { PostState } from '../../reducers/post';
 import type { AuthState } from '../../reducers/auth';
 import type { AccountState } from '../../reducers/account';
+import { lockPost } from '../../actions/adminAction';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -58,6 +59,7 @@ type Props = {
 	replyTo: (number) => any,
 	submitComment: (Object) => any,
 	submitReaction: (Object) => any,
+	lockPost: (Object) => any,
 	match: { params: { id: string } },
 };
 
@@ -265,6 +267,21 @@ class Post extends React.Component<Props, State> {
 
 	getOtherActionsGroup() {
 
+		if(this.props.auth.isAdmin){
+			return (<Container textAlign="right">
+				<Label as="a" color={'blue'} onClick={()=>{
+					this.props.lockPost({postId: this.props.match.params.id, reason:'locked'}).then((res:Object) => {
+						if (res.type === LOCK_POST) {
+							console.log(res.locked);
+						}
+					});
+				}}>
+					<Icon name="lock" />
+					{t('lockPost')}
+				</Label>
+			</Container>);
+		}
+
 		return (
 			<Container textAlign="right">
 				<Responsive
@@ -439,8 +456,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		submitComment: (commentData) => dispatch(submitComment(commentData)),
-		submitReaction: (reactionData) =>
-			dispatch(submitReaction(reactionData)),
+		submitReaction: (reactionData) => dispatch(submitReaction(reactionData)),
+		lockPost: (postData) => dispatch(lockPost(postData)),
 		getPost: (id) => dispatch(getPost(id)),
 		getReactions: (id) => dispatch(getReactions(id)),
 		getComments: (id) => dispatch(getComments(id)),

@@ -61,7 +61,7 @@ export const userLogin = (userData) => {
 			body: JSON.stringify({ ...userData }),
 		}).then(res => {
 			checkAuth(res.status, dispatch);
-			return dispatch({ type: LOGIN, payload: { token: res.token, user: userData.user }  });
+			return dispatch({ type: LOGIN, payload: { token: res.token, user: userData.user, isAdmin:res.isAdmin }  });
 		}).catch(e => {
 			console.error(e);
 		});

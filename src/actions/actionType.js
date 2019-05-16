@@ -38,3 +38,6 @@ export const REACTION_REACTED = 'REACTION_REACTED';
 export const SUB_EXIST = 'SUB_EXIST';
 
 export const REPLY_TO = 'REPLY_TO';
+
+export const REQUEST_LOCK_POST = 'REQUEST_LOCK_POST';
+export const LOCK_POST = 'LOCK_POST';

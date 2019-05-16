@@ -25,5 +25,9 @@ body{
 }
 
 .segment {
-    background-color: ghostwhite ;
+    background-color: ghostwhite !important;
+}
+
+.inverted {
+    background-color: #1b1c1d !important;
 }
