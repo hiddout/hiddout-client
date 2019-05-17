@@ -18,7 +18,7 @@ type State = {};
 
 class CommentSection extends React.Component<Props, State> {
 	render() {
-		const { comments } = this.props.post;
+		const { comments, currentPost } = this.props.post;
 
 		return (
 			<Comment.Group>
@@ -50,7 +50,7 @@ class CommentSection extends React.Component<Props, State> {
 									<Comment.Actions>
 										<Comment.Action
 											onClick={() => {
-												if (!this.props.auth.isAuth) {
+												if (!this.props.auth.isAuth || (currentPost && currentPost.isLocked)) {
 													return;
 												}
 												this.props.replyTo(i + 1);

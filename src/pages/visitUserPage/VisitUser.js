@@ -34,7 +34,7 @@ class VisitUser extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar showBackBtn={'back'}/>
-				<Container className={'pageContent'} textAlign={'left'} >
+				<Container className={'PageContent'} textAlign={'left'} >
 					<Segment>
 						<Grid>
 							<Grid.Column width={4}>

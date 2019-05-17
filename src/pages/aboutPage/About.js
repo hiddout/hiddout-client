@@ -12,7 +12,7 @@ class About extends React.Component<Props,State> {
 	render(): Node {
 		return (
 			<React.Fragment>
-				<Container className={'pageContent'}  textAlign={'left'}>
+				<Container className={'PageContent'}  textAlign={'left'}>
 				</Container>
 			</React.Fragment>
 		);

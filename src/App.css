@@ -17,11 +17,15 @@ body{
     width: 100%;
 }
 
-.pageContent {
+.PageContent {
     margin-top: 7em;
     margin-bottom: 3em;
     min-height: 70%;
     padding-bottom:3em;
+}
+
+.PopupTips {
+    margin-bottom: 7em !important;
 }
 
 .segment {

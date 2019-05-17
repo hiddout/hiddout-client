@@ -58,7 +58,7 @@ class BoardPage extends React.Component<Props, State> {
 				<NavigationBar boardValue={params.id} />
 
 					<Container
-						className={'pageContent'}
+						className={'PageContent'}
 						textAlign={'left'}
 					>
 						{this.state.showPage && (<Segment>

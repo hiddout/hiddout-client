@@ -195,6 +195,7 @@ class Post extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<Popup
+					className={'PopupTips'}
 					trigger={
 						<Button
 							color="green"
@@ -217,6 +218,7 @@ class Post extends React.Component<Props, State> {
 				/>
 
 				<Popup
+					className={'PopupTips'}
 					trigger={
 						<Button
 							color="red"
@@ -241,6 +243,7 @@ class Post extends React.Component<Props, State> {
 				/>
 
 				<Popup
+					className={'PopupTips'}
 					trigger={
 						<Button
 							color="black"
@@ -389,7 +392,13 @@ class Post extends React.Component<Props, State> {
 						/>
 					)}
 
-					{isAuth && (
+					{currentPost.isLocked && <Message
+						floating
+						color="red"
+						content={`${currentPost.lockedFor}`}
+					/>}
+
+					{isAuth && !currentPost.isLocked && (
 						<SubmitForm
 							disabled={this.state.submitting}
 							ButtonText={t('reply')}
@@ -435,7 +444,7 @@ class Post extends React.Component<Props, State> {
 			<React.Fragment>
 				<NavigationBar showBackBtn={'back'} />
 				<Container
-					className={'pageContent'}
+					className={'PageContent'}
 					textAlign={'left'}
 				>
 					<Segment>{this.getContent()}</Segment>
