@@ -40,7 +40,7 @@ const ReactMarkdown = React.lazy(() => import('react-markdown'));
 import type { PostState } from '../../reducers/post';
 import type { AuthState } from '../../reducers/auth';
 import type { AccountState } from '../../reducers/account';
-import { lockPost } from '../../actions/adminAction';
+import { lockPost, openAdminModal } from '../../actions/adminAction';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -60,6 +60,7 @@ type Props = {
 	submitComment: (Object) => any,
 	submitReaction: (Object) => any,
 	lockPost: (Object) => any,
+	openAdminModal: () => any,
 	match: { params: { id: string } },
 };
 
@@ -195,6 +196,7 @@ class Post extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<Popup
+					className={'PopupTips'}
 					trigger={
 						<Button
 							color="green"
@@ -217,6 +219,7 @@ class Post extends React.Component<Props, State> {
 				/>
 
 				<Popup
+					className={'PopupTips'}
 					trigger={
 						<Button
 							color="red"
@@ -241,6 +244,7 @@ class Post extends React.Component<Props, State> {
 				/>
 
 				<Popup
+					className={'PopupTips'}
 					trigger={
 						<Button
 							color="black"
@@ -270,6 +274,7 @@ class Post extends React.Component<Props, State> {
 		if(this.props.auth.isAdmin){
 			return (<Container textAlign="right">
 				<Label as="a" color={'blue'} onClick={()=>{
+					// this.props.openAdminModal();
 					this.props.lockPost({postId: this.props.match.params.id, reason:'locked'}).then((res:Object) => {
 						if (res.type === LOCK_POST) {
 							console.log(res.locked);
@@ -389,7 +394,13 @@ class Post extends React.Component<Props, State> {
 						/>
 					)}
 
-					{isAuth && (
+					{currentPost.isLocked && <Message
+						floating
+						color="red"
+						content={`${currentPost.lockedFor}`}
+					/>}
+
+					{isAuth && !currentPost.isLocked && (
 						<SubmitForm
 							disabled={this.state.submitting}
 							ButtonText={t('reply')}
@@ -435,7 +446,7 @@ class Post extends React.Component<Props, State> {
 			<React.Fragment>
 				<NavigationBar showBackBtn={'back'} />
 				<Container
-					className={'pageContent'}
+					className={'PageContent'}
 					textAlign={'left'}
 				>
 					<Segment>{this.getContent()}</Segment>
@@ -458,6 +469,7 @@ const mapDispatchToProps = (dispatch) => {
 		submitComment: (commentData) => dispatch(submitComment(commentData)),
 		submitReaction: (reactionData) => dispatch(submitReaction(reactionData)),
 		lockPost: (postData) => dispatch(lockPost(postData)),
+		openAdminModal: () => dispatch(openAdminModal()),
 		getPost: (id) => dispatch(getPost(id)),
 		getReactions: (id) => dispatch(getReactions(id)),
 		getComments: (id) => dispatch(getComments(id)),

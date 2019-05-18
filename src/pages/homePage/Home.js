@@ -20,7 +20,7 @@ class Home extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar board={'life'}/>
-				<Container className={'pageContent'} textAlign={'left'}>
+				<Container className={'PageContent'} textAlign={'left'}>
 					<PostList/>
 				</Container>
 			</React.Fragment>

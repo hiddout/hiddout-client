@@ -6,7 +6,6 @@ import {
 	Menu,
 	Button,
 	Icon,
-	Popup,
 	Dropdown,
 	Responsive,
 } from 'semantic-ui-react';
@@ -68,10 +67,7 @@ class NavigationBar extends React.Component<Props, State> {
 
 		const createPostBtn = (
 			<Menu.Item as={Nav} to="/submit">
-				<Popup
-					trigger={<Icon name="signup" />}
-					content={t('create a post')}
-				/>
+				<Icon name="signup" />
 			</Menu.Item>
 		);
 

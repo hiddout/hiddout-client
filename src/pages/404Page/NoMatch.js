@@ -22,7 +22,7 @@ class NoMatch extends React.Component<Props, State> {
 	render(): Node {
 		return (
 			<React.Fragment>
-				<Container className={'pageContent'} textAlign={'left'}>
+				<Container className={'PageContent'} textAlign={'left'}>
 					<Segment>
 						<Header as="h3">
 							{' '}

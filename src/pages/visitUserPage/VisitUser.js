@@ -1,17 +1,16 @@
 // @flow
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-
-const NavigationBar = React.lazy(() =>
-	import('../../containers/navigationBar/NavigationBar'),
-);
-
 import { t } from 'i18next';
 import type { Node } from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../../actions/visitUserAction';
 import { Container, Statistic, Image, Segment, Grid, Loader, Divider } from 'semantic-ui-react';
 import type { UserState } from '../../reducers/visitUser';
+
+const NavigationBar = React.lazy(() =>
+	import('../../containers/navigationBar/NavigationBar'),
+);
 
 type Props = {
 	match: Object,
@@ -34,7 +33,7 @@ class VisitUser extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar showBackBtn={'back'}/>
-				<Container className={'pageContent'} textAlign={'left'} >
+				<Container className={'PageContent'} textAlign={'left'} >
 					<Segment>
 						<Grid>
 							<Grid.Column width={4}>
