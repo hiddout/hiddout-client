@@ -28,7 +28,8 @@ type State = {};
 
 const CHINESE = '中文',
 	SWEDISH = 'Svenska',
-	ENGLISH = 'English';
+	ENGLISH = 'English',
+	GERMAN = 'Deutsch';
 
 class Settings extends React.Component<Props, State> {
 	onDropdownClick(e, { value }) {
@@ -41,6 +42,9 @@ class Settings extends React.Component<Props, State> {
 				break;
 			case SWEDISH:
 				this.props.changeLanguage('sv');
+				break;
+			case GERMAN:
+				this.props.changeLanguage('de');
 				break;
 			default:
 				break;
@@ -79,6 +83,11 @@ class Settings extends React.Component<Props, State> {
 				text: SWEDISH,
 				value: SWEDISH,
 			},
+			{
+				key: GERMAN,
+				text: GERMAN,
+				value: GERMAN,
+			},
 		];
 
 		return (
@@ -97,6 +106,7 @@ class Settings extends React.Component<Props, State> {
 		const options = [
 			{ key: 'en', text: 'English', value: 'en' },
 			{ key: 'zh', text: '中文', value: 'zh' },
+			{ key: 'de', text: 'Deutsch', value: 'de' },
 			{ key: 'sv', text: 'Svenska', value: 'sv' },
 		];
 
