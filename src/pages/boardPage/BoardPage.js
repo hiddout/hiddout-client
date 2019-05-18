@@ -61,7 +61,7 @@ class BoardPage extends React.Component<Props, State> {
 						className={'PageContent'}
 						textAlign={'left'}
 					>
-						{this.state.showPage && (<Segment>
+						{this.state.showPage && (<Segment inverted secondary>
 							<Image
 								src={`/public/static/images/avatar/board/${
 									params.id

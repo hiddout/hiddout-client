@@ -1,6 +1,14 @@
-import { LOCK_POST, REQUEST_LOCK_POST } from './actionType';
+import { CLOSE_ADMIN_MODAL, LOCK_POST, OPEN_ADMIN_MODAL, REQUEST_LOCK_POST } from './actionType';
 import { config } from '../config';
 import { checkAuth } from './loginAction';
+
+export const openAdminModal = () => {
+	return {type: OPEN_ADMIN_MODAL};
+};
+
+export const closeAdminModal = () => {
+	return {type: CLOSE_ADMIN_MODAL};
+};
 
 export const lockPost = (postData) => {
 	return (dispatch, getState) => {

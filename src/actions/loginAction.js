@@ -4,7 +4,7 @@ import {
 	LOGIN, LOGOUT,
 	OPEN_LOGIN_MODAL,
 	OPEN_SIGN_UP_MODAL, TO_PAGE_404, REQUEST_LOGIN,
-	SIGNUP,
+	SIGN_UP,
 } from './actionType';
 import { config } from '../config';
 
@@ -79,7 +79,7 @@ export const userSignUp = (userData) => {
 		}).then(res => {
 			checkAuth(res.status);
 			dispatch({type: CLOSE_SIGN_UP_MODAL});
-			return dispatch({ type: SIGNUP, payload: { token: res.token, user: userData.user } });
+			return dispatch({ type: SIGN_UP, payload: { token: res.token, user: userData.user } });
 		}).catch(e => console.error(e));
 	};
 };

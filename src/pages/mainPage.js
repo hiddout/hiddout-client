@@ -14,7 +14,7 @@ const BoardPage = React.lazy( ()=>import('./boardPage/BoardPage') );
 
 const Settings = React.lazy(() => import('./settingsPage/Settings'));
 
-import LoginSignInModal from '../containers/loginSignInModal/LoginSignInModal';
+import LoginSignUpModal from '../containers/loginSignUpModal/LoginSignUpModal';
 
 const Home = React.lazy(() => import('./homePage/Home'));
 const User = React.lazy(() => import('./visitUserPage/VisitUser'));
@@ -23,6 +23,9 @@ const NoMatch = React.lazy(() => import('./404Page/NoMatch'));
 const About = React.lazy(() => import('./aboutPage/About'));
 
 import type { Node } from 'react';
+import type { ModalState } from '../reducers/modal';
+import type { AuthState } from '../reducers/auth';
+import AdminModal from '../containers/adminModal/AdminModal';
 
 type Props = {
 	auth: AuthState,
@@ -32,10 +35,6 @@ type Props = {
 };
 
 type State = {};
-
-import type { ModalState } from '../reducers/modal';
-import type { AuthState } from '../reducers/auth';
-
 
 class MainPage extends React.Component<Props, State> {
 	constructor(props) {
@@ -66,13 +65,14 @@ class MainPage extends React.Component<Props, State> {
 
 	render(): Node {
 
-		const { signUpModalShowed, loginModalShowed } = this.props.modal;
+		const { signUpModalShowed, loginModalShowed, adminModalShowed } = this.props.modal;
 
-		const isLoginSign = (signUpModalShowed || loginModalShowed);
+		const isLoginSignUp = (signUpModalShowed || loginModalShowed);
 
 		return (
 			<Suspense fallback={<Loader />}>
-				{isLoginSign && <LoginSignInModal />}
+				{isLoginSignUp && <LoginSignUpModal />}
+				{adminModalShowed && <AdminModal/>}
 				<Switch>
 					<PageRoute
 						exact
@@ -88,7 +88,7 @@ class MainPage extends React.Component<Props, State> {
 						path="/submit"
 						render={(props) => <Submit {...props} />}
 					/>
-					<PageRoute
+					<AuthRoute
 						path="/b/:id"
 						render={(props) => <BoardPage {...props} />}
 					/>
@@ -96,7 +96,7 @@ class MainPage extends React.Component<Props, State> {
 						path="/p/:id"
 						render={(props) => <Post {...props} />}
 					/>
-					<PageRoute
+					<AuthRoute
 						path="/u/:id"
 						render={(props) => <User {...props} />}
 					/>
