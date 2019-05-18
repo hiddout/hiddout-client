@@ -52,7 +52,7 @@ type State = {
 	passwordVerify:string,
 };
 
-class LoginSignInModal extends React.Component<Props, State> {
+class LoginSignUpModal extends React.Component<Props, State> {
 	state = {
 		redirectToReferrer: false,
 		user: '',
@@ -302,5 +302,5 @@ export default withRouter(
 	connect(
 		mapStateToProps,
 		mapDispatchToProps,
-	)(LoginSignInModal),
+	)(LoginSignUpModal),
 );
