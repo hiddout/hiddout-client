@@ -32,11 +32,12 @@ export const getPosts = (boardId) => {
 				},
 			})
 			.then((res) => {
-				checkAuth(res.status, dispatch);
-				return dispatch({
-					type: GET_POSTS,
-					payload: { posts: res.posts, isLatest: res.isLatest },
-				});
+				return dispatch(
+					checkAuth(res.status, {
+						type: GET_POSTS,
+						payload: { posts: res.posts, isLatest: res.isLatest },
+					}),
+				);
 			})
 			.catch((e) => {
 				console.error(e);
@@ -56,11 +57,12 @@ export const getPost = (id) => {
 				},
 			})
 			.then((res) => {
-				checkAuth(res.status, dispatch);
-				return dispatch({
-					type: GET_POST,
-					payload: { post: res.post },
-				});
+				return dispatch(
+					checkAuth(res.status, {
+						type: GET_POST,
+						payload: { post: res.post },
+					}),
+				);
 			})
 			.catch((e) => {
 				console.error(e);
@@ -80,11 +82,12 @@ export const getReactions = (id) => {
 				},
 			})
 			.then((res) => {
-				checkAuth(res.status, dispatch);
-				return dispatch({
-					type: GET_REACTIONS,
-					payload: { reactions: res.reactions },
-				});
+				return dispatch(
+					checkAuth(res.status, {
+						type: GET_REACTIONS,
+						payload: { reactions: res.reactions },
+					}),
+				);
 			})
 			.catch((e) => {
 				console.error(e);
@@ -104,11 +107,12 @@ export const getComments = (id) => {
 				},
 			})
 			.then((res) => {
-				checkAuth(res.status, dispatch);
-				return dispatch({
-					type: GET_COMMENTS,
-					payload: { comments: res.comments },
-				});
+				return dispatch(
+					checkAuth(res.status, {
+						type: GET_COMMENTS,
+						payload: { comments: res.comments },
+					}),
+				);
 			})
 			.catch((e) => {
 				console.error(e);

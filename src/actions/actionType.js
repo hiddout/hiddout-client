@@ -3,6 +3,7 @@ export const REQUEST_LOGIN = 'REQUEST_LOGIN';
 
 export const LOGOUT = 'LOGOUT';
 export const SIGN_UP = 'SIGN_UP';
+export const RENEW_TOKEN = 'RENEW_TOKEN';
 
 export const OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL';
 export const CLOSE_LOGIN_MODAL = 'CLOSE_LOGIN_MODAL';

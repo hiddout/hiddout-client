@@ -5,7 +5,7 @@ import {
 	CLOSE_SIGN_UP_MODAL,
 	OPEN_ADMIN_MODAL,
 	OPEN_LOGIN_MODAL,
-	OPEN_SIGN_UP_MODAL,
+	OPEN_SIGN_UP_MODAL, SIGN_UP,
 } from '../actions/actionType';
 
 export type ModalState = {
@@ -31,6 +31,7 @@ const modal = (state: ModalState = initState, action: Action) =>
 				draft.loginModalShowed = false;
 				draft.signUpModalShowed = true;
 				break;
+			case SIGN_UP:
 			case CLOSE_SIGN_UP_MODAL:
 				draft.signUpModalShowed = false;
 				break;
