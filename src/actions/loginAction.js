@@ -58,6 +58,26 @@ export const checkAuth = (status, defaultAction, callback, callbackData) => {
 	};
 };
 
+const checkTokenRenewStatus = (status, defaultAction) => {
+	return (dispatch) => {
+		if (!status) {
+			return dispatch(defaultAction);
+		}
+
+		switch (status) {
+			case 400:
+			case 401:
+			case 404:
+				dispatch({ type: LOGOUT });
+				dispatch({ type: OPEN_LOGIN_MODAL });
+				throw new Error('token invalid');
+			case 200:
+			default:
+				return dispatch(defaultAction);
+		}
+	};
+};
+
 export const renewToken = (callback, callbackData) => {
 	return (dispatch, getState) => {
 		const { auth } = getState();
@@ -74,7 +94,7 @@ export const renewToken = (callback, callbackData) => {
 			})
 			.then((res) => {
 				dispatch(
-					checkAuth(res.status, {
+					checkTokenRenewStatus(res.status, {
 						type: RENEW_TOKEN,
 						payload: { token: res.token },
 					}),
