@@ -14,8 +14,6 @@ type State = {};
 
 class Home extends React.Component<Props, State> {
 
-
-
 	render(): Node {
 		return (
 			<React.Fragment>
