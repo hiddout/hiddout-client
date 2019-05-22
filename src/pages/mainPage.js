@@ -21,6 +21,7 @@ const User = React.lazy(() => import('./visitUserPage/VisitUser'));
 const Message = React.lazy(() => import('./messagePage/Message'));
 const NoMatch = React.lazy(() => import('./404Page/NoMatch'));
 const About = React.lazy(() => import('./aboutPage/About'));
+const FooterPage = React.lazy(() => import('./footerPage/FooterPage') );
 
 import type { Node } from 'react';
 import type { ModalState } from '../reducers/modal';
@@ -107,36 +108,7 @@ class MainPage extends React.Component<Props, State> {
 					<PageRoute path="/about" render={(props) => <About {...props} />} />
 					<PageRoute render={(props) => <NoMatch {...props} />} />
 				</Switch>
-				<Segment inverted vertical style={{ padding: '5em 0em' }}>
-					<Container>
-						<Grid divided inverted stackable>
-							<Grid.Row>
-								<Grid.Column width={3}>
-									<Header inverted as='h4' content='About' />
-									<List link inverted>
-										<List.Item as='a'>What is Hiddout</List.Item>
-										<List.Item as='a'>Contact Us</List.Item>
-									</List>
-								</Grid.Column>
-								<Grid.Column width={3}>
-									<Header inverted as='h4' content='Services' />
-									<List link inverted>
-										<List.Item as='a'>GDPR</List.Item>
-										<List.Item as='a'>Content Policy</List.Item>
-									</List>
-								</Grid.Column>
-								<Grid.Column width={7}>
-									<Header as='h4' inverted>
-										Hiddout for a hideout
-									</Header>
-									<p>
-										We shall meet in the place where there is no darkness.
-									</p>
-								</Grid.Column>
-							</Grid.Row>
-						</Grid>
-					</Container>
-				</Segment>
+				<FooterPage/>
 			</Suspense>
 		);
 	}
