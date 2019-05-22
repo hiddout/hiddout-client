@@ -2,7 +2,7 @@
 import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Switch, withRouter } from 'react-router-dom';
-import { Container, Header, Loader, Segment, Grid, List } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import { resources } from '../i18n/resources';
 
 import PageRoute from '../containers/pageRoute/PageRoute';
