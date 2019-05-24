@@ -284,6 +284,10 @@ class Post extends React.Component<Props, State> {
 					<Icon name="lock" />
 					{t('lockPost')}
 				</Label>
+				<Label as="a" color={'red'}>
+					<Icon name="trash alternate" />
+					{t('deletePost')}
+				</Label>
 			</Container>);
 		}
 
