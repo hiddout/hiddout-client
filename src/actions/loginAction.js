@@ -67,10 +67,12 @@ const checkTokenRenewStatus = (status, defaultAction) => {
 		switch (status) {
 			case 400:
 			case 401:
-			case 404:
 				dispatch({ type: LOGOUT });
 				dispatch({ type: OPEN_LOGIN_MODAL });
 				throw new Error('token invalid');
+			case 404:
+				dispatch({ type: TO_PAGE_404 });
+				throw new Error('page not found');
 			case 200:
 			default:
 				return dispatch(defaultAction);

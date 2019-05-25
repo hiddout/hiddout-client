@@ -6,7 +6,7 @@ export type UserState = { visitingUser: null|Object };
 const visitUser = (state: UserState = {visitingUser: null }, action: Action) =>
 	immer.produce(state, draft => {
 
-		const payload = action.payload;
+		const payload = action.payload || {};
 
 		switch (action.type) {
 			case GET_USER:

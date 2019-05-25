@@ -6,7 +6,7 @@ export type AuthState = { token: string, tokenKey: string, isAuth: boolean, show
 const auth = (state: AuthState = { token: '', tokenKey: '',isAuth: false, show404: false, isAdmin: false, isModerator: false }, action: Action) =>
 	immer.produce(state, draft => {
 
-		const payload = action.payload;
+		const payload = action.payload || {};
 
 		switch (action.type) {
 			case TO_PAGE_404:

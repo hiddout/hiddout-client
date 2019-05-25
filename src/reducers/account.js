@@ -6,7 +6,7 @@ export type AccountState = { user: string };
 const account = (state: AccountState = {user: '' }, action: Action) =>
 	immer.produce(state, draft => {
 
-		const payload = action.payload;
+		const payload = action.payload || {};
 
 		switch (action.type) {
 			case SIGN_UP :

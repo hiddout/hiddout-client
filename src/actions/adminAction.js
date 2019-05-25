@@ -3,6 +3,8 @@ import {
 	LOCK_POST,
 	OPEN_ADMIN_MODAL,
 	REQUEST_LOCK_POST,
+	REQUEST_DELETE_POST,
+	REQUEST_MOVE_POST,
 } from './actionType';
 import { config } from '../config';
 import { checkAuth } from './loginAction';
@@ -15,10 +17,21 @@ export const closeAdminModal = () => {
 	return { type: CLOSE_ADMIN_MODAL };
 };
 
+export const requestLockPost = () => {
+	return { type: REQUEST_LOCK_POST };
+};
+
+export const requestDeletePost = () => {
+	return { type: REQUEST_DELETE_POST };
+};
+
+export const requestMovePost = () => {
+	return { type: REQUEST_MOVE_POST };
+};
+
 export const lockPost = (postData) => {
 	return (dispatch, getState) => {
 		const { auth } = getState();
-		dispatch({ type: REQUEST_LOCK_POST });
 
 		return hiddoutViewer
 			.request(

@@ -33,6 +33,7 @@ type Props = {
 	i18n: Object,
 	modal: ModalState,
 	history: Object,
+	location: Object,
 };
 
 type State = {};
@@ -59,8 +60,9 @@ class MainPage extends React.Component<Props, State> {
 			window.location.reload();
 		}
 
-		if(this.props.auth.show404 !== prevProps.auth.show404 && this.props.auth.show404){
+		if(this.props.auth.show404 && this.props.location.pathname !== '/404'){
 			this.props.history.replace('/404');
+			window.location.reload();
 		}
 	}
 

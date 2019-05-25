@@ -6,7 +6,7 @@ export type SubmitState = { cratedPostId: string };
 const submit = (state: SubmitState = { cratedPostId:'' }, action: Action) =>
 	immer.produce(state, draft => {
 
-		const payload = action.payload;
+		const payload = action.payload || {};
 
 		switch (action.type) {
 			case POST_CREATED:

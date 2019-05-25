@@ -31,7 +31,7 @@ import SubmitForm from '../../component/submitForm/SubmitForm';
 import {
 	COMMENT_SUBMITTED,
 	GET_COMMENTS,
-	GET_POST, LOCK_POST,
+	GET_POST,
 	REACTION_REACTED,
 } from '../../actions/actionType';
 
@@ -40,7 +40,12 @@ const ReactMarkdown = React.lazy(() => import('react-markdown'));
 import type { PostState } from '../../reducers/post';
 import type { AuthState } from '../../reducers/auth';
 import type { AccountState } from '../../reducers/account';
-import { lockPost, openAdminModal } from '../../actions/adminAction';
+import {
+	openAdminModal,
+	requestDeletePost,
+	requestLockPost,
+	requestMovePost,
+} from '../../actions/adminAction';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -59,7 +64,9 @@ type Props = {
 	replyTo: (number) => any,
 	submitComment: (Object) => any,
 	submitReaction: (Object) => any,
-	lockPost: (Object) => any,
+	requestMovePost: (Object) => any,
+	requestDeletePost: (Object) => any,
+	requestLockPost: (Object) => any,
 	openAdminModal: () => any,
 	match: { params: { id: string } },
 };
@@ -274,19 +281,25 @@ class Post extends React.Component<Props, State> {
 		if(this.props.auth.isAdmin){
 			return (<Container textAlign="right">
 				<Label as="a" color={'blue'} onClick={()=>{
-					// this.props.openAdminModal();
-					this.props.lockPost({postId: this.props.match.params.id, reason:'locked'}).then((res:Object) => {
-						if (res.type === LOCK_POST) {
-							console.log(res.locked);
-						}
-					});
+					this.props.requestLockPost();
+					this.props.openAdminModal();
 				}}>
 					<Icon name="lock" />
 					{t('lockPost')}
 				</Label>
-				<Label as="a" color={'red'}>
+				<Label as="a" color={'red'} onClick={()=>{
+					this.props.requestDeletePost();
+					this.props.openAdminModal();
+				}}>
 					<Icon name="trash alternate" />
 					{t('deletePost')}
+				</Label>
+				<Label as="a" color={'yellow'} onClick={()=>{
+					this.props.requestMovePost();
+					this.props.openAdminModal();
+				}}>
+					<Icon name="shipping fast" />
+					{t('movePost')}
 				</Label>
 			</Container>);
 		}
@@ -472,7 +485,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		submitComment: (commentData) => dispatch(submitComment(commentData)),
 		submitReaction: (reactionData) => dispatch(submitReaction(reactionData)),
-		lockPost: (postData) => dispatch(lockPost(postData)),
+		requestLockPost: () => dispatch(requestLockPost()),
+		requestMovePost: () => dispatch(requestMovePost()),
+		requestDeletePost: () => dispatch(requestDeletePost()),
 		openAdminModal: () => dispatch(openAdminModal()),
 		getPost: (id) => dispatch(getPost(id)),
 		getReactions: (id) => dispatch(getReactions(id)),
