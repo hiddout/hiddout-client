@@ -1,9 +1,9 @@
 // @flow
 import { REQUEST_DELETE_POST, REQUEST_LOCK_POST, REQUEST_MOVE_POST } from '../actions/actionType';
 
-export type AccountState = { currentAction: string };
+export type AdminState = { currentAction: string };
 
-const admin = (state: AccountState = { currentAction: '' }, action: Action) =>
+const admin = (state: AdminState = { currentAction: '' }, action: Action) =>
 	immer.produce(state, draft => {
 
 		//const payload = action.payload || {};

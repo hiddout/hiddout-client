@@ -48,3 +48,5 @@ export const REQUEST_DELETE_POST = 'REQUEST_DELETE_POST';
 export const REQUEST_MOVE_POST = 'REQUEST_MOVE_POST';
 
 export const LOCK_POST = 'LOCK_POST';
+export const DELETE_POST = 'DELETE_POST';
+export const MOVE_POST = 'MOVE_POST';

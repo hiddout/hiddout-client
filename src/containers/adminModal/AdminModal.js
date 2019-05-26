@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import {
@@ -12,14 +13,27 @@ import { withRouter } from 'react-router-dom';
 import type { AuthState } from '../../reducers/auth';
 import type { PostState } from '../../reducers/post';
 import type { ModalState } from '../../reducers/modal';
-import { closeAdminModal, lockPost } from '../../actions/adminAction';
-import { REQUEST_DELETE_POST, REQUEST_LOCK_POST, REQUEST_MOVE_POST, LOCK_POST } from '../../actions/actionType';
+import { closeAdminModal, deletePost, lockPost, movePost } from '../../actions/adminAction';
+import {
+	REQUEST_DELETE_POST,
+	REQUEST_LOCK_POST,
+	REQUEST_MOVE_POST,
+	LOCK_POST,
+	DELETE_POST,
+	MOVE_POST,
+} from '../../actions/actionType';
 import BoardSelector from '../../component/boardSelector/BoardSelector';
+import type { AdminState } from '../../reducers/admin';
 
 type Props = {
+	admin: AdminState,
 	auth: AuthState,
 	post: PostState,
 	modal: ModalState,
+	deletePost: Object => any,
+	lockPost: Object => any,
+	movePost: Object => any,
+	closeAdminModal: () => void,
 };
 
 type State = {
@@ -40,11 +54,33 @@ class AdminModal extends React.Component<Props, State> {
 
 		const { currentPost } = this.props.post;
 
+		if(!currentPost){
+			this.props.closeAdminModal();
+			return;
+		}
+
 		switch (this.props.admin.currentAction) {
 			case REQUEST_LOCK_POST:
-				this.props.lockPost({postId: currentPost._id, reason: this.state.formData}).then((res?:Object) => {
+				this.props.lockPost({postId: currentPost._id, reason: this.state.formData}).then((res:Object) => {
 					if (res.type === LOCK_POST) {
 						this.props.closeAdminModal();
+						window.location.reload();
+					}
+				});
+				break;
+			case REQUEST_DELETE_POST:
+				this.props.deletePost({postId: currentPost._id }).then((res:Object) => {
+					if (res.type === DELETE_POST) {
+						this.props.closeAdminModal();
+						window.location.reload();
+					}
+				});
+				break;
+			case REQUEST_MOVE_POST:
+				this.props.movePost({postId: currentPost._id, moveTo: this.state.board }).then((res:Object) => {
+					if (res.type === MOVE_POST) {
+						this.props.closeAdminModal();
+						window.location.reload();
 					}
 				});
 				break;
@@ -108,7 +144,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		deletePost: (postData) => dispatch(deletePost(postData)),
 		lockPost: (postData) => dispatch(lockPost(postData)),
+		movePost: (postData) => dispatch(movePost(postData)),
 		closeAdminModal: () => dispatch(closeAdminModal()),
 	};
 };

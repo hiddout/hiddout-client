@@ -135,7 +135,8 @@ class Post extends React.Component<Props, State> {
 		if (
 			!auth.isAuth ||
 			!post.reactions ||
-			(post.currentPost && account.user === post.currentPost.userId)
+			(post.currentPost && account.user === post.currentPost.userId) ||
+			(post.currentPost && post.currentPost.isLocked)
 		) {
 			return;
 		}
@@ -431,16 +432,20 @@ class Post extends React.Component<Props, State> {
 								this.setState(
 									{ submitting: true },
 									async () => {
-										const response = await this.props.submitComment(
-											commentData,
-										);
-
-										if (
-											response.type === COMMENT_SUBMITTED
-										) {
-											this.props.getComments(
-												this.props.match.params.id,
+										try{
+											const response = await this.props.submitComment(
+												commentData,
 											);
+
+											if (
+												response.type === COMMENT_SUBMITTED
+											) {
+												this.props.getComments(
+													this.props.match.params.id,
+												);
+											}
+										}catch (e) {
+											console.log(e);
 										}
 
 										this.setState({
