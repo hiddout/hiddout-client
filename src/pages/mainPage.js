@@ -2,20 +2,21 @@
 import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Switch, withRouter } from 'react-router-dom';
+import i18n from 'i18next';
 import { Loader } from 'semantic-ui-react';
 import { resources } from '../i18n/resources';
 
 import PageRoute from '../containers/pageRoute/PageRoute';
 import AuthRoute from '../containers/authRoute/AuthRoute';
 
+import AdminModal from '../containers/adminModal/AdminModal';
+import LoginSignUpModal from '../containers/loginSignUpModal/LoginSignUpModal';
+
 const Post = React.lazy(() => import('./postPage/Post'));
 const Submit = React.lazy(() => import('./submitPage/Submit'));
 const BoardPage = React.lazy( ()=>import('./boardPage/BoardPage') );
 
 const Settings = React.lazy(() => import('./settingsPage/Settings'));
-
-import LoginSignUpModal from '../containers/loginSignUpModal/LoginSignUpModal';
-
 const Home = React.lazy(() => import('./homePage/Home'));
 const User = React.lazy(() => import('./visitUserPage/VisitUser'));
 const Message = React.lazy(() => import('./messagePage/Message'));
@@ -26,7 +27,6 @@ const FooterPage = React.lazy(() => import('./footerPage/FooterPage') );
 import type { Node } from 'react';
 import type { ModalState } from '../reducers/modal';
 import type { AuthState } from '../reducers/auth';
-import AdminModal from '../containers/adminModal/AdminModal';
 
 type Props = {
 	auth: AuthState,
@@ -44,8 +44,7 @@ class MainPage extends React.Component<Props, State> {
 	}
 
 	async initLanguage() {
-		const i18n = await import('i18next');
-		await i18n.init({
+		i18n.init({
 			resources,
 			lng: this.props.i18n.language,
 		});
