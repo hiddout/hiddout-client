@@ -22,6 +22,9 @@ const interval = setInterval(() => {
 		document.head.removeChild(document.getElementById('viewerScriptTag'));
 		clearInterval(interval);
 
+		document.head.removeChild(document.getElementById('loadingStyle'));
+		document.body.removeChild(document.getElementById('loading'));
+
 		ReactDOM.render(<App />, document.getElementById('root'));
 	}
 }, 500);

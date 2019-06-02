@@ -8,7 +8,7 @@ import {
 	Menu,
 	Divider,
 	Statistic,
-	Grid,
+	Grid, Form, Input, Label, Button,
 } from 'semantic-ui-react';
 import { t } from 'i18next';
 import { connect } from 'react-redux';
@@ -24,7 +24,12 @@ type Props = {
 	changeLanguage: (string) => any;
 };
 
-type State = {};
+type State = {
+	password: string,
+	passwordVerify: string,
+	passwordViolation: boolean,
+	passwordVerification: boolean,
+};
 
 const CHINESE = '中文',
 	SWEDISH = 'Svenska',
@@ -32,6 +37,15 @@ const CHINESE = '中文',
 	GERMAN = 'Deutsch';
 
 class Settings extends React.Component<Props, State> {
+
+	state = {
+		password: '',
+		passwordVerify: '',
+		passwordViolation: false,
+		passwordVerification: true,
+	};
+
+
 	onDropdownClick(e, { value }) {
 		switch (value) {
 			case CHINESE:
@@ -101,6 +115,28 @@ class Settings extends React.Component<Props, State> {
 		);
 	}
 
+	onVerifyPasswordChange(e, { value }) {
+		if (value !== this.state.password) {
+			this.setState({ passwordVerify: value, passwordVerification: false });
+			return;
+		}
+
+		this.setState({ passwordVerify: value, passwordVerification: true });
+	}
+
+	onPasswordChange(e, { value }) {
+		if (
+			!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/.test(
+				value,
+			)
+		) {
+			this.setState({ passwordViolation: true });
+			return;
+		}
+
+		this.setState({ password: value, passwordViolation: false });
+	}
+
 	render() {
 
 		const options = [
@@ -141,6 +177,88 @@ class Settings extends React.Component<Props, State> {
 								</Grid.Column>
 							</Grid.Row>
 							</Grid>
+							<Divider horizontal>
+								<Header as="h4">{t('security')}</Header>
+							</Divider>
+
+
+							<Grid centered columns={2}>
+								<Grid.Column>
+									<Form>
+										<Form.Field>
+											<label>{t('OLD PASSWORD')}</label>
+											<Input
+												placeholder={t('OLD PASSWORD')}
+												type={'password'}
+
+											/>
+										</Form.Field>
+										{(
+											<Form.Field>
+												<label>{t('NEW PASSWORD')}</label>
+												<Input
+													placeholder={t('NEW PASSWORD')}
+													type={'password'}
+													onChange={this.onPasswordChange.bind(this)}
+												/>
+												{this.state.passwordViolation && (
+													<Label basic color="red" pointing>
+														{t('passwordViolation')}
+													</Label>
+												)}
+											</Form.Field>
+										)}
+										{(
+											<Form.Field>
+												<label>{t('VERIFY PASSWORD')}</label>
+												<Input
+													placeholder={t('VERIFY PASSWORD')}
+													type={'password'}
+													onChange={this.onVerifyPasswordChange.bind(this)}
+												/>
+												{!this.state.passwordVerification && (
+													<Label basic color="red" pointing>
+														{t('passwordVerification')}
+													</Label>
+												)}
+											</Form.Field>
+										)}
+										<Button
+											type={'submit'}
+											color={'blue'}
+
+										>
+											{t('change')}
+										</Button>
+									</Form>
+								</Grid.Column>
+							</Grid>
+
+							<Divider horizontal>
+								<Header as="h4">{t('accountBtn')}</Header>
+							</Divider>
+
+							<Grid centered columns={4}>
+								<Grid.Row >
+									<Grid.Column>
+										<Button
+											type={'submit'}
+											color={'red'}
+										>
+											{t('deleteAccount')}
+										</Button>
+									</Grid.Column>
+									<Grid.Column>
+										<Button
+											type={'submit'}
+											color={'black'}
+										>
+											{t('getAccountData')}
+										</Button>
+									</Grid.Column>
+								</Grid.Row>
+							</Grid>
+
 						</Container>
 					</Segment>
 				</Container>

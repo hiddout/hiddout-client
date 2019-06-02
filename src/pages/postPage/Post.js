@@ -372,10 +372,11 @@ class Post extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<Container textAlign="left">
-					<Label color={'teal'} size={'large'}>
-						{`${t('b/')} ${t(`${currentPost.board}Board`)}.   ${t(
-							'postBy',
-						)}  ${currentPost.userId}`}
+					<Label basic color='black'>
+						{`${t('b/')}:`}
+						<Label color={'teal'}><a style={{opacity: 1}} href={`/b/${currentPost.board}`}>{`${t(`${currentPost.board}Board`)}`}</a></Label>
+						{`${t('postBy')}:`}
+						<Label color={'blue'}><a style={{opacity: 1}} href={`/u/${hiddoutViewer.encodeId(currentPost.userId)}`}>{`${currentPost.userId}`}</a></Label>
 					</Label>
 				</Container>
 

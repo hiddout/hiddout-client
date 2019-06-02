@@ -233,9 +233,7 @@ class LoginSignUpModal extends React.Component<Props, State> {
 								<Input
 									placeholder={t('VERIFY PASSWORD')}
 									type={'password'}
-									onChange={this.onVerifyPasswordChange.bind(
-										this,
-									)}
+									onChange={this.onVerifyPasswordChange.bind(this)}
 								/>
 								{!loginModalShowed &&
 									!this.state.passwordVerification && (
