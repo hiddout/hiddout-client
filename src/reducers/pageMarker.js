@@ -14,6 +14,9 @@ const pageMarker = (state: PageMarkerState = initState, action: Action) =>
 			case GET_POSTS:
 				draft.isLatest = action.payload.isLatest;
 				break;
+			case '@@router/LOCATION_CHANGE':
+				draft.currentPage = 0;
+				break;
 		}
 	});
 
