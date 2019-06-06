@@ -13,13 +13,17 @@ import {
 import { config } from '../config';
 import { checkAuth } from './loginAction';
 
+const PAGE_NUMBER_INDEX = 1;
+
 export const getPosts = (boardId) => {
 	return (dispatch, getState) => {
-		const { pageMarker } = getState();
+		const { router } = getState();
 
 		dispatch({ type: REQUEST_GET_POSTS });
 
-		const page = pageMarker.currentPage;
+		const { location } = router;
+
+		const page = location.search.length ? location.search.split('=')[PAGE_NUMBER_INDEX] : 0;
 		const board = boardId ? `&board=${boardId}` : '';
 
 		const query = `?page=${page}${board}`;

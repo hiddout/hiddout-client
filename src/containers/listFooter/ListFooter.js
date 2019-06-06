@@ -6,10 +6,11 @@ import { withRouter } from 'react-router-dom';
 
 import { Button } from 'semantic-ui-react';
 import type { PageMarkerState } from '../../reducers/pageMarker';
-import { goPage } from '../../actions/postAction';
 
 type Props = {
 	goPage: (number) => any,
+	location: Object,
+	history: Object,
 	pageMarker: PageMarkerState,
 };
 
@@ -17,24 +18,49 @@ type State = {
 	navigating: boolean,
 };
 
-class ListFooter extends React.Component<Props, State> {
+const PAGE_NUMBER_INDEX = 1;
 
-	state = {navigating: false};
+class ListFooter extends React.Component<Props, State> {
+	state = { navigating: false };
+
+	onClickNext() {
+		let page = null;
+
+		const { location } = this.props;
+		if (!location.search.length) {
+			page = 1;
+		} else {
+			page = this.getCurrentPage() + 1;
+		}
+
+		this.props.history.push(`${location.pathname}?page=${page}`);
+	}
+
+	onClickPrevious() {
+		const { location } = this.props;
+		let page = this.getCurrentPage() - 1;
+		const qureyString = page ? `?page=${page}` : '';
+
+		this.props.history.push(`${location.pathname}${qureyString}`);
+	}
+
+	getCurrentPage() {
+		const { location } = this.props;
+		return parseInt(location.search.split('=')[PAGE_NUMBER_INDEX]);
+	}
 
 	render() {
-		const { goPage } = this.props;
-
-		const { currentPage, isLatest } = this.props.pageMarker;
+		const { isLatest } = this.props.pageMarker;
 
 		return (
 			<React.Fragment>
-				{!!currentPage && (
+				{!!this.getCurrentPage() && (
 					<Button
 						disabled={this.state.navigating}
 						secondary
 						floated="left"
 						onClick={() => {
-							goPage(currentPage - 1);
+							this.onClickPrevious();
 						}}
 					>
 						{t('previousPage')}
@@ -46,7 +72,7 @@ class ListFooter extends React.Component<Props, State> {
 						color="green"
 						floated="right"
 						onClick={() => {
-							goPage(currentPage + 1);
+							this.onClickNext();
 						}}
 					>
 						{t('nextPage')}
@@ -64,15 +90,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		goPage: (number) => dispatch(goPage(number)),
-	};
-};
-
-export default withRouter(
-	connect(
-		mapStateToProps,
-		mapDispatchToProps,
-	)(ListFooter),
-);
+export default withRouter(connect(mapStateToProps)(ListFooter));
