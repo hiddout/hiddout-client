@@ -58,6 +58,7 @@ type Props = {
 	auth: AuthState,
 	account: AccountState,
 	post: PostState,
+	location: Object,
 	getPost: (string) => any,
 	getComments: (string) => any,
 	getReactions: (string) => any,
@@ -89,6 +90,17 @@ class Post extends React.Component<Props, State> {
 	};
 
 	async componentDidMount() {
+		await this.refreshPostPage();
+	}
+
+	async componentDidUpdate(prevProps) {
+		const { location } = this.props;
+		if (location !== prevProps.location) {
+			await this.refreshPostPage();
+		}
+	}
+
+	async refreshPostPage() {
 		const id = this.props.match.params.id;
 		const postRes = await this.props.getPost(id);
 
@@ -278,38 +290,51 @@ class Post extends React.Component<Props, State> {
 	}
 
 	getOtherActionsGroup() {
-
-		if(this.props.auth.isAdmin){
-			return (<Container textAlign="right">
-				<Label as="a" color={'blue'} onClick={()=>{
-					this.props.requestLockPost();
-					this.props.openAdminModal();
-				}}>
-					<Icon name="lock" />
-					{t('lockPost')}
-				</Label>
-				<Label as="a" color={'red'} onClick={()=>{
-					this.props.requestDeletePost();
-					this.props.openAdminModal();
-				}}>
-					<Icon name="trash alternate" />
-					{t('deletePost')}
-				</Label>
-				<Label as="a" color={'yellow'} onClick={()=>{
-					this.props.requestMovePost();
-					this.props.openAdminModal();
-				}}>
-					<Icon name="shipping fast" />
-					{t('movePost')}
-				</Label>
-			</Container>);
+		if (this.props.auth.isAdmin) {
+			return (
+				<Container textAlign="right">
+					<Label
+						as="a"
+						color={'blue'}
+						onClick={() => {
+							this.props.requestLockPost();
+							this.props.openAdminModal();
+						}}
+					>
+						<Icon name="lock" />
+						{t('lockPost')}
+					</Label>
+					<Label
+						as="a"
+						color={'red'}
+						onClick={() => {
+							this.props.requestDeletePost();
+							this.props.openAdminModal();
+						}}
+					>
+						<Icon name="trash alternate" />
+						{t('deletePost')}
+					</Label>
+					<Label
+						as="a"
+						color={'yellow'}
+						onClick={() => {
+							this.props.requestMovePost();
+							this.props.openAdminModal();
+						}}
+					>
+						<Icon name="shipping fast" />
+						{t('movePost')}
+					</Label>
+				</Container>
+			);
 		}
 
 		return (
 			<Container textAlign="right">
 				<Responsive
 					as={Dropdown}
-					pointing='top left'
+					pointing="top left"
 					trigger={
 						<span>
 							<Icon
@@ -324,14 +349,13 @@ class Post extends React.Component<Props, State> {
 							text: (
 								<span style={{ color: 'gray' }}>
 									{t('moreAction')}
-									</span>
+								</span>
 							),
 							value: 0,
 						},
 						{ key: 'hide', text: t('hide'), icon: 'ban' },
 						{ key: 'report', text: t('report'), icon: 'flag' },
-					]
-					}
+					]}
 					icon={null}
 					maxWidth={470}
 				/>
@@ -345,14 +369,14 @@ class Post extends React.Component<Props, State> {
 				</Label>
 
 				<Responsive as={React.Fragment} minWidth={471}>
-				<Label as="a" color={'orange'}>
-					<Icon name="ban" />
-					{t('hide')}
-				</Label>
-				<Label as="a" color={'violet'}>
-					<Icon name="flag" />
-					{t('report')}
-				</Label>
+					<Label as="a" color={'orange'}>
+						<Icon name="ban" />
+						{t('hide')}
+					</Label>
+					<Label as="a" color={'violet'}>
+						<Icon name="flag" />
+						{t('report')}
+					</Label>
 				</Responsive>
 			</Container>
 		);
@@ -360,7 +384,7 @@ class Post extends React.Component<Props, State> {
 
 	getContent(): Node {
 		const { currentPost, comments, replyTo } = this.props.post;
-		const {isAuth} = this.props.auth;
+		const { isAuth } = this.props.auth;
 
 		if (!currentPost) {
 			return this.getPlaceholderContent();
@@ -372,15 +396,29 @@ class Post extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<Container textAlign="left">
-					<Label basic color='black'>
+					<Label basic color="black">
 						{`${t('b/')}:`}
-						<Label color={'teal'}><a style={{opacity: 1}} href={`/b/${currentPost.board}`}>{`${t(`${currentPost.board}Board`)}`}</a></Label>
+						<Label color={'teal'}>
+							<a
+								style={{ opacity: 1 }}
+								href={`/b/${currentPost.board}`}
+							>{`${t(`${currentPost.board}Board`)}`}</a>
+						</Label>
 						{`${t('postBy')}:`}
-						<Label color={'blue'}><a style={{opacity: 1}} href={`/u/${hiddoutViewer.encodeId(currentPost.userId)}`}>{`${currentPost.userId}`}</a></Label>
+						<Label color={'blue'}>
+							<a
+								style={{ opacity: 1 }}
+								href={`/u/${hiddoutViewer.encodeId(
+									currentPost.userId,
+								)}`}
+							>{`${currentPost.userId}`}</a>
+						</Label>
 					</Label>
 				</Container>
 
-				<Header as="h1" style={{wordBreak:'break-word'}}>{currentPost.title}</Header>
+				<Header as="h1" style={{ wordBreak: 'break-word' }}>
+					{currentPost.title}
+				</Header>
 
 				<Container>
 					<Container
@@ -413,11 +451,13 @@ class Post extends React.Component<Props, State> {
 						/>
 					)}
 
-					{currentPost.isLocked && <Message
-						floating
-						color="red"
-						content={`${currentPost.lockedFor}`}
-					/>}
+					{currentPost.isLocked && (
+						<Message
+							floating
+							color="red"
+							content={`${currentPost.lockedFor}`}
+						/>
+					)}
 
 					{isAuth && !currentPost.isLocked && (
 						<SubmitForm
@@ -433,19 +473,20 @@ class Post extends React.Component<Props, State> {
 								this.setState(
 									{ submitting: true },
 									async () => {
-										try{
+										try {
 											const response = await this.props.submitComment(
 												commentData,
 											);
 
 											if (
-												response.type === COMMENT_SUBMITTED
+												response.type ===
+												COMMENT_SUBMITTED
 											) {
 												this.props.getComments(
 													this.props.match.params.id,
 												);
 											}
-										}catch (e) {
+										} catch (e) {
 											console.log(e);
 										}
 
@@ -468,10 +509,7 @@ class Post extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar showBackBtn={'back'} />
-				<Container
-					className={'PageContent'}
-					textAlign={'left'}
-				>
+				<Container className={'PageContent'} textAlign={'left'}>
 					<Segment>{this.getContent()}</Segment>
 				</Container>
 			</React.Fragment>
@@ -490,7 +528,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		submitComment: (commentData) => dispatch(submitComment(commentData)),
-		submitReaction: (reactionData) => dispatch(submitReaction(reactionData)),
+		submitReaction: (reactionData) =>
+			dispatch(submitReaction(reactionData)),
 		requestLockPost: () => dispatch(requestLockPost()),
 		requestMovePost: () => dispatch(requestMovePost()),
 		requestDeletePost: () => dispatch(requestDeletePost()),

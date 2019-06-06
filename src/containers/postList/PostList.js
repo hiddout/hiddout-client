@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { List, Segment, Divider, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getPosts } from '../../actions/postAction';
@@ -15,6 +16,7 @@ type Props = {
 	post: PostState,
 	pageMarker: PageMarkerState,
 	boardId?: string,
+	location: Object,
 	getPosts: (string | typeof undefined) => any,
 };
 
@@ -26,8 +28,8 @@ class PostList extends React.Component<Props, State> {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {boardId, pageMarker} = this.props;
-		if (boardId !== prevProps.boardId || pageMarker.currentPage !== prevProps.pageMarker.currentPage) {
+		const {boardId, location} = this.props;
+		if (boardId !== prevProps.boardId || location.search !== prevProps.location.search) {
 			this.props.getPosts(boardId);
 		}
 	}
@@ -76,7 +78,6 @@ class PostList extends React.Component<Props, State> {
 const mapStateToProps = (state) => {
 	return {
 		post: state.post,
-		pageMarker: state.pageMarker,
 	};
 };
 
@@ -86,7 +87,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(
+export default withRouter(connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(PostList);
+)(PostList));
