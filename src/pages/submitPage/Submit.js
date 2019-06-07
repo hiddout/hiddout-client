@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Container, Segment, Header, Divider, Input } from 'semantic-ui-react';
+import { Container, Segment, Header, Divider, Input, Label } from 'semantic-ui-react';
 import { t } from 'i18next';
 import SubmitForm from '../../component/submitForm/SubmitForm';
 import BoardSelector from '../../component/boardSelector/BoardSelector';
@@ -22,6 +22,7 @@ type Props = {
 	auth: AuthState,
 	account: AccountState,
 	submit: SubmitState,
+	i18n: Object,
 	history: Object,
 	submitPost: (Object) => any,
 };
@@ -57,7 +58,7 @@ class Submit extends React.Component<Props, State> {
 			title: this.state.title,
 			content: this.state.content,
 			board: this.state.boardSelected,
-			language: 'en',
+			language: this.props.i18n.language,
 		};
 
 		this.props.submitPost(postData).then((response: Object) => {
@@ -83,6 +84,9 @@ class Submit extends React.Component<Props, State> {
 						/>
 						</Header>
 						<Header floated={'right'}>{t('submitAPost')}</Header>
+						<Label basic color='blue'>
+							{t(this.props.i18n.language)}
+						</Label>
 						<Divider clearing />
 						<Input
 							placeholder={t('title')}
@@ -112,6 +116,7 @@ const mapStateToProps = (state) => {
 		auth: state.auth,
 		account: state.account,
 		submit: state.submit,
+		i18n: state.i18n,
 	};
 };
 

@@ -8,7 +8,11 @@ import {
 	Menu,
 	Divider,
 	Statistic,
-	Grid, Form, Input, Label, Button,
+	Grid,
+	Form,
+	Input,
+	Label,
+	Button,
 } from 'semantic-ui-react';
 import { t } from 'i18next';
 import { connect } from 'react-redux';
@@ -20,8 +24,8 @@ const NavigationBar = React.lazy(() =>
 );
 
 type Props = {
-	i18n: Object;
-	changeLanguage: (string) => any;
+	i18n: Object,
+	changeLanguage: (string) => any,
 };
 
 type State = {
@@ -37,14 +41,12 @@ const CHINESE = '中文',
 	GERMAN = 'Deutsch';
 
 class Settings extends React.Component<Props, State> {
-
 	state = {
 		password: '',
 		passwordVerify: '',
 		passwordViolation: false,
 		passwordVerification: true,
 	};
-
 
 	onDropdownClick(e, { value }) {
 		switch (value) {
@@ -117,7 +119,10 @@ class Settings extends React.Component<Props, State> {
 
 	onVerifyPasswordChange(e, { value }) {
 		if (value !== this.state.password) {
-			this.setState({ passwordVerify: value, passwordVerification: false });
+			this.setState({
+				passwordVerify: value,
+				passwordVerification: false,
+			});
 			return;
 		}
 
@@ -138,7 +143,6 @@ class Settings extends React.Component<Props, State> {
 	}
 
 	render() {
-
 		const options = [
 			{ key: 'en', text: 'English', value: 'en' },
 			{ key: 'zh', text: '中文', value: 'zh' },
@@ -149,10 +153,7 @@ class Settings extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar showBackBtn={true} />
-				<Container
-					className={'PageContent'}
-					textAlign={'left'}
-				>
+				<Container className={'PageContent'} textAlign={'left'}>
 					<Segment>
 						<Header as="h3">{t('settingsBtn')}</Header>
 
@@ -161,104 +162,128 @@ class Settings extends React.Component<Props, State> {
 								<Header as="h4">Language</Header>
 							</Divider>
 
-							<Grid centered columns={3}>
-							<Grid.Row >
-								<Grid.Column>
-									<Statistic size='mini'>
-										<Statistic.Label>{t('interface')}</Statistic.Label>
+							<Grid columns="equal">
+								<Grid.Column />
+								<Grid.Column width={3}>
+									<Statistic size="mini">
+										<Statistic.Label>
+											{t('interface')}
+										</Statistic.Label>
 									</Statistic>
 									{this.getLaguageSelector()}
 								</Grid.Column>
-								<Grid.Column>
-									<Statistic size='mini'>
-										<Statistic.Label>{t('prefer')}</Statistic.Label>
+								<Grid.Column width={8}>
+									<Statistic size="mini">
+										<Statistic.Label>
+											{t('prefer')}
+										</Statistic.Label>
 									</Statistic>
-									<Dropdown placeholder={t('allLanguagePost')} fluid multiple selection options={options} />
+									<Dropdown
+										placeholder={t('allLanguagePost')}
+										fluid
+										multiple
+										selection
+										options={options}
+									/>
 								</Grid.Column>
-							</Grid.Row>
+								<Grid.Column />
 							</Grid>
 							<Divider horizontal>
 								<Header as="h4">{t('security')}</Header>
 							</Divider>
 
-
-							<Grid centered columns={2}>
-								<Grid.Column>
+							<Grid columns="equal">
+								<Grid.Column />
+								<Grid.Column width={12}>
 									<Form>
 										<Form.Field>
 											<label>{t('OLD PASSWORD')}</label>
 											<Input
 												placeholder={t('OLD PASSWORD')}
 												type={'password'}
-
 											/>
 										</Form.Field>
-										{(
+										{
 											<Form.Field>
-												<label>{t('NEW PASSWORD')}</label>
+												<label>
+													{t('NEW PASSWORD')}
+												</label>
 												<Input
-													placeholder={t('NEW PASSWORD')}
+													placeholder={t(
+														'NEW PASSWORD',
+													)}
 													type={'password'}
-													onChange={this.onPasswordChange.bind(this)}
+													onChange={this.onPasswordChange.bind(
+														this,
+													)}
 												/>
-												{this.state.passwordViolation && (
-													<Label basic color="red" pointing>
+												{this.state
+													.passwordViolation && (
+													<Label
+														basic
+														color="red"
+														pointing
+													>
 														{t('passwordViolation')}
 													</Label>
 												)}
 											</Form.Field>
-										)}
-										{(
+										}
+										{
 											<Form.Field>
-												<label>{t('VERIFY PASSWORD')}</label>
+												<label>
+													{t('VERIFY PASSWORD')}
+												</label>
 												<Input
-													placeholder={t('VERIFY PASSWORD')}
+													placeholder={t(
+														'VERIFY PASSWORD',
+													)}
 													type={'password'}
-													onChange={this.onVerifyPasswordChange.bind(this)}
+													onChange={this.onVerifyPasswordChange.bind(
+														this,
+													)}
 												/>
-												{!this.state.passwordVerification && (
-													<Label basic color="red" pointing>
-														{t('passwordVerification')}
+												{!this.state
+													.passwordVerification && (
+													<Label
+														basic
+														color="red"
+														pointing
+													>
+														{t(
+															'passwordVerification',
+														)}
 													</Label>
 												)}
 											</Form.Field>
-										)}
-										<Button
-											type={'submit'}
-											color={'blue'}
-
-										>
+										}
+										<Button type={'submit'} color={'blue'}>
 											{t('change')}
 										</Button>
 									</Form>
 								</Grid.Column>
+								<Grid.Column />
 							</Grid>
 
 							<Divider horizontal>
 								<Header as="h4">{t('accountBtn')}</Header>
 							</Divider>
 
-							<Grid centered columns={4}>
-								<Grid.Row >
-									<Grid.Column>
-										<Button
-											type={'submit'}
-											color={'red'}
-										>
-											{t('deleteAccount')}
-										</Button>
-									</Grid.Column>
-									<Grid.Column>
-										<Button
-											type={'submit'}
-											color={'black'}
-										>
-											{t('getAccountData')}
-										</Button>
-									</Grid.Column>
-								</Grid.Row>
+							<Grid columns="equal">
+								<Grid.Column width={2} />
+								<Grid.Column width={5}>
+									<Button type={'submit'} color={'red'}>
+										{t('deleteAccount')}
+									</Button>
+								</Grid.Column>
+								<Grid.Column width={2} />
+								<Grid.Column width={6}>
+									<Button type={'submit'} color={'black'}>
+										{t('getAccountData')}
+									</Button>
+								</Grid.Column>
+								<Grid.Column width={1} />
 							</Grid>
-
 						</Container>
 					</Segment>
 				</Container>
