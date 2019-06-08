@@ -1,5 +1,4 @@
 import {
-	CHANGE_PAGE,
 	GET_COMMENTS,
 	GET_POST,
 	GET_POSTS,
@@ -17,9 +16,10 @@ const PAGE_NUMBER_INDEX = 1;
 
 export const getPosts = (boardId) => {
 	return (dispatch, getState) => {
-		const { router } = getState();
 
 		dispatch({ type: REQUEST_GET_POSTS });
+
+		const { router } = getState();
 
 		const { location } = router;
 
@@ -103,8 +103,12 @@ export const getComments = (id) => {
 	return (dispatch) => {
 		dispatch({ type: REQUEST_GET_COMMENTS });
 
+		const page = 0;
+
+		const query = `?page=${page}`;
+
 		return hiddoutViewer
-			.request(`${config.baseURL}${config.apiV1}post/${id}/comments`, {
+			.request(`${config.baseURL}${config.apiV1}post/${id}/comments${query}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json; charset=utf-8',
@@ -126,8 +130,4 @@ export const getComments = (id) => {
 
 export const replyTo = (number) => {
 	return { type: REPLY_TO, payload: { level: number } };
-};
-
-export const goPage = (number) => {
-	return { type: CHANGE_PAGE, payload: { pageNumber: number } };
 };

@@ -164,7 +164,7 @@ class Settings extends React.Component<Props, State> {
 
 							<Grid columns="equal">
 								<Grid.Column />
-								<Grid.Column width={3}>
+								<Grid.Column width={5}>
 									<Statistic size="mini">
 										<Statistic.Label>
 											{t('interface')}
@@ -172,7 +172,7 @@ class Settings extends React.Component<Props, State> {
 									</Statistic>
 									{this.getLaguageSelector()}
 								</Grid.Column>
-								<Grid.Column width={8}>
+								<Grid.Column width={6}>
 									<Statistic size="mini">
 										<Statistic.Label>
 											{t('prefer')}
