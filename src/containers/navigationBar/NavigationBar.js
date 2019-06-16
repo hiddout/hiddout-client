@@ -6,6 +6,7 @@ import {
 	Menu,
 	Button,
 	Icon,
+	Label,
 	Dropdown,
 	Responsive,
 } from 'semantic-ui-react';
@@ -76,6 +77,10 @@ class NavigationBar extends React.Component<Props, State> {
 				<span>
 					<Image avatar src={'/public/static/Hiddout.png'} />{' '}
 					{user.length > 10 ? `${user.substring(0, 6)}...` : user}
+
+					<Label color='red' floating>
+							22
+						</Label>
 				</span>
 			);
 			const options = [
