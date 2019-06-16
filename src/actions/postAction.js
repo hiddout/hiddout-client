@@ -3,11 +3,13 @@ import {
 	GET_POST,
 	GET_POSTS,
 	GET_REACTIONS,
+	SUBSCRIBED_POST,
 	REPLY_TO,
 	REQUEST_GET_COMMENTS,
 	REQUEST_GET_POST,
 	REQUEST_GET_POSTS,
 	REQUEST_GET_REACTIONS,
+	REQUEST_SUBSCRIBE,
 } from './actionType';
 import { config } from '../config';
 import { checkAuth } from './loginAction';
@@ -40,6 +42,34 @@ export const getPosts = (boardId) => {
 					checkAuth(res.status, {
 						type: GET_POSTS,
 						payload: { posts: res.posts, isLatest: res.isLatest },
+					}),
+				);
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	};
+};
+
+export const subscribePost = (subscriptionData) => {
+	return (dispatch, getState) => {
+		const { auth } = getState();
+		dispatch({ type: REQUEST_SUBSCRIBE });
+
+		return hiddoutViewer
+			.request(`${config.baseURL}${config.apiV1}user/subscribe/${subscriptionData.id}`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json; charset=utf-8',
+					authorization: auth.token,
+				},
+				body: JSON.stringify(subscriptionData),
+			})
+			.then((res) => {
+				return dispatch(
+					checkAuth(res.status, {
+						type: SUBSCRIBED_POST,
+						payload: { subscribed: res.subscribed },
 					}),
 				);
 			})
