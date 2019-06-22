@@ -58,14 +58,15 @@ export const checkAuth = (status, defaultAction, callback, callbackData) => {
 	};
 };
 
-const checkTokenRenewStatus = (status, defaultAction) => {
+const checkTokenRenewStatus = (res, defaultAction) => {
 	return (dispatch) => {
-		if (!status) {
+		if (!res.status) {
 			return dispatch(defaultAction);
 		}
 
-		switch (status) {
+		switch (res.status) {
 			case 400:
+				throw new Error('bad request');
 			case 401:
 				dispatch({ type: LOGOUT });
 				dispatch({ type: OPEN_LOGIN_MODAL });
@@ -96,7 +97,7 @@ export const renewToken = (callback, callbackData) => {
 			})
 			.then((res) => {
 				dispatch(
-					checkTokenRenewStatus(res.status, {
+					checkTokenRenewStatus(res, {
 						type: RENEW_TOKEN,
 						payload: { token: res.token },
 					}),

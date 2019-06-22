@@ -6,6 +6,7 @@ import {
 	Menu,
 	Button,
 	Icon,
+	Label,
 	Dropdown,
 	Responsive,
 } from 'semantic-ui-react';
@@ -37,8 +38,9 @@ type Props = {
 type State = {};
 
 const ACCOUNT = 1;
-const SETTINGS = 2;
-const LOGOUT = 3;
+const MESSAGES = 2;
+const SETTINGS = 3;
+const LOGOUT = 4;
 
 class NavigationBar extends React.Component<Props, State> {
 	onDropdownClick(e, { value }) {
@@ -47,6 +49,9 @@ class NavigationBar extends React.Component<Props, State> {
 				this.props.history.push(
 					`/u/${hiddoutViewer.encodeId(this.props.account.user)}`,
 				);
+				break;
+			case MESSAGES:
+				this.props.history.push('/message');
 				break;
 			case SETTINGS:
 				this.props.history.push('/settings');
@@ -76,6 +81,10 @@ class NavigationBar extends React.Component<Props, State> {
 				<span>
 					<Image avatar src={'/public/static/Hiddout.png'} />{' '}
 					{user.length > 10 ? `${user.substring(0, 6)}...` : user}
+
+					<Label color='red' floating>
+							!
+						</Label>
 				</span>
 			);
 			const options = [
@@ -94,6 +103,19 @@ class NavigationBar extends React.Component<Props, State> {
 					text: t('accountBtn'),
 					icon: 'user',
 					value: ACCOUNT,
+				},
+				{
+					key: 'message',
+					text: (
+						<span>
+						<Label color='red' floating>
+							22
+						</Label>
+							{t('messageBtn')}
+							</span>
+					),
+					icon: 'inbox',
+					value: MESSAGES,
 				},
 				{
 					key: 'settings',

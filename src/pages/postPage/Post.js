@@ -21,7 +21,7 @@ import {
 	getComments,
 	getPost,
 	getReactions,
-	replyTo,
+	replyTo, subscribePost,
 } from '../../actions/postAction';
 import { submitComment, submitReaction } from '../../actions/submitAction';
 import { withRouter } from 'react-router-dom';
@@ -70,6 +70,7 @@ type Props = {
 	requestLockPost: (Object) => any,
 	openAdminModal: () => any,
 	match: { params: { id: string } },
+	subscribePost: (Object) => any,
 };
 
 type State = {
@@ -359,7 +360,17 @@ class Post extends React.Component<Props, State> {
 					icon={null}
 					maxWidth={470}
 				/>
-				<Label as="a" color={'blue'}>
+				<Label
+					as="a"
+					color={'blue'}
+					onClick={()=>{
+						this.props.subscribePost({
+							id: this.props.match.params.id,
+							isSubscribed: true,
+							type: 'post',
+						});
+					}}
+				>
 					<Icon name="bell outline" />
 					{t('subscribe')}
 				</Label>
@@ -528,8 +539,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		submitComment: (commentData) => dispatch(submitComment(commentData)),
-		submitReaction: (reactionData) =>
-			dispatch(submitReaction(reactionData)),
+		submitReaction: (reactionData) => dispatch(submitReaction(reactionData)),
 		requestLockPost: () => dispatch(requestLockPost()),
 		requestMovePost: () => dispatch(requestMovePost()),
 		requestDeletePost: () => dispatch(requestDeletePost()),
@@ -537,6 +547,7 @@ const mapDispatchToProps = (dispatch) => {
 		getPost: (id) => dispatch(getPost(id)),
 		getReactions: (id) => dispatch(getReactions(id)),
 		getComments: (id) => dispatch(getComments(id)),
+		subscribePost: (subscriptionData) => dispatch(subscribePost(subscriptionData)),
 		replyTo: (level) => dispatch(replyTo(level)),
 	};
 };
