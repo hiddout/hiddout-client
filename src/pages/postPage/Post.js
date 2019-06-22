@@ -70,6 +70,7 @@ type Props = {
 	requestLockPost: (Object) => any,
 	openAdminModal: () => any,
 	match: { params: { id: string } },
+	subscribePost: (Object) => any,
 };
 
 type State = {
