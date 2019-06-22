@@ -1,3 +1,5 @@
+import { Container } from 'semantic-ui-react';
+import React from 'react';
 
 const resources = {
 	en: {
@@ -65,6 +67,7 @@ const resources = {
 			'userNameViolation': 'maximum 36 characters, no special character except _',
 			'passwordViolation': 'minimum eight characters, at least one uppercase letter, one lowercase letter and one number',
 			'passwordVerification': 'password is not the same, check again',
+			'By signing up, you agree to our Terms and that you have read our Privacy Policy and Content Policy.': 'By signing up, you agree to our Terms and that you have read our Privacy Policy and Content Policy.',
 		},
 	},
 	zh: {
