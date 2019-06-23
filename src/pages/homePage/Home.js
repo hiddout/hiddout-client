@@ -1,12 +1,11 @@
 // @flow
 import React from 'react';
-
-const  NavigationBar = React.lazy( () => import( '../../containers/navigationBar/NavigationBar'));
-
-import type { Node } from 'react';
-const  PostList = React.lazy( () => import( '../../containers/postList/PostList'));
 import { Container } from 'semantic-ui-react';
 
+const  NavigationBar = React.lazy( () => import( '../../containers/navigationBar/NavigationBar'));
+const  PostList = React.lazy( () => import( '../../containers/postList/PostList'));
+
+import type { Node } from 'react';
 
 type Props = {};
 

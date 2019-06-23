@@ -44,7 +44,6 @@ export const checkAuth = (status, defaultAction, callback, callbackData) => {
 			case 401:
 				if (!callback) {
 					dispatch({ type: LOGOUT });
-					dispatch({ type: OPEN_LOGIN_MODAL });
 					throw new Error('token invalid');
 				}
 				return dispatch(renewToken(callback, callbackData));
@@ -69,7 +68,6 @@ const checkTokenRenewStatus = (res, defaultAction) => {
 				throw new Error('bad request');
 			case 401:
 				dispatch({ type: LOGOUT });
-				dispatch({ type: OPEN_LOGIN_MODAL });
 				throw new Error('token invalid');
 			case 404:
 				dispatch({ type: TO_PAGE_404 });

@@ -1,6 +1,3 @@
-import { Container } from 'semantic-ui-react';
-import React from 'react';
-
 const resources = {
 	en: {
 		translation: {
