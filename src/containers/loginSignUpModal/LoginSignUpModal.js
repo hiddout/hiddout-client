@@ -9,6 +9,8 @@ import {
 	Input,
 	Label,
 	Message,
+	Container,
+	Divider,
 } from 'semantic-ui-react';
 import { t } from 'i18next';
 
@@ -235,12 +237,13 @@ class LoginSignUpModal extends React.Component<Props, State> {
 									type={'password'}
 									onChange={this.onVerifyPasswordChange.bind(this)}
 								/>
-								{!loginModalShowed &&
-									!this.state.passwordVerification && (
-										<Label basic color="red" pointing>
-											{t('passwordVerification')}
+								{!this.state.passwordVerification && (
+									<Label
+										basic color="red"
+										pointing>
+										{t('passwordVerification')}
 										</Label>
-									)}
+								)}
 							</Form.Field>
 						)}
 						<Button
@@ -250,6 +253,12 @@ class LoginSignUpModal extends React.Component<Props, State> {
 						>
 							{loginModalShowed ? t('loginBtn') : t('signupBtn')}
 						</Button>
+						{!loginModalShowed &&
+							<Container>
+								<Divider />
+								{t('By signing up, you agree to our Terms and that you have read our Privacy Policy and Content Policy.')}
+							</Container>
+						}
 					</Form>
 				</Modal.Content>
 				<Modal.Actions>
