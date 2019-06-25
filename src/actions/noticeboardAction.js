@@ -16,7 +16,6 @@ export const getSubscriptio = () => {
 				},
 			})
 			.then((res) => {
-				console.log(res);
 				return dispatch(
 					checkAuth(res.status, {
 						type: GET_SUBSCRIPTION,
