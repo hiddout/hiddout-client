@@ -273,13 +273,13 @@ class Settings extends React.Component<Props, State> {
 								<Grid.Column width={2} />
 								<Grid.Column width={5}>
 									<Button type={'submit'} color={'red'}>
-										{t('deleteAccount')}
+										{t('delete Account')}
 									</Button>
 								</Grid.Column>
 								<Grid.Column width={2} />
 								<Grid.Column width={6}>
 									<Button type={'submit'} color={'black'}>
-										{t('getAccountData')}
+										{t('get Account Data')}
 									</Button>
 								</Grid.Column>
 								<Grid.Column width={1} />

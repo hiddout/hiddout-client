@@ -82,7 +82,7 @@ class NavigationBar extends React.Component<Props, State> {
 					<Image avatar src={'/public/static/Hiddout.png'} />{' '}
 					{user.length > 10 ? `${user.substring(0, 6)}...` : user}
 
-					{this.props.account.subscriptions.length > 0 && <Label color='red' floating>!</Label>}
+					{this.props.account.subscriptionMessages.length > 0 && <Label color='red' floating>!</Label>}
 				</span>
 			);
 			const options = [
@@ -106,8 +106,8 @@ class NavigationBar extends React.Component<Props, State> {
 					key: 'message',
 					text: (
 						<span>
-							{this.props.account.subscriptions.length > 0 && <Label color='red' floating>
-								{this.props.account.subscriptions.length}
+							{this.props.account.subscriptionMessages.length > 0 && <Label color='red' floating>
+								{this.props.account.subscriptionMessages.length}
 							</Label>}
 							{t('messageBtn')}
 							</span>

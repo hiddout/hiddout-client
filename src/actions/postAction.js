@@ -9,7 +9,7 @@ import {
 	REQUEST_GET_POST,
 	REQUEST_GET_POSTS,
 	REQUEST_GET_REACTIONS,
-	REQUEST_SUBSCRIBE,
+	REQUEST_SUBSCRIBE, REQUEST_CHECK_IS_POST_SUBSCRIBED, GET_POST_SUBSCRIPTION,
 } from './actionType';
 import { config } from '../config';
 import { checkAuth } from './loginAction';
@@ -69,6 +69,34 @@ export const subscribePost = (subscriptionData) => {
 				return dispatch(
 					checkAuth(res.status, {
 						type: SUBSCRIBED_POST,
+						payload: { subscribed: res.subscribed },
+					}),
+				);
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	};
+};
+
+export const getPostSubscription = (id) => {
+	return (dispatch, getState) => {
+		const {auth} = getState();
+
+		dispatch({type: REQUEST_CHECK_IS_POST_SUBSCRIBED});
+
+		return hiddoutViewer
+			.request(`${config.baseURL}${config.apiV1}user/subscribe/${id}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json; charset=utf-8',
+					authorization: auth.token,
+				},
+			})
+			.then((res) => {
+				return dispatch(
+					checkAuth(res.status, {
+						type: GET_POST_SUBSCRIPTION,
 						payload: { subscribed: res.subscribed },
 					}),
 				);

@@ -1,9 +1,9 @@
 // @flow
 import { GET_SUBSCRIPTION, LOGIN, LOGOUT, SIGN_UP } from '../actions/actionType';
 
-export type AccountState = { user: string, subscriptions: Array<Object> };
+export type AccountState = { user: string, subscriptionMessages: Array<Object> };
 
-const account = (state: AccountState = {user: '', subscriptions:[] }, action: Action) =>
+const account = (state: AccountState = {user: '', subscriptionMessages:[] }, action: Action) =>
 	immer.produce(state, draft => {
 
 		const payload = action.payload || {};
@@ -17,7 +17,7 @@ const account = (state: AccountState = {user: '', subscriptions:[] }, action: Ac
 				draft.user = '';
 				break;
 			case GET_SUBSCRIPTION:
-				draft.subscriptions = payload.subscriptions;
+				draft.subscriptionMessages = payload.subscriptionMessages;
 				break;
 		}
 	});

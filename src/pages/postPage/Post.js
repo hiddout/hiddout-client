@@ -19,7 +19,7 @@ import {
 
 import {
 	getComments,
-	getPost,
+	getPost, getPostSubscription,
 	getReactions,
 	replyTo, subscribePost,
 } from '../../actions/postAction';
@@ -31,8 +31,8 @@ import SubmitForm from '../../component/submitForm/SubmitForm';
 import {
 	COMMENT_SUBMITTED,
 	GET_COMMENTS,
-	GET_POST,
-	REACTION_REACTED,
+	GET_POST, GET_POST_SUBSCRIPTION,
+	REACTION_REACTED, SUBSCRIBED_POST,
 } from '../../actions/actionType';
 
 const ReactMarkdown = React.lazy(() => import('react-markdown'));
@@ -62,6 +62,7 @@ type Props = {
 	getPost: (string) => any,
 	getComments: (string) => any,
 	getReactions: (string) => any,
+	getPostSubscription: (string) => any,
 	replyTo: (number) => any,
 	submitComment: (Object) => any,
 	submitReaction: (Object) => any,
@@ -77,6 +78,7 @@ type State = {
 	submitting: boolean,
 	reacted: boolean,
 	reaction: string,
+	subscriptionDone: boolean,
 };
 
 const REACT_UP = 'up';
@@ -87,6 +89,7 @@ class Post extends React.Component<Props, State> {
 	state = {
 		submitting: false,
 		reacted: false,
+		subscriptionDone: true,
 		reaction: '',
 	};
 
@@ -103,6 +106,12 @@ class Post extends React.Component<Props, State> {
 
 	async refreshPostPage() {
 		const id = this.props.match.params.id;
+		const postSubscribedRes = await this.props.getPostSubscription(id);
+
+		if (postSubscribedRes.type !== GET_POST_SUBSCRIPTION) {
+			return;
+		}
+
 		const postRes = await this.props.getPost(id);
 
 		if (postRes.type !== GET_POST) {
@@ -331,6 +340,8 @@ class Post extends React.Component<Props, State> {
 			);
 		}
 
+		const {currentPostSubscribed} = this.props.post;
+
 		return (
 			<Container textAlign="right">
 				<Responsive
@@ -362,17 +373,32 @@ class Post extends React.Component<Props, State> {
 				/>
 				<Label
 					as="a"
-					color={'blue'}
+					disabled={!this.state.subscriptionDone}
+					color={currentPostSubscribed? 'brown':'blue'}
 					onClick={()=>{
-						this.props.subscribePost({
-							id: this.props.match.params.id,
-							isSubscribed: true,
-							type: 'post',
+						if(!this.state.subscriptionDone){
+							return;
+						}
+
+						this.setState({subscriptionDone: false},async () => {
+							const postSubscribedRes = await this.props.subscribePost({
+								id: this.props.match.params.id,
+								isSubscribed: !currentPostSubscribed,
+								type: 'post',
+							});
+
+							if (postSubscribedRes.type !== SUBSCRIBED_POST) {
+								return;
+							}
+
+							this.setState({subscriptionDone: true});
 						});
+
 					}}
 				>
-					<Icon name="bell outline" />
-					{t('subscribe')}
+					{!this.state.subscriptionDone && <Icon loading name='spinner' />}
+					{this.state.subscriptionDone && <Icon name={'bell outline'} />}
+					{currentPostSubscribed? t('unsubscribe'): t('subscribe')}
 				</Label>
 				<Label as="a" color={'yellow'}>
 					<Icon name="ticket alternate" />
@@ -544,6 +570,7 @@ const mapDispatchToProps = (dispatch) => {
 		requestMovePost: () => dispatch(requestMovePost()),
 		requestDeletePost: () => dispatch(requestDeletePost()),
 		openAdminModal: () => dispatch(openAdminModal()),
+		getPostSubscription: (id) => dispatch(getPostSubscription(id)),
 		getPost: (id) => dispatch(getPost(id)),
 		getReactions: (id) => dispatch(getReactions(id)),
 		getComments: (id) => dispatch(getComments(id)),

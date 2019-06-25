@@ -20,7 +20,7 @@ export const getSubscriptio = () => {
 				return dispatch(
 					checkAuth(res.status, {
 						type: GET_SUBSCRIPTION,
-						payload: { subscriptions: res.subscriptions },
+						payload: { subscriptionMessages: res.subscriptionMessages },
 					}),
 				);
 			})
