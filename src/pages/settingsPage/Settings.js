@@ -18,6 +18,7 @@ import { t } from 'i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { changeLanguage } from '../../actions/i18nAction';
+import { changePassword } from '../../actions/loginAction';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -26,9 +27,11 @@ const NavigationBar = React.lazy(() =>
 type Props = {
 	i18n: Object,
 	changeLanguage: (string) => any,
+	changePassword: (Object) => any,
 };
 
 type State = {
+	oldPassword:string,
 	password: string,
 	passwordVerify: string,
 	passwordViolation: boolean,
@@ -42,6 +45,7 @@ const CHINESE = '中文',
 
 class Settings extends React.Component<Props, State> {
 	state = {
+		oldPassword:'',
 		password: '',
 		passwordVerify: '',
 		passwordViolation: false,
@@ -129,6 +133,18 @@ class Settings extends React.Component<Props, State> {
 		this.setState({ passwordVerify: value, passwordVerification: true });
 	}
 
+	onOldPasswordChange(e, { value }) {
+		if (
+			!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/.test(
+				value,
+			)
+		) {
+			return;
+		}
+
+		this.setState({ oldPassword: value });
+	}
+
 	onPasswordChange(e, { value }) {
 		if (
 			!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/.test(
@@ -140,6 +156,28 @@ class Settings extends React.Component<Props, State> {
 		}
 
 		this.setState({ password: value, passwordViolation: false });
+	}
+
+	onChangePasswordClick() {
+
+		if(this.state.passwordViolation || this.state.password.length === 0){
+			return;
+		}
+
+		const md: Object = forge.md.sha256.create();
+		md.update(this.state.oldPassword);
+		const opwh = md.digest().toHex();
+
+		const nmd: Object = forge.md.sha256.create();
+		nmd.update(this.state.password);
+		const npwh = nmd.digest().toHex();
+
+		const pwhData = {
+			old:opwh,
+			new:npwh,
+		};
+
+		this.props.changePassword(pwhData);
 	}
 
 	render() {
@@ -201,6 +239,9 @@ class Settings extends React.Component<Props, State> {
 											<Input
 												placeholder={t('OLD PASSWORD')}
 												type={'password'}
+												onChange={this.onOldPasswordChange.bind(
+													this,
+												)}
 											/>
 										</Form.Field>
 										{
@@ -257,8 +298,12 @@ class Settings extends React.Component<Props, State> {
 												)}
 											</Form.Field>
 										}
-										<Button type={'submit'} color={'blue'}>
-											{t('change')}
+										<Button
+											type={'submit'}
+											color={'blue'}
+											onClick={this.onChangePasswordClick.bind(this)}
+										>
+											{t('Change Password')}
 										</Button>
 									</Form>
 								</Grid.Column>
@@ -271,12 +316,12 @@ class Settings extends React.Component<Props, State> {
 
 							<Grid columns="equal">
 								<Grid.Column width={2} />
-								<Grid.Column width={5}>
+								<Grid.Column width={6}>
 									<Button type={'submit'} color={'red'}>
 										{t('delete Account')}
 									</Button>
 								</Grid.Column>
-								<Grid.Column width={2} />
+								<Grid.Column width={1} />
 								<Grid.Column width={6}>
 									<Button type={'submit'} color={'black'}>
 										{t('get Account Data')}
@@ -300,6 +345,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		changePassword: (pwhData) => dispatch(changePassword(pwhData)),
 		changeLanguage: (lng) => dispatch(changeLanguage(lng)),
 	};
 };

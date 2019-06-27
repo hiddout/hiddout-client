@@ -9,7 +9,9 @@ import {
 	REQUEST_GET_POST,
 	REQUEST_GET_POSTS,
 	REQUEST_GET_REACTIONS,
-	REQUEST_SUBSCRIBE, REQUEST_CHECK_IS_POST_SUBSCRIBED, GET_POST_SUBSCRIPTION,
+	REQUEST_SUBSCRIBE,
+	REQUEST_CHECK_IS_POST_SUBSCRIBED,
+	GET_POST_SUBSCRIPTION,
 } from './actionType';
 import { config } from '../config';
 import { checkAuth } from './loginAction';
@@ -18,14 +20,15 @@ const PAGE_NUMBER_INDEX = 1;
 
 export const getPosts = (boardId) => {
 	return (dispatch, getState) => {
-
 		dispatch({ type: REQUEST_GET_POSTS });
 
 		const { router } = getState();
 
 		const { location } = router;
 
-		const page = location.search.length ? location.search.split('=')[PAGE_NUMBER_INDEX] : 0;
+		const page = location.search.length
+			? location.search.split('=')[PAGE_NUMBER_INDEX]
+			: 0;
 		const board = boardId ? `&board=${boardId}` : '';
 
 		const query = `?page=${page}${board}`;
@@ -57,20 +60,30 @@ export const subscribePost = (subscriptionData) => {
 		dispatch({ type: REQUEST_SUBSCRIBE });
 
 		return hiddoutViewer
-			.request(`${config.baseURL}${config.apiV1}user/subscribe/${subscriptionData.id}`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json; charset=utf-8',
-					authorization: auth.token,
+			.request(
+				`${config.baseURL}${config.apiV1}user/subscribe/${
+					subscriptionData.id
+				}`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json; charset=utf-8',
+						authorization: auth.token,
+					},
+					body: JSON.stringify(subscriptionData),
 				},
-				body: JSON.stringify(subscriptionData),
-			})
+			)
 			.then((res) => {
 				return dispatch(
-					checkAuth(res.status, {
-						type: SUBSCRIBED_POST,
-						payload: { subscribed: res.subscribed },
-					}),
+					checkAuth(
+						res.status,
+						{
+							type: SUBSCRIBED_POST,
+							payload: { subscribed: res.subscribed },
+						},
+						subscribePost,
+						subscriptionData,
+					),
 				);
 			})
 			.catch((e) => {
@@ -81,9 +94,9 @@ export const subscribePost = (subscriptionData) => {
 
 export const getPostSubscription = (id) => {
 	return (dispatch, getState) => {
-		const {auth} = getState();
+		const { auth } = getState();
 
-		dispatch({type: REQUEST_CHECK_IS_POST_SUBSCRIBED});
+		dispatch({ type: REQUEST_CHECK_IS_POST_SUBSCRIBED });
 
 		return hiddoutViewer
 			.request(`${config.baseURL}${config.apiV1}user/subscribe/${id}`, {
@@ -95,10 +108,15 @@ export const getPostSubscription = (id) => {
 			})
 			.then((res) => {
 				return dispatch(
-					checkAuth(res.status, {
-						type: GET_POST_SUBSCRIPTION,
-						payload: { subscribed: res.subscribed },
-					}),
+					checkAuth(
+						res.status,
+						{
+							type: GET_POST_SUBSCRIPTION,
+							payload: { subscribed: res.subscribed },
+						},
+						getPostSubscription,
+						id,
+					),
 				);
 			})
 			.catch((e) => {
@@ -133,7 +151,8 @@ export const getPost = (id) => {
 };
 
 export const getReactions = (id) => {
-	return (dispatch) => {
+	return (dispatch, getState) => {
+		const { auth } = getState();
 		dispatch({ type: REQUEST_GET_REACTIONS });
 
 		return hiddoutViewer
@@ -141,6 +160,7 @@ export const getReactions = (id) => {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json; charset=utf-8',
+					authorization: auth.token,
 				},
 			})
 			.then((res) => {
@@ -166,12 +186,15 @@ export const getComments = (id) => {
 		const query = `?page=${page}`;
 
 		return hiddoutViewer
-			.request(`${config.baseURL}${config.apiV1}post/${id}/comments${query}`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json; charset=utf-8',
+			.request(
+				`${config.baseURL}${config.apiV1}post/${id}/comments${query}`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json; charset=utf-8',
+					},
 				},
-			})
+			)
 			.then((res) => {
 				return dispatch(
 					checkAuth(res.status, {

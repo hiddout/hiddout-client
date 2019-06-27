@@ -56,7 +56,7 @@ module.exports = {
 		}),
 		new HtmlWebpackPlugin({
 			filename: '../index.[hash].html',
-			template: 'index.html'
+			template: 'index.html',
 		}),
 	],
 };

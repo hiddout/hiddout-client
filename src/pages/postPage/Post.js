@@ -17,29 +17,19 @@ import {
 	Responsive,
 } from 'semantic-ui-react';
 
+import { submitComment, submitReaction } from '../../actions/submitAction';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { t } from 'i18next';
+import SubmitForm from '../../component/submitForm/SubmitForm';
+
 import {
 	getComments,
 	getPost, getPostSubscription,
 	getReactions,
 	replyTo, subscribePost,
 } from '../../actions/postAction';
-import { submitComment, submitReaction } from '../../actions/submitAction';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { t } from 'i18next';
-import SubmitForm from '../../component/submitForm/SubmitForm';
-import {
-	COMMENT_SUBMITTED,
-	GET_COMMENTS,
-	GET_POST, GET_POST_SUBSCRIPTION,
-	REACTION_REACTED, SUBSCRIBED_POST,
-} from '../../actions/actionType';
 
-const ReactMarkdown = React.lazy(() => import('react-markdown'));
-
-import type { PostState } from '../../reducers/post';
-import type { AuthState } from '../../reducers/auth';
-import type { AccountState } from '../../reducers/account';
 import {
 	openAdminModal,
 	requestDeletePost,
@@ -47,12 +37,25 @@ import {
 	requestMovePost,
 } from '../../actions/adminAction';
 
+import {
+	COMMENT_SUBMITTED,
+	GET_COMMENTS,
+	GET_POST,
+	REACTION_REACTED, SUBSCRIBED_POST,
+} from '../../actions/actionType';
+
+const ReactMarkdown = React.lazy(() => import('react-markdown'));
+
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
 );
 const CommentSection = React.lazy(() =>
 	import('../../containers/commentSection/CommentSection'),
 );
+
+import type { PostState } from '../../reducers/post';
+import type { AuthState } from '../../reducers/auth';
+import type { AccountState } from '../../reducers/account';
 
 type Props = {
 	auth: AuthState,
@@ -105,11 +108,11 @@ class Post extends React.Component<Props, State> {
 	}
 
 	async refreshPostPage() {
-		const id = this.props.match.params.id;
-		const postSubscribedRes = await this.props.getPostSubscription(id);
+		const { auth, match } = this.props;
+		const id = match.params.id;
 
-		if (postSubscribedRes.type !== GET_POST_SUBSCRIPTION) {
-			return;
+		if(auth.isAuth) {
+			await this.props.getPostSubscription(id);
 		}
 
 		const postRes = await this.props.getPost(id);
@@ -124,10 +127,12 @@ class Post extends React.Component<Props, State> {
 			return;
 		}
 
-		this.props.getReactions(id);
+		if(auth.isAuth) {
+			this.props.getReactions(id);
+		}
 	}
 
-	getPlaceholderContent(): Node {
+	static getPlaceholderContent(): Node {
 		const placeholderContent = (
 			<Placeholder>
 				<Placeholder.Paragraph>
@@ -189,7 +194,7 @@ class Post extends React.Component<Props, State> {
 	getReactionButtons(): Node {
 		const { currentPost, reactions } = this.props.post;
 
-		if (!currentPost || !reactions) {
+		if (!currentPost) {
 			return (
 				<Placeholder style={{ height: 40, width: 200 }}>
 					<Placeholder.Image />
@@ -202,25 +207,27 @@ class Post extends React.Component<Props, State> {
 			disableDown = false,
 			disableLOL = false;
 
-		for (const reactInfo of reactions) {
-			if (reactInfo.userId === this.props.account.user) {
-				reacted = reactInfo.reaction;
-				break;
+		if(reactions) {
+			for (const reactInfo of reactions) {
+				if (reactInfo.userId === this.props.account.user) {
+					reacted = reactInfo.reaction;
+					break;
+				}
 			}
-		}
 
-		switch (reacted) {
-			case REACT_UP:
-				disabledUp = true;
-				break;
-			case REACT_DOWN:
-				disableDown = true;
-				break;
-			case REACT_LOL:
-				disableLOL = true;
-				break;
-			default:
-				break;
+			switch (reacted) {
+				case REACT_UP:
+					disabledUp = true;
+					break;
+				case REACT_DOWN:
+					disableDown = true;
+					break;
+				case REACT_LOL:
+					disableLOL = true;
+					break;
+				default:
+					break;
+			}
 		}
 
 		return (
@@ -424,7 +431,7 @@ class Post extends React.Component<Props, State> {
 		const { isAuth } = this.props.auth;
 
 		if (!currentPost) {
-			return this.getPlaceholderContent();
+			return Post.getPlaceholderContent();
 		}
 
 		const markdown = currentPost.content;

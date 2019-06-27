@@ -1,5 +1,5 @@
 // @flow
-import { LOGIN, LOGOUT, TO_PAGE_404, SIGN_UP, PAGE_404, RENEW_TOKEN } from '../actions/actionType';
+import { LOGIN, LOGOUT, TO_PAGE_404, SIGN_UP, PAGE_404, RENEW_TOKEN, PASSWORD_CHANGED } from '../actions/actionType';
 
 export type AuthState = { token: string, tokenKey: string, isAuth: boolean, show404: boolean, isAdmin: boolean, isModerator:boolean };
 
@@ -20,6 +20,7 @@ const auth = (state: AuthState = { token: '', tokenKey: '',isAuth: false, show40
 				draft.tokenKey = payload.tokenKey;
 				draft.isAuth = true;
 				break;
+			case PASSWORD_CHANGED:
 			case LOGIN:
 				draft.token = `bearer ${payload.token}`;
 				draft.tokenKey = payload.tokenKey;

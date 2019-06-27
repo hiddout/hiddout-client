@@ -8,7 +8,7 @@ import {
 	TO_PAGE_404,
 	REQUEST_LOGIN,
 	SIGN_UP,
-	RENEW_TOKEN,
+	RENEW_TOKEN, REQUEST_CHANGE_PASSWORD, PASSWORD_CHANGED,
 } from './actionType';
 import { config } from '../config';
 
@@ -101,6 +101,44 @@ export const renewToken = (callback, callbackData) => {
 					}),
 				);
 				return dispatch(callback(callbackData));
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	};
+};
+
+export const changePassword = (pwhData) => {
+	return (dispatch, getState) => {
+		const { auth } = getState();
+		dispatch({type: REQUEST_CHANGE_PASSWORD});
+
+		return hiddoutViewer
+			.request(`${config.baseURL}${config.apiV1}changePassWord`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json; charset=utf-8',
+					authorization: auth.token,
+				},
+				body: JSON.stringify({ ...pwhData }),
+			})
+			.then((res) => {
+				return dispatch(
+					checkAuth(res.status, (dispatch) => {
+						if(!res.changed){
+							throw Error('password not changed');
+						}
+
+						return dispatch({
+							type: PASSWORD_CHANGED,
+							payload: {
+								token: res.token,
+								tokenKey: res.tokenKey,
+								isAdmin: res.isAdmin,
+							},
+						});
+					},changePassword,pwhData),
+				);
 			})
 			.catch((e) => {
 				console.error(e);

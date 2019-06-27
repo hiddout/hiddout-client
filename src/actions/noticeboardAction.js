@@ -17,10 +17,16 @@ export const getSubscriptio = () => {
 			})
 			.then((res) => {
 				return dispatch(
-					checkAuth(res.status, {
-						type: GET_SUBSCRIPTION,
-						payload: { subscriptionMessages: res.subscriptionMessages },
-					}),
+					checkAuth(
+						res.status,
+						{
+							type: GET_SUBSCRIPTION,
+							payload: {
+								subscriptionMessages: res.subscriptionMessages,
+							},
+						},
+						getSubscriptio,
+					),
 				);
 			})
 			.catch((e) => {
