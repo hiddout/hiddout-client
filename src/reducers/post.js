@@ -1,18 +1,39 @@
 // @flow
 import {
 	GET_COMMENTS,
-	GET_POST, GET_POST_SUBSCRIPTION,
-	GET_POSTS, GET_REACTIONS,
+	GET_POST,
+	GET_POST_SUBSCRIPTION,
+	GET_POSTS,
+	GET_REACTIONS,
 	REPLY_TO,
 	REQUEST_GET_POST,
-	REQUEST_GET_POSTS, SUBSCRIBED_POST,
+	REQUEST_GET_POSTS,
+	SUBSCRIBED_POST,
 } from '../actions/actionType';
 
-export type PostState = { currentPostSubscribed: boolean, isLoading: boolean, posts: Array<Object>, reactions: null | Array<Object>, comments: Array<Object>, currentPost: Object|null, replyTo: number };
+export type PostState = {
+	currentPostSubscribed: boolean,
+	isLoading: boolean,
+	posts: Array<Object>,
+	reactions: null | Array<Object>,
+	comments: Array<Object>,
+	currentPost: Object | null,
+	replyTo: number,
+};
 
-const post = (state: PostState = { currentPostSubscribed: false, isLoading: false, posts: [], reactions: null, comments: [], currentPost: null, replyTo: 0 }, action: Action) =>
-	immer.produce(state, draft => {
-
+const post = (
+	state: PostState = {
+		currentPostSubscribed: false,
+		isLoading: false,
+		posts: [],
+		reactions: null,
+		comments: [],
+		currentPost: null,
+		replyTo: 0,
+	},
+	action: Action,
+) =>
+	immer.produce(state, (draft) => {
 		const payload = action.payload || {};
 
 		switch (action.type) {
@@ -46,7 +67,7 @@ const post = (state: PostState = { currentPostSubscribed: false, isLoading: fals
 				draft.reactions = payload.reactions;
 				break;
 			case REPLY_TO:
-				if(state.replyTo === payload.level){
+				if (state.replyTo === payload.level) {
 					draft.replyTo = 0;
 				} else {
 					draft.replyTo = payload.level;

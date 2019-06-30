@@ -17,7 +17,7 @@ import {
 import { t } from 'i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { changeLanguage } from '../../actions/i18nAction';
+import { changeLanguage, changePrefer } from '../../actions/i18nAction';
 import { changePassword } from '../../actions/loginAction';
 
 const NavigationBar = React.lazy(() =>
@@ -28,6 +28,7 @@ type Props = {
 	i18n: Object,
 	changeLanguage: (string) => any,
 	changePassword: (Object) => any,
+	changePrefer: (Array<string>) => any,
 };
 
 type State = {
@@ -52,7 +53,7 @@ class Settings extends React.Component<Props, State> {
 		passwordVerification: true,
 	};
 
-	onDropdownClick(e, { value }) {
+	onInterfaceClick(e, { value }) {
 		switch (value) {
 			case CHINESE:
 				this.props.changeLanguage('zh');
@@ -71,7 +72,11 @@ class Settings extends React.Component<Props, State> {
 		}
 	}
 
-	getLaguageSelector() {
+	onPreferClick(e, { value }) {
+		this.props.changePrefer(value);
+	}
+
+	getLanguageSelector() {
 		const { language } = this.props.i18n;
 
 		const trigger = <span>{t(language)}</span>;
@@ -113,7 +118,7 @@ class Settings extends React.Component<Props, State> {
 		return (
 			<Menu.Item>
 				<Dropdown
-					onChange={this.onDropdownClick.bind(this)}
+					onChange={this.onInterfaceClick.bind(this)}
 					trigger={trigger}
 					options={options}
 				/>
@@ -208,7 +213,7 @@ class Settings extends React.Component<Props, State> {
 											{t('interface')}
 										</Statistic.Label>
 									</Statistic>
-									{this.getLaguageSelector()}
+									{this.getLanguageSelector()}
 								</Grid.Column>
 								<Grid.Column width={6}>
 									<Statistic size="mini">
@@ -222,6 +227,8 @@ class Settings extends React.Component<Props, State> {
 										multiple
 										selection
 										options={options}
+										value={this.props.i18n.prefer}
+										onChange={this.onPreferClick.bind(this)}
 									/>
 								</Grid.Column>
 								<Grid.Column />
@@ -347,6 +354,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		changePassword: (pwhData) => dispatch(changePassword(pwhData)),
 		changeLanguage: (lng) => dispatch(changeLanguage(lng)),
+		changePrefer: (prefer) => dispatch(changePrefer(prefer)),
 	};
 };
 
