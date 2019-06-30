@@ -17,7 +17,11 @@ class FooterPage extends React.Component<Props, State> {
 							<Grid.Column width={3}>
 								<Header inverted as="h4" content="About" />
 								<List link inverted>
-									<List.Item as="a">
+									<List.Item
+										as="a"
+										target="_blank"
+										href="https://github.com/hiddout/hiddout-policies/blob/master/UserAgreement.md"
+									>
 										What is Hiddout
 									</List.Item>
 									<List.Item as="a">Contact Us</List.Item>
@@ -26,8 +30,16 @@ class FooterPage extends React.Component<Props, State> {
 							<Grid.Column width={3}>
 								<Header inverted as="h4" content="Services" />
 								<List link inverted>
-									<List.Item as="a">GDPR</List.Item>
-									<List.Item as="a">Content Policy</List.Item>
+									<List.Item
+										as="a"
+										target="_blank"
+										href="https://github.com/hiddout/hiddout-policies/blob/master/PrivacyPolicy.md"
+									>GDPR</List.Item>
+									<List.Item
+										as="a"
+										target="_blank"
+										href="https://github.com/hiddout/hiddout-policies/blob/master/ContentPolicy.md"
+									>Content Policy</List.Item>
 								</List>
 							</Grid.Column>
 							<Grid.Column width={7}>
