@@ -34,7 +34,7 @@ export const getPosts = (boardId) => {
 
 		const board = boardId ? `&board=${boardId}` : '';
 
-		const preferLanguage = prefer.length? `&prefer=${prefer.join()}`: '';
+		const preferLanguage = (prefer && prefer.length)? `&prefer=${prefer.join()}`: '';
 
 		const query = `?page=${page}${board}${preferLanguage}`;
 
