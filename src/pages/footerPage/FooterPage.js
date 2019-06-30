@@ -33,11 +33,13 @@ class FooterPage extends React.Component<Props, State> {
 									<List.Item
 										as="a"
 										target="_blank"
+										rel="noopener noreferrer"
 										href="https://github.com/hiddout/hiddout-policies/blob/master/PrivacyPolicy.md"
 									>GDPR</List.Item>
 									<List.Item
 										as="a"
 										target="_blank"
+										rel="noopener noreferrer"
 										href="https://github.com/hiddout/hiddout-policies/blob/master/ContentPolicy.md"
 									>Content Policy</List.Item>
 								</List>
