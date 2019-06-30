@@ -22,16 +22,21 @@ export const getPosts = (boardId) => {
 	return (dispatch, getState) => {
 		dispatch({ type: REQUEST_GET_POSTS });
 
-		const { router } = getState();
+		const { router, i18n } = getState();
 
 		const { location } = router;
+
+		const { prefer } = i18n;
 
 		const page = location.search.length
 			? location.search.split('=')[PAGE_NUMBER_INDEX]
 			: 0;
+
 		const board = boardId ? `&board=${boardId}` : '';
 
-		const query = `?page=${page}${board}`;
+		const preferLanguage = (prefer && prefer.length)? `&prefer=${prefer.join()}`: '';
+
+		const query = `?page=${page}${board}${preferLanguage}`;
 
 		return hiddoutViewer
 			.request(`${config.baseURL}${config.apiV1}posts${query}`, {

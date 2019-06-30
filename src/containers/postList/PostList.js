@@ -37,10 +37,18 @@ class PostList extends React.Component<Props, State> {
 	render() {
 		const { posts, isLoading } = this.props.post;
 
-		if (!posts || !posts.length) {
+		if (isLoading && (!posts || !posts.length)) {
 			return (
 				<Segment>
 					<Loader active inline="centered" />
+				</Segment>
+			);
+		}
+
+		if(!isLoading && !posts.length){
+			return (
+				<Segment>
+					<h3> No post found or change your language filter </h3>
 				</Segment>
 			);
 		}
