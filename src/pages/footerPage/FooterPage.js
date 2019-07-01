@@ -24,7 +24,12 @@ class FooterPage extends React.Component<Props, State> {
 									>
 										What is Hiddout
 									</List.Item>
-									<List.Item as="a">Contact Us</List.Item>
+									<List.Item
+										as="a"
+										target="_blank"
+										rel="noopener noreferrer"
+										href="https://github.com/hiddout/hiddout-policies/issues"
+									>Contact Us</List.Item>
 								</List>
 							</Grid.Column>
 							<Grid.Column width={3}>
