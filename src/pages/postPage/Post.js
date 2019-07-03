@@ -26,7 +26,7 @@ import SubmitForm from '../../component/submitForm/SubmitForm';
 import {
 	getComments,
 	getPost, getPostSubscription,
-	getReactions,
+	getReactions, hidePost,
 	replyTo, subscribePost,
 } from '../../actions/postAction';
 
@@ -67,6 +67,7 @@ type Props = {
 	getReactions: (string) => any,
 	getPostSubscription: (string) => any,
 	replyTo: (number) => any,
+	hidePost: (string) => any,
 	submitComment: (Object) => any,
 	submitReaction: (Object) => any,
 	requestMovePost: (Object) => any,
@@ -413,7 +414,16 @@ class Post extends React.Component<Props, State> {
 				</Label>
 
 				<Responsive as={React.Fragment} minWidth={471}>
-					<Label as="a" color={'orange'}>
+					<Label
+						as="a"
+						color={'orange'}
+						onClick={() => {
+							const { currentPost } = this.props.post;
+							if(currentPost) {
+								this.props.hidePost(currentPost._id);
+							}
+						}}
+					>
 						<Icon name="ban" />
 						{t('hide')}
 					</Label>
@@ -582,6 +592,7 @@ const mapDispatchToProps = (dispatch) => {
 		getReactions: (id) => dispatch(getReactions(id)),
 		getComments: (id) => dispatch(getComments(id)),
 		subscribePost: (subscriptionData) => dispatch(subscribePost(subscriptionData)),
+		hidePost: (id) => dispatch(hidePost(id)),
 		replyTo: (level) => dispatch(replyTo(level)),
 	};
 };
