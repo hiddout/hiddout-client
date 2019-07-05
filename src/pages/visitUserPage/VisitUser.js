@@ -16,6 +16,7 @@ import {
 	Dropdown,
 } from 'semantic-ui-react';
 import type { UserState } from '../../reducers/visitUser';
+import type { AccountState } from '../../reducers/account';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -23,6 +24,7 @@ const NavigationBar = React.lazy(() =>
 
 type Props = {
 	match: Object,
+	account: AccountState,
 	visitUser: UserState,
 	getUser: (string) => any,
 };
@@ -155,7 +157,6 @@ class VisitUser extends React.Component<Props, State> {
 
 const mapStateToProps = (state) => {
 	return {
-		auth: state.auth,
 		account: state.account,
 		visitUser: state.visitUser,
 	};
