@@ -79,7 +79,12 @@ class NavigationBar extends React.Component<Props, State> {
 		if (isAuth) {
 			const trigger = (
 				<span>
-					<Image avatar src={'/public/static/Hiddout.png'} />{' '}
+					<Image
+						avatar
+						src="/public/static/images/avatar/user/0.png"
+						circular
+						style={{ backgroundColor: 'gray' }}
+					/>{' '}
 					{user.length > 10 ? `${user.substring(0, 6)}...` : user}
 
 					{this.props.account.subscriptionMessages.length > 0 && <Label color='red' floating>!</Label>}
