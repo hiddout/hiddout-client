@@ -21,7 +21,6 @@ import type { AuthState } from '../../reducers/auth';
 
 import BoardSelector from '../../component/boardSelector/BoardSelector';
 import type { AccountState } from '../../reducers/account';
-import { getUserColor } from '../../utils/commonUtil';
 
 const Nav = (props) => <NavLink exact {...props} activeClassName="active" />;
 
@@ -81,7 +80,7 @@ class NavigationBar extends React.Component<Props, State> {
 
 			const trigger = (
 				<span>
-					<Label circular empty style={{backgroundColor: getUserColor(user)}} />{' '}
+					<Icon name={'caret down'}/>
 					{user.length > 10 ? `${user.substring(0, 6)}...` : user}
 
 					{this.props.account.subscriptionMessages.length > 0 && <Label color='red' floating>!</Label>}
