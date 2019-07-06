@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { changeLanguage, changePrefer } from '../../actions/i18nAction';
 import { changePassword } from '../../actions/loginAction';
+import LanguageSelector from '../../component/languageSelector/LanguageSelector';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -39,11 +40,6 @@ type State = {
 	passwordVerification: boolean,
 };
 
-const CHINESE = '中文',
-	SWEDISH = 'Svenska',
-	ENGLISH = 'English',
-	GERMAN = 'Deutsch';
-
 class Settings extends React.Component<Props, State> {
 	state = {
 		oldPassword:'',
@@ -53,23 +49,8 @@ class Settings extends React.Component<Props, State> {
 		passwordVerification: true,
 	};
 
-	onInterfaceClick(e, { value }) {
-		switch (value) {
-			case CHINESE:
-				this.props.changeLanguage('zh');
-				break;
-			case ENGLISH:
-				this.props.changeLanguage('en');
-				break;
-			case SWEDISH:
-				this.props.changeLanguage('sv');
-				break;
-			case GERMAN:
-				this.props.changeLanguage('de');
-				break;
-			default:
-				break;
-		}
+	onLanguageClick( value ) {
+		this.props.changeLanguage(value);
 	}
 
 	onPreferClick(e, { value }) {
@@ -79,49 +60,9 @@ class Settings extends React.Component<Props, State> {
 	getLanguageSelector() {
 		const { language } = this.props.i18n;
 
-		const trigger = <span>{t(language)}</span>;
-		const options = [
-			{
-				key: 'userId',
-				text: (
-					<span style={{ color: 'gray' }}>
-						{'current using '}
-						<strong style={{ color: 'green' }}>
-							{t(language)}
-						</strong>
-					</span>
-				),
-				value: 0,
-			},
-			{
-				key: CHINESE,
-				text: CHINESE,
-				value: CHINESE,
-			},
-			{
-				key: ENGLISH,
-				text: ENGLISH,
-				value: ENGLISH,
-			},
-			{
-				key: SWEDISH,
-				text: SWEDISH,
-				value: SWEDISH,
-			},
-			{
-				key: GERMAN,
-				text: GERMAN,
-				value: GERMAN,
-			},
-		];
-
 		return (
 			<Menu.Item>
-				<Dropdown
-					onChange={this.onInterfaceClick.bind(this)}
-					trigger={trigger}
-					options={options}
-				/>
+				<LanguageSelector language={language} onChange={this.onLanguageClick.bind(this)}/>
 			</Menu.Item>
 		);
 	}

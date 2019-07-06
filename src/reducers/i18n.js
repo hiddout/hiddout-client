@@ -3,7 +3,7 @@ import { CHANGE_LANGUAGE,CHANGE_PREFER } from '../actions/actionType';
 
 type State = { language: string, prefer: Array<string> };
 
-const initState = { language: 'en', prefer: [] };
+const initState = { language: navigator.language.split('-')[0], prefer: [] };
 
 const i18n = (state: State = initState, action: Action) =>
 	immer.produce(state, (draft) => {

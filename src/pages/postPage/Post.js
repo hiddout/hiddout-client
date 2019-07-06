@@ -25,13 +25,16 @@ import SubmitForm from '../../component/submitForm/SubmitForm';
 
 import {
 	getComments,
-	getPost, getPostSubscription,
-	getReactions, hidePost,
-	replyTo, subscribePost,
+	getPost,
+	getPostSubscription,
+	getReactions,
+	hidePost,
+	replyTo,
+	subscribePost,
 } from '../../actions/postAction';
 
 import {
-	openAdminModal,
+	openAdminModal, requestChangePostLanguage,
 	requestDeletePost,
 	requestLockPost,
 	requestMovePost,
@@ -41,7 +44,8 @@ import {
 	COMMENT_SUBMITTED,
 	GET_COMMENTS,
 	GET_POST,
-	REACTION_REACTED, SUBSCRIBED_POST,
+	REACTION_REACTED,
+	SUBSCRIBED_POST,
 } from '../../actions/actionType';
 
 const ReactMarkdown = React.lazy(() => import('react-markdown'));
@@ -70,9 +74,10 @@ type Props = {
 	hidePost: (string) => any,
 	submitComment: (Object) => any,
 	submitReaction: (Object) => any,
-	requestMovePost: (Object) => any,
-	requestDeletePost: (Object) => any,
-	requestLockPost: (Object) => any,
+	requestMovePost: () => any,
+	requestDeletePost: () => any,
+	requestLockPost: () => any,
+	requestChangePostLanguage: () => any,
 	openAdminModal: () => any,
 	match: { params: { id: string } },
 	subscribePost: (Object) => any,
@@ -112,7 +117,7 @@ class Post extends React.Component<Props, State> {
 		const { auth, match } = this.props;
 		const id = match.params.id;
 
-		if(auth.isAuth) {
+		if (auth.isAuth) {
 			await this.props.getPostSubscription(id);
 		}
 
@@ -128,7 +133,7 @@ class Post extends React.Component<Props, State> {
 			return;
 		}
 
-		if(auth.isAuth) {
+		if (auth.isAuth) {
 			this.props.getReactions(id);
 		}
 	}
@@ -208,7 +213,7 @@ class Post extends React.Component<Props, State> {
 			disableDown = false,
 			disableLOL = false;
 
-		if(reactions) {
+		if (reactions) {
 			for (const reactInfo of reactions) {
 				if (reactInfo.userId === this.props.account.user) {
 					reacted = reactInfo.reaction;
@@ -348,7 +353,7 @@ class Post extends React.Component<Props, State> {
 			);
 		}
 
-		const {currentPostSubscribed} = this.props.post;
+		const { currentPostSubscribed } = this.props.post;
 
 		return (
 			<Container textAlign="right">
@@ -382,31 +387,36 @@ class Post extends React.Component<Props, State> {
 				<Label
 					as="a"
 					disabled={!this.state.subscriptionDone}
-					color={currentPostSubscribed? 'brown':'blue'}
-					onClick={()=>{
-						if(!this.state.subscriptionDone){
+					color={currentPostSubscribed ? 'brown' : 'blue'}
+					onClick={() => {
+						if (!this.state.subscriptionDone) {
 							return;
 						}
 
-						this.setState({subscriptionDone: false},async () => {
-							const postSubscribedRes = await this.props.subscribePost({
-								id: this.props.match.params.id,
-								isSubscribed: !currentPostSubscribed,
-								type: 'post',
-							});
+						this.setState({ subscriptionDone: false }, async () => {
+							const postSubscribedRes = await this.props.subscribePost(
+								{
+									id: this.props.match.params.id,
+									isSubscribed: !currentPostSubscribed,
+									type: 'post',
+								},
+							);
 
 							if (postSubscribedRes.type !== SUBSCRIBED_POST) {
 								return;
 							}
 
-							this.setState({subscriptionDone: true});
+							this.setState({ subscriptionDone: true });
 						});
-
 					}}
 				>
-					{!this.state.subscriptionDone && <Icon loading name='spinner' />}
-					{this.state.subscriptionDone && <Icon name={'bell outline'} />}
-					{currentPostSubscribed? t('unsubscribe'): t('subscribe')}
+					{!this.state.subscriptionDone && (
+						<Icon loading name="spinner" />
+					)}
+					{this.state.subscriptionDone && (
+						<Icon name={'bell outline'} />
+					)}
+					{currentPostSubscribed ? t('unsubscribe') : t('subscribe')}
 				</Label>
 				<Label as="a" color={'yellow'}>
 					<Icon name="ticket alternate" />
@@ -419,7 +429,7 @@ class Post extends React.Component<Props, State> {
 						color={'orange'}
 						onClick={() => {
 							const { currentPost } = this.props.post;
-							if(currentPost) {
+							if (currentPost) {
 								this.props.hidePost(currentPost._id);
 							}
 						}}
@@ -438,7 +448,7 @@ class Post extends React.Component<Props, State> {
 
 	getContent(): Node {
 		const { currentPost, comments, replyTo } = this.props.post;
-		const { isAuth } = this.props.auth;
+		const { isAuth, isAdmin } = this.props.auth;
 
 		if (!currentPost) {
 			return Post.getPlaceholderContent();
@@ -451,14 +461,14 @@ class Post extends React.Component<Props, State> {
 			<React.Fragment>
 				<Container textAlign="left">
 					<Label basic color="black">
-						{`${t('b/')}:`}
+						{`${t('b/')}:`}{' '}
 						<Label color={'teal'}>
 							<a
 								style={{ opacity: 1 }}
 								href={`/b/${currentPost.board}`}
 							>{`${t(`${currentPost.board}Board`)}`}</a>
-						</Label>
-						{`${t('postBy')}:`}
+						</Label>{' '}
+						{`${t('postBy')}:`}{' '}
 						<Label color={'blue'}>
 							<a
 								style={{ opacity: 1 }}
@@ -471,7 +481,22 @@ class Post extends React.Component<Props, State> {
 				</Container>
 
 				<Header as="h1" style={{ wordBreak: 'break-word' }}>
-					{currentPost.title}
+					{currentPost.title}{' '}
+					<Label
+						basic
+						color="blue"
+						onClick={()=>{
+							if(!isAdmin){
+								return;
+							}
+
+							this.props.requestChangePostLanguage();
+							this.props.openAdminModal();
+						}}
+						style={{cursor:isAdmin?'pointer':'default'}}
+					>
+						{t(currentPost.language)}
+					</Label>
 				</Header>
 
 				<Container>
@@ -582,16 +607,19 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		submitComment: (commentData) => dispatch(submitComment(commentData)),
-		submitReaction: (reactionData) => dispatch(submitReaction(reactionData)),
+		submitReaction: (reactionData) =>
+			dispatch(submitReaction(reactionData)),
 		requestLockPost: () => dispatch(requestLockPost()),
 		requestMovePost: () => dispatch(requestMovePost()),
 		requestDeletePost: () => dispatch(requestDeletePost()),
+		requestChangePostLanguage: () => dispatch(requestChangePostLanguage()),
 		openAdminModal: () => dispatch(openAdminModal()),
 		getPostSubscription: (id) => dispatch(getPostSubscription(id)),
 		getPost: (id) => dispatch(getPost(id)),
 		getReactions: (id) => dispatch(getReactions(id)),
 		getComments: (id) => dispatch(getComments(id)),
-		subscribePost: (subscriptionData) => dispatch(subscribePost(subscriptionData)),
+		subscribePost: (subscriptionData) =>
+			dispatch(subscribePost(subscriptionData)),
 		hidePost: (id) => dispatch(hidePost(id)),
 		replyTo: (level) => dispatch(replyTo(level)),
 	};

@@ -5,7 +5,7 @@ import {
 	OPEN_ADMIN_MODAL,
 	REQUEST_LOCK_POST,
 	REQUEST_DELETE_POST,
-	REQUEST_MOVE_POST, MOVE_POST,
+	REQUEST_MOVE_POST, MOVE_POST, REQUEST_CHANGE_POST_LANGUAGE,
 } from './actionType';
 import { config } from '../config';
 import { checkAuth } from './loginAction';
@@ -28,6 +28,14 @@ export const requestDeletePost = () => {
 
 export const requestMovePost = () => {
 	return { type: REQUEST_MOVE_POST };
+};
+
+export const requestChangePostLanguage = () => {
+	return { type: REQUEST_CHANGE_POST_LANGUAGE };
+};
+
+export const changePostLanguage = (postData) => {
+	console.log(postData);
 };
 
 export const deletePost = (postData) => {

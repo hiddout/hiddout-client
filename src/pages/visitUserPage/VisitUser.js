@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { t } from 'i18next';
 import type { Node } from 'react';
 import { connect } from 'react-redux';
-import { getUser } from '../../actions/visitUserAction';
+import { changeAvatar, getUser } from '../../actions/visitUserAction';
 import {
 	Container,
 	Statistic,
@@ -17,6 +17,7 @@ import {
 } from 'semantic-ui-react';
 import type { UserState } from '../../reducers/visitUser';
 import type { AccountState } from '../../reducers/account';
+import { getUserColor } from '../../utils/commonUtil';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -27,38 +28,50 @@ type Props = {
 	account: AccountState,
 	visitUser: UserState,
 	getUser: (string) => any,
+	changeAvatar: (number) => any,
 };
 
-type State = {};
+type State ={
+	isChangingAvatar: boolean,
+};
 
 class VisitUser extends React.Component<Props, State> {
+
+	state = {isChangingAvatar: false};
+
 	async componentDidMount() {
 		const id = this.props.match.params.id;
 		await this.props.getUser(id);
 	}
 
 	getAvatarDropdown() {
+		const { visitingUser } = this.props.visitUser;
+		if(!visitingUser){
+			return null;
+		}
+
+		const userColor = getUserColor(visitingUser.userId);
 		const avatarOptions = [
 			{
 				key: 'Default',
-				text: 'Default',
+				text: 'default',
 				value: 0,
 				image: {
 					avatar: true,
 					src: '/public/static/images/avatar/user/0.png',
-					style: { backgroundColor: 'gray' },
+					style: { backgroundColor: userColor },
 				},
 			},
 		];
 		for (let index = 1; index < 7; ++index) {
 			avatarOptions.push({
-				key: `Avatar ${index}`,
-				text: `Avatar ${index}`,
+				key: `Avatar-${index}`,
+				text: `r${index}`,
 				value: index,
 				image: {
 					avatar: true,
 					src: `/public/static/images/avatar/user/${index}.png`,
-					style: { backgroundColor: 'gray' },
+					style: { backgroundColor: userColor },
 				},
 			});
 		}
@@ -68,8 +81,17 @@ class VisitUser extends React.Component<Props, State> {
 				Avatar:{' '}
 				<Dropdown
 					inline
+					disabled={this.state.isChangingAvatar}
 					options={avatarOptions}
-					defaultValue={avatarOptions[0].value}
+					defaultValue={avatarOptions[visitingUser?visitingUser.avatar:0].value}
+					onChange={async (e,{value})=>{
+						this.setState({isChangingAvatar:true});
+						const res = await this.props.changeAvatar(value);
+						if(res.payload.changed) {
+							await this.props.getUser(this.props.match.params.id);
+							this.setState({isChangingAvatar:false});
+						}
+					}}
 				/>
 			</Container>
 		);
@@ -91,10 +113,10 @@ class VisitUser extends React.Component<Props, State> {
 									this.getAvatarDropdown()}
 								{visitingUser ? (
 									<Image
-										src="/public/static/images/avatar/user/0.png"
+										src={`/public/static/images/avatar/user/${visitingUser.avatar || 0}.png`}
 										size="medium"
 										circular
-										style={{ backgroundColor: 'gray' }}
+										style={{ backgroundColor: getUserColor(visitingUser.userId) }}
 									/>
 								) : (
 									<Loader active inline="centered" />
@@ -165,6 +187,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		getUser: (id) => dispatch(getUser(id)),
+		changeAvatar: (avatarId) => dispatch(changeAvatar(avatarId)),
 	};
 };
 

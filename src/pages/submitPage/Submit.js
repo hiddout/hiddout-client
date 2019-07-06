@@ -84,7 +84,7 @@ class Submit extends React.Component<Props, State> {
 						/>
 						</Header>
 						<Header floated={'right'}>{t('submitAPost')}</Header>
-						<Label basic color='blue'>
+						<Label basic color='blue' style={{cursor:'default'}}>
 							{t(this.props.i18n.language)}
 						</Label>
 						<Divider clearing />

@@ -6,7 +6,7 @@ import { t } from 'i18next';
 import { replyTo } from '../../actions/postAction';
 import type { PostState } from '../../reducers/post';
 import type { AuthState } from '../../reducers/auth';
-import { getHiddoutTime } from '../../utils/dataUtil';
+import { getHiddoutTime } from '../../utils/commonUtil';
 
 type Props = {
 	auth: AuthState,

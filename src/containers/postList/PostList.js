@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getPosts } from '../../actions/postAction';
 import PostItem from '../../component/postItem/PostItem';
 
-import { getHiddoutTime } from '../../utils/dataUtil';
+import { getHiddoutTime } from '../../utils/commonUtil';
 
 import type { PostState } from '../../reducers/post';
 import type { PageMarkerState } from '../../reducers/pageMarker';
