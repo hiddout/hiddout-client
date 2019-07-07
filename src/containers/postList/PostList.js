@@ -45,7 +45,7 @@ class PostList extends React.Component<Props, State> {
 			);
 		}
 
-		if(!isLoading && !posts.length){
+		if(!isLoading && (!posts || !posts.length)){
 			return (
 				<Segment>
 					<h3> No post found or change your language filter </h3>

@@ -27,7 +27,7 @@ class LanguageSelector extends React.Component<Props, State> {
 	}
 
 	onInterfaceClick(e: Object, { value }: Object) {
-		let language = 'en';
+		let language = '';
 		switch (value) {
 			case CHINESE:
 				language = 'zh';
@@ -42,7 +42,7 @@ class LanguageSelector extends React.Component<Props, State> {
 				language = 'de';
 				break;
 			default:
-				break;
+				return;
 		}
 
 		this.setState({language},()=>{
