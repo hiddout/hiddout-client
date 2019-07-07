@@ -83,7 +83,7 @@ class VisitUser extends React.Component<Props, State> {
 					inline
 					disabled={this.state.isChangingAvatar}
 					options={avatarOptions}
-					defaultValue={avatarOptions[visitingUser?visitingUser.avatar:0].value}
+					defaultValue={avatarOptions[visitingUser.avatar || 0].value}
 					onChange={async (e,{value})=>{
 						this.setState({isChangingAvatar:true});
 						const res = await this.props.changeAvatar(value);
