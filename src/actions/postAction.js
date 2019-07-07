@@ -25,9 +25,8 @@ export const getPosts = (boardId) => {
 
 		const { router, i18n } = getState();
 
-		const { location } = router;
-
 		const { prefer } = i18n;
+		const { location } = router;
 
 		const page = location.search.length
 			? location.search.split('=')[PAGE_NUMBER_INDEX]
@@ -185,10 +184,16 @@ export const getReactions = (id) => {
 };
 
 export const getComments = (id) => {
-	return (dispatch) => {
+	return (dispatch, getState) => {
 		dispatch({ type: REQUEST_GET_COMMENTS });
 
-		const page = 0;
+		const { router } = getState();
+
+		const { location } = router;
+
+		const page = location.search.length
+			? location.search.split('=')[PAGE_NUMBER_INDEX]
+			: 0;
 
 		const query = `?page=${page}`;
 
@@ -206,7 +211,7 @@ export const getComments = (id) => {
 				return dispatch(
 					checkAuth(res.status, {
 						type: GET_COMMENTS,
-						payload: { comments: res.comments },
+						payload: { comments: res.comments, isLatest: res.isLatest },
 					}),
 				);
 			})

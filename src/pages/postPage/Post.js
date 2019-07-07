@@ -60,6 +60,7 @@ const CommentSection = React.lazy(() =>
 import type { PostState } from '../../reducers/post';
 import type { AuthState } from '../../reducers/auth';
 import type { AccountState } from '../../reducers/account';
+import ListFooter from '../../containers/listFooter/ListFooter';
 
 type Props = {
 	auth: AuthState,
@@ -579,6 +580,7 @@ class Post extends React.Component<Props, State> {
 					)}
 
 					<CommentSection />
+					<ListFooter />
 				</Container>
 			</React.Fragment>
 		);
