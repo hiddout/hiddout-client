@@ -23,8 +23,8 @@ import {
 	MOVE_POST, REQUEST_CHANGE_POST_LANGUAGE,
 } from '../../actions/actionType';
 import BoardSelector from '../../component/boardSelector/BoardSelector';
-import type { AdminState } from '../../reducers/admin';
 import LanguageSelector from '../../component/languageSelector/LanguageSelector';
+import type { AdminState } from '../../reducers/admin';
 
 type Props = {
 	admin: AdminState,
