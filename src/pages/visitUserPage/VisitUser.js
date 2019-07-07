@@ -66,7 +66,7 @@ class VisitUser extends React.Component<Props, State> {
 		for (let index = 1; index < 7; ++index) {
 			avatarOptions.push({
 				key: `Avatar-${index}`,
-				text: `r${index}`,
+				text: `h${index}`,
 				value: index,
 				image: {
 					avatar: true,
