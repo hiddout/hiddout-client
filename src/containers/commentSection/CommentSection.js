@@ -30,9 +30,10 @@ class CommentSection extends React.Component<Props, State> {
 					comments.map((c, i) => (
 						<Comment key={i}>
 							<Comment.Content>
+								{c.userId !=='N/A' &&
 								<Comment.Author as="a" href={`/u/${hiddoutViewer.encodeId(c.userId)}`}>
 									{`@${c.userId}`}
-								</Comment.Author>
+								</Comment.Author>}
 								<Comment.Metadata>
 									<div>{getHiddoutTime(c.createTime)}</div>
 								</Comment.Metadata>

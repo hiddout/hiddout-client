@@ -20,6 +20,8 @@ import { withRouter } from 'react-router-dom';
 import { changeLanguage, changePrefer } from '../../actions/i18nAction';
 import { changePassword } from '../../actions/loginAction';
 import LanguageSelector from '../../component/languageSelector/LanguageSelector';
+import AccountModal from '../../containers/accountModal/AccountModal';
+import { openAccountModal } from '../../actions/accountAction';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -30,6 +32,7 @@ type Props = {
 	changeLanguage: (string) => any,
 	changePassword: (Object) => any,
 	changePrefer: (Array<string>) => any,
+	openAccountModal: () => any,
 };
 
 type State = {
@@ -136,6 +139,7 @@ class Settings extends React.Component<Props, State> {
 
 		return (
 			<React.Fragment>
+				<AccountModal />
 				<NavigationBar showBackBtn={true} />
 				<Container className={'PageContent'} textAlign={'left'}>
 					<Segment>
@@ -265,7 +269,7 @@ class Settings extends React.Component<Props, State> {
 							<Grid columns="equal">
 								<Grid.Column width={2} />
 								<Grid.Column width={6}>
-									<Button type={'submit'} color={'red'}>
+									<Button type={'submit'} color={'red'} onClick={()=> this.props.openAccountModal()}>
 										{t('delete Account')}
 									</Button>
 								</Grid.Column>
@@ -293,6 +297,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		openAccountModal: () => dispatch(openAccountModal()),
 		changePassword: (pwhData) => dispatch(changePassword(pwhData)),
 		changeLanguage: (lng) => dispatch(changeLanguage(lng)),
 		changePrefer: (prefer) => dispatch(changePrefer(prefer)),
