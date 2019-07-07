@@ -41,6 +41,10 @@ export const checkAuth = (status, defaultAction, callback, callbackData) => {
 		}
 
 		switch (status) {
+			case 500:
+				throw new Error('server error');
+			case 429:
+				throw new Error('too many requests');
 			case 401:
 				if (!callback) {
 					dispatch({ type: LOGOUT });
@@ -64,6 +68,10 @@ const checkTokenRenewStatus = (res, defaultAction) => {
 		}
 
 		switch (res.status) {
+			case 500:
+				throw new Error('server error');
+			case 429:
+				throw new Error('too many requests');
 			case 400:
 				throw new Error('bad request');
 			case 401:
