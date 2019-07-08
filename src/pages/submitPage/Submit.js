@@ -7,6 +7,7 @@ import { t } from 'i18next';
 import SubmitForm from '../../component/submitForm/SubmitForm';
 import BoardSelector from '../../component/boardSelector/BoardSelector';
 
+const ReactMarkdown = React.lazy(() => import('react-markdown'));
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
 );
@@ -73,6 +74,7 @@ class Submit extends React.Component<Props, State> {
 	}
 
 	render(): Node {
+		const MarkdownComponent: any = ReactMarkdown;
 		return (
 			<React.Fragment>
 				<NavigationBar showBackBtn={true} />
@@ -107,6 +109,15 @@ class Submit extends React.Component<Props, State> {
 								this.setState({ content: data.value })
 							}
 						/>
+
+						<Divider/>
+
+						<Container
+							textAlign="justified"
+							style={{ overflowX: 'auto' }}
+						>
+							<MarkdownComponent source={this.state.content} />
+						</Container>
 					</Segment>
 				</Container>
 			</React.Fragment>
