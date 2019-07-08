@@ -44,6 +44,7 @@ class CommentSection extends React.Component<Props, State> {
 										content={`@${
 											comments[c.replyTo - 1].userId
 										} - ${comments[c.replyTo - 1].content}`}
+										style={{overflowX: 'auto'}}
 									/>
 								)}
 								<Comment.Text>{c.content}</Comment.Text>
