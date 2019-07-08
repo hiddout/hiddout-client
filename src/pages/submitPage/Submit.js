@@ -29,6 +29,7 @@ type Props = {
 
 type State = {
 	submitting: boolean,
+	titleTooLong: boolean,
 	title: string,
 	content: string,
 	boardSelected: string,
@@ -37,6 +38,7 @@ type State = {
 class Submit extends React.Component<Props, State> {
 	state = {
 		submitting: false,
+		titleTooLong: false,
 		title: '',
 		content: '',
 		boardSelected: 'life',
@@ -89,10 +91,11 @@ class Submit extends React.Component<Props, State> {
 						</Label>
 						<Divider clearing />
 						<Input
+							error={this.state.titleTooLong}
 							placeholder={t('title')}
 							size={'large'}
 							onChange={(e, data) =>
-								this.setState({ title: data.value })
+								this.setState({ title: data.value, titleTooLong: data.value.length > 120 })
 							}
 						/>
 						<Divider hidden />

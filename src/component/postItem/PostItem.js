@@ -19,7 +19,7 @@ class PostItem extends React.Component<Props, State> {
 		const { title, author, boardImgSrc, createdAt, postId } = this.props;
 
 		return (
-			<List.Item>
+			<List.Item style={{overflow:'hidden'}}>
 				<List.Content>
 					<List.Header style={{fontSize: '1.2em'}}>
 						<Image avatar src={boardImgSrc} />
