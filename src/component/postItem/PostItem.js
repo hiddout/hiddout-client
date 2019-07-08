@@ -20,9 +20,9 @@ class PostItem extends React.Component<Props, State> {
 
 		return (
 			<List.Item>
-				<Image avatar src={boardImgSrc} />
 				<List.Content>
 					<List.Header style={{fontSize: '1.2em'}}>
+						<Image avatar src={boardImgSrc} />
 						<Link to={`/p/${postId}`}>{title}</Link>
 					</List.Header>
 					<List.Description>

@@ -20,18 +20,36 @@ type Props = {
 	getPosts: (string | typeof undefined) => any,
 };
 
-type State = {};
+type State = {
+	width: number,
+};
 
 class PostList extends React.Component<Props, State> {
+	state = {
+		width: window.innerWidth,
+	};
+
 	componentDidMount() {
 		this.props.getPosts(this.props.boardId);
+		window.addEventListener('resize', this.updateDimensions.bind(this));
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.updateDimensions.bind(this));
 	}
 
 	componentDidUpdate(prevProps) {
-		const {boardId, location} = this.props;
-		if (boardId !== prevProps.boardId || location.search !== prevProps.location.search) {
+		const { boardId, location } = this.props;
+		if (
+			boardId !== prevProps.boardId ||
+			location.search !== prevProps.location.search
+		) {
 			this.props.getPosts(boardId);
 		}
+	}
+
+	updateDimensions() {
+		this.setState({ width: window.innerWidth });
 	}
 
 	render() {
@@ -40,12 +58,12 @@ class PostList extends React.Component<Props, State> {
 		if (isLoading && (!posts || !posts.length)) {
 			return (
 				<Segment>
-					<Loader active inline="centered" />
+					<Loader active inline="centered"/>
 				</Segment>
 			);
 		}
 
-		if(!isLoading && (!posts || !posts.length)){
+		if (!isLoading && (!posts || !posts.length)) {
 			return (
 				<Segment>
 					<h3> No post found or change your language filter </h3>
@@ -56,24 +74,39 @@ class PostList extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<Segment>
-					{isLoading && <Loader active inline="centered" />}
-					{isLoading && <Divider />}
+					{isLoading && <Loader active inline="centered"/>}
+					{isLoading && <Divider/>}
 					<List>
-						{posts.map((p) => (
-							<React.Fragment key={p._id}>
-								<PostItem
-									history={history}
-									title={p.title}
-									author={p.userId}
-									boardImgSrc={`/public/static/images/avatar/board/${
-										p.board
-									}.jpg`}
-									createdAt={getHiddoutTime(p.createTime)}
-									postId={hiddoutViewer.encodeId(p._id)}
-								/>
-								<Divider />
-							</React.Fragment>
-						))}
+						{posts.map((p) => {
+							const titleLength = p.title.length;
+							let shouldReduceTitl = false;
+							const maxCharacterNumber = this.state.width / 12;
+							if (titleLength > maxCharacterNumber) {
+								shouldReduceTitl = true;
+							}
+							return (
+								<React.Fragment key={p._id}>
+									<PostItem
+										history={history}
+										title={
+											shouldReduceTitl
+												? `${p.title.substring(
+												0,
+												maxCharacterNumber,
+												)}...`
+												: p.title
+										}
+										author={p.userId}
+										boardImgSrc={`/public/static/images/avatar/board/${
+											p.board
+											}.jpg`}
+										createdAt={getHiddoutTime(p.createTime)}
+										postId={hiddoutViewer.encodeId(p._id)}
+									/>
+									<Divider/>
+								</React.Fragment>
+							);
+						})}
 					</List>
 				</Segment>
 
@@ -95,7 +128,9 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default withRouter(connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(PostList));
+export default withRouter(
+	connect(
+		mapStateToProps,
+		mapDispatchToProps,
+	)(PostList),
+);

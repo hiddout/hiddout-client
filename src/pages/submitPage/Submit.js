@@ -48,7 +48,7 @@ class Submit extends React.Component<Props, State> {
 
 	onSubmitPost() {
 
-		if(!this.state.title.length){
+		if(!this.state.title.length || this.state.title.length > 120){
 			return;
 		}
 
