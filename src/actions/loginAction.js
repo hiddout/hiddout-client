@@ -45,6 +45,8 @@ export const checkAuth = (status, defaultAction, callback, callbackData) => {
 				throw new Error('server error');
 			case 429:
 				throw new Error('too many requests');
+			case 400:
+				throw new Error('bad request');
 			case 401:
 				if (!callback) {
 					dispatch({ type: LOGOUT });

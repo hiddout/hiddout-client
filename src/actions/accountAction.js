@@ -1,4 +1,4 @@
-import { ACCOUNT_DELETED, CLOSE_ACCOUNT_MODAL, OPEN_ACCOUNT_MODAL } from './actionType';
+import { ACCOUNT_DELETED, CLOSE_ACCOUNT_MODAL, OPEN_ACCOUNT_MODAL, REQUEST_DELETE_ACCOUNT } from './actionType';
 import { config } from '../config';
 
 export const openAccountModal = () => {
@@ -11,6 +11,8 @@ export const closeAccountModal = () => {
 
 export const deleteAccount = (account) => {
 	return (dispatch) => {
+		dispatch({ type:REQUEST_DELETE_ACCOUNT });
+
 		return hiddoutViewer
 			.request(`${config.baseURL}${config.apiV1}account/delete`, {
 				method: 'POST',

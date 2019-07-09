@@ -48,7 +48,7 @@ class CommentSection extends React.Component<Props, State> {
 									/>
 								)}
 								<Comment.Text>{c.content}</Comment.Text>
-								{this.props.auth.isAuth && (
+								{this.props.auth.isAuth && c.userId !=='N/A' && (
 									<Comment.Actions>
 										<Comment.Action
 											onClick={() => {
@@ -61,18 +61,18 @@ class CommentSection extends React.Component<Props, State> {
 										>
 											{t('reply')}
 										</Comment.Action>
-										<Comment.Action>
+										{c.userId !=='N/A' &&<Comment.Action>
 											{t('up')}
-										</Comment.Action>
-										<Comment.Action>
+										</Comment.Action>}
+										{c.userId !=='N/A' &&<Comment.Action>
 											{t('down')}
-										</Comment.Action>
-										<Comment.Action>
+										</Comment.Action>}
+										{c.userId !=='N/A' &&<Comment.Action>
 											{t('lol')}
-										</Comment.Action>
-										<Comment.Action>
+										</Comment.Action>}
+										{c.userId !=='N/A' &&<Comment.Action>
 											{t('reward')}
-										</Comment.Action>
+										</Comment.Action>}
 									</Comment.Actions>
 								)}
 							</Comment.Content>

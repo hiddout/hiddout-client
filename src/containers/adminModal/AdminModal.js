@@ -20,7 +20,7 @@ import {
 	REQUEST_MOVE_POST,
 	LOCK_POST,
 	DELETE_POST,
-	MOVE_POST, REQUEST_CHANGE_POST_LANGUAGE,
+	MOVE_POST, REQUEST_CHANGE_POST_LANGUAGE, CHANGE_POST_LANGUAGE,
 } from '../../actions/actionType';
 import BoardSelector from '../../component/boardSelector/BoardSelector';
 import LanguageSelector from '../../component/languageSelector/LanguageSelector';
@@ -88,7 +88,13 @@ class AdminModal extends React.Component<Props, State> {
 				});
 				break;
 			case REQUEST_CHANGE_POST_LANGUAGE:
-				this.props.changePostLanguage({postId: currentPost._id, language: this.state.language});
+				this.props.changePostLanguage({postId: currentPost._id, language: this.state.language}).then((res:Object) => {
+					if (res.type === CHANGE_POST_LANGUAGE) {
+						this.props.closeAdminModal();
+						window.location.reload();
+					}
+				});
+
 				break;
 			default:
 				this.props.closeAdminModal();

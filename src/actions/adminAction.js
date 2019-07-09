@@ -5,7 +5,7 @@ import {
 	OPEN_ADMIN_MODAL,
 	REQUEST_LOCK_POST,
 	REQUEST_DELETE_POST,
-	REQUEST_MOVE_POST, MOVE_POST, REQUEST_CHANGE_POST_LANGUAGE,
+	REQUEST_MOVE_POST, MOVE_POST, REQUEST_CHANGE_POST_LANGUAGE, CHANGE_POST_LANGUAGE,
 } from './actionType';
 import { config } from '../config';
 import { checkAuth } from './loginAction';
@@ -35,7 +35,35 @@ export const requestChangePostLanguage = () => {
 };
 
 export const changePostLanguage = (postData) => {
-	console.log(postData);
+	return (dispatch, getState) => {
+		const { auth } = getState();
+
+		return hiddoutViewer
+			.request(
+				`${config.baseURL}${config.apiV1}post/${postData.postId}/language`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json; charset=utf-8',
+						authorization: auth.token,
+					},
+					body: JSON.stringify(postData),
+				},
+			)
+			.then((res) => {
+				return dispatch(
+					checkAuth(
+						res.status,
+						{ type: CHANGE_POST_LANGUAGE, changed: res.changed },
+						changePostLanguage,
+						postData,
+					),
+				);
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	};
 };
 
 export const deletePost = (postData) => {
