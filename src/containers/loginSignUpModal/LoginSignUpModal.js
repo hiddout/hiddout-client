@@ -256,12 +256,12 @@ class LoginSignUpModal extends React.Component<Props, State> {
 						{!loginModalShowed &&
 							<Container>
 								<Divider />
-								{t('By signing up, you agree to our Terms and that you have read our Privacy Policy and Content Policy.')}
+								{t('By signing up, you agree to our Terms and that you have read our Privacy Policy and Content Policy')}{' '}
 								<a
 									target="_blank"
 									rel="noopener noreferrer"
 									href="https://github.com/hiddout/hiddout-policies/blob/master/README.md"
-								> Here</a>
+								>{t('See Here')}</a>
 							</Container>
 						}
 					</Form>

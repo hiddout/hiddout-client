@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { t } from 'i18next';
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -8,7 +9,7 @@ const NavigationBar = React.lazy(() =>
 
 import type { Node } from 'react';
 const PostList = React.lazy(() => import('../../containers/postList/PostList'));
-import { Container, Segment, Image } from 'semantic-ui-react';
+import { Container, Segment, Image, Header } from 'semantic-ui-react';
 import { getBoard } from '../../actions/boardAction';
 import { connect } from 'react-redux';
 import { SUB_EXIST } from '../../actions/actionType';
@@ -50,6 +51,21 @@ class BoardPage extends React.Component<Props, State> {
 		}
 	}
 
+	getBoardTitle(boardId) {
+		switch(boardId){
+			case 'life':
+				return t('Topics for Everyday Life Conversations');
+			case 'game':
+				return t('Topics for Gaming and Grouping');
+			case 'work':
+				return t('Topics for Work related Networking');
+			case 'spam':
+				return t('Things that better not showing on front page');
+			default:
+				return boardId;
+		}
+	}
+
 	render(): Node {
 		const { params } = this.props.match;
 
@@ -62,12 +78,15 @@ class BoardPage extends React.Component<Props, State> {
 						textAlign={'left'}
 					>
 						{this.state.showPage && (<Segment inverted secondary>
-							<Image
-								src={`/public/static/images/avatar/board/${
-									params.id
-								}.jpg`}
-								circular
-							/>
+							<Header as='h2' color='orange'>
+								<Image
+									src={`/public/static/images/avatar/board/${
+										params.id
+										}.jpg`}
+									circular
+								/>
+								<Header.Content>{this.getBoardTitle(params.id)}</Header.Content>
+							</Header>
 						</Segment>)}
 						<PostList boardId={params.id} />
 					</Container>

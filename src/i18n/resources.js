@@ -65,7 +65,12 @@ const resources = {
 			'userNameViolation': 'maximum 36 characters, no special character except _',
 			'passwordViolation': 'minimum eight characters, at least one uppercase letter, one lowercase letter and one number',
 			'passwordVerification': 'password is not the same, check again',
-			'By signing up, you agree to our Terms and that you have read our Privacy Policy and Content Policy.': 'By signing up, you agree to our Terms and that you have read our Privacy Policy and Content Policy.',
+			'Topics for Everyday Life Conversations': 'Topics for Everyday Life Conversations',
+			'Topics for Gaming and Grouping': 'Topics for Gaming and Grouping',
+			'Topics for Work related Networking': 'Topics for Work related Networking',
+			'Things that better not showing on front page': 'Things that better not showing on front page',
+			'See Here': 'See Here',
+			'By signing up, you agree to our Terms and that you have read our Privacy Policy and Content Policy': 'By signing up, you agree to our Terms and that you have read our Privacy Policy and Content Policy',
 		},
 	},
 	zh: {
@@ -134,6 +139,12 @@ const resources = {
 			'userNameViolation': '最多36个英文字符，请避免使用除开_符号的其它特殊字符',
 			'passwordViolation': '最少8位，至少包含一个大写一个小写一个数字',
 			'passwordVerification': '密码不一致，请重新输入一次',
+			'Topics for Everyday Life Conversations': '畅谈日常生活百态的深巷酒馆',
+			'Topics for Gaming and Grouping': '大佬求带，萌新一枚',
+			'Topics for Work related Networking': '瞧一瞧看一看，说不定有内推机会哦',
+			'Things that better not showing on front page': '当初建立这个站的时候可没告诉我有这些帖子会出现',
+			'See Here': '阅读细则',
+			'By signing up, you agree to our Terms and that you have read our Privacy Policy and Content Policy':'在注册之前请阅读我们的用户协议，使用协议和内容规则',
 		},
 	},
 	sv: {
@@ -192,8 +203,8 @@ const resources = {
 			'signUpInfoViolation': 'Användarnamnet är ogiltigt eller redan upptaget',
 			'userNameViolation': 'Mest 36 tecken, inget speciellt tecken förutom _',
 			'passwordViolation': 'Minst 8 tecken, minst en stor bokstav, minst en liten bokstav samt minst en siffra',
-		},	
-	},	
+		},
+	},
 	de: {
 		translation: {
 			'en': 'English',
