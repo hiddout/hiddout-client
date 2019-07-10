@@ -314,6 +314,8 @@ class Post extends React.Component<Props, State> {
 	}
 
 	getOtherActionsGroup() {
+		const { currentPostSubscribed } = this.props.post;
+
 		if (this.props.auth.isAdmin) {
 			return (
 				<Container textAlign="right">
@@ -350,11 +352,44 @@ class Post extends React.Component<Props, State> {
 						<Icon name="shipping fast" />
 						{t('movePost')}
 					</Label>
+					<Divider hidden/>
+					<Label
+						as="a"
+						disabled={!this.state.subscriptionDone}
+						color={currentPostSubscribed ? 'brown' : 'orange'}
+						onClick={() => {
+							if (!this.state.subscriptionDone) {
+								return;
+							}
+
+							this.setState({ subscriptionDone: false }, async () => {
+								const postSubscribedRes = await this.props.subscribePost(
+									{
+										id: this.props.match.params.id,
+										isSubscribed: !currentPostSubscribed,
+										type: 'post',
+									},
+								);
+
+								if (postSubscribedRes.type !== SUBSCRIBED_POST) {
+									return;
+								}
+
+								this.setState({ subscriptionDone: true });
+							});
+						}}
+					>
+						{!this.state.subscriptionDone && (
+							<Icon loading name="spinner" />
+						)}
+						{this.state.subscriptionDone && (
+							<Icon name={'bell outline'} />
+						)}
+						{currentPostSubscribed ? t('unsubscribe') : t('subscribe')}
+					</Label>
 				</Container>
 			);
 		}
-
-		const { currentPostSubscribed } = this.props.post;
 
 		return (
 			<Container textAlign="right">
@@ -418,10 +453,6 @@ class Post extends React.Component<Props, State> {
 						<Icon name={'bell outline'} />
 					)}
 					{currentPostSubscribed ? t('unsubscribe') : t('subscribe')}
-				</Label>
-				<Label as="a" color={'yellow'}>
-					<Icon name="ticket alternate" />
-					{t('reward')}
 				</Label>
 
 				<Responsive as={React.Fragment} minWidth={471}>
