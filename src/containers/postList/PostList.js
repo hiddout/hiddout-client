@@ -102,6 +102,7 @@ class PostList extends React.Component<Props, State> {
 											}.jpg`}
 										createdAt={getHiddoutTime(p.createTime)}
 										postId={hiddoutViewer.encodeId(p._id)}
+										reply={p.reply}
 									/>
 									<Divider/>
 								</React.Fragment>

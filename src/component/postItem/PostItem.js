@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { t } from 'i18next';
-import { List, Image } from 'semantic-ui-react';
+import { List, Image, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 type Props = {
@@ -10,13 +10,14 @@ type Props = {
 	postId: string,
 	boardImgSrc: string,
 	createdAt: string,
+	reply: number,
 };
 
 type State = {};
 
 class PostItem extends React.Component<Props, State> {
 	render() {
-		const { title, author, boardImgSrc, createdAt, postId } = this.props;
+		const { title, author, boardImgSrc, createdAt, postId, reply } = this.props;
 
 		return (
 			<List.Item style={{overflow:'hidden'}}>
@@ -31,6 +32,9 @@ class PostItem extends React.Component<Props, State> {
 							<b>{author}</b>
 						</a>
 						{createdAt}
+						<Label size={'mini'} color={'black'} >
+							{reply? reply : 0}
+						</Label>
 					</List.Description>
 				</List.Content>
 			</List.Item>

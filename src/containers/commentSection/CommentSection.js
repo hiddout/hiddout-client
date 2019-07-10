@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Comment, Header, Message, Divider } from 'semantic-ui-react';
+import { Comment, Header, Message, Divider, Label } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { t } from 'i18next';
 import { replyTo } from '../../actions/postAction';
@@ -34,9 +34,9 @@ class CommentSection extends React.Component<Props, State> {
 								<Comment.Author as="a" href={`/u/${hiddoutViewer.encodeId(c.userId)}`}>
 									{`@${c.userId}`}
 								</Comment.Author>}
-								<Comment.Metadata>
+								{ c.userId !=='N/A' && <Comment.Metadata>
 									<div>{getHiddoutTime(c.createTime)}</div>
-								</Comment.Metadata>
+								</Comment.Metadata>}
 								{!!c.replyTo && (
 									<Message
 										floating
@@ -47,7 +47,8 @@ class CommentSection extends React.Component<Props, State> {
 										style={{overflowX: 'auto'}}
 									/>
 								)}
-								<Comment.Text>{c.content}</Comment.Text>
+								{ c.userId ==='N/A' && <Label color={'red'}>Deleted</Label>}
+								{ c.userId !=='N/A' && <Comment.Text>{c.content}</Comment.Text>}
 								{this.props.auth.isAuth && c.userId !=='N/A' && (
 									<Comment.Actions>
 										<Comment.Action
@@ -61,18 +62,6 @@ class CommentSection extends React.Component<Props, State> {
 										>
 											{t('reply')}
 										</Comment.Action>
-										{c.userId !=='N/A' &&<Comment.Action>
-											{t('up')}
-										</Comment.Action>}
-										{c.userId !=='N/A' &&<Comment.Action>
-											{t('down')}
-										</Comment.Action>}
-										{c.userId !=='N/A' &&<Comment.Action>
-											{t('lol')}
-										</Comment.Action>}
-										{c.userId !=='N/A' &&<Comment.Action>
-											{t('reward')}
-										</Comment.Action>}
 									</Comment.Actions>
 								)}
 							</Comment.Content>
