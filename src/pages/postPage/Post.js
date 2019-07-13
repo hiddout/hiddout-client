@@ -34,7 +34,8 @@ import {
 } from '../../actions/postAction';
 
 import {
-	openAdminModal, requestChangePostLanguage,
+	openAdminModal,
+	requestChangePostLanguage,
 	requestDeletePost,
 	requestLockPost,
 	requestMovePost,
@@ -517,15 +518,15 @@ class Post extends React.Component<Props, State> {
 					<Label
 						basic
 						color="blue"
-						onClick={()=>{
-							if(!isAdmin){
+						onClick={() => {
+							if (!isAdmin) {
 								return;
 							}
 
 							this.props.requestChangePostLanguage();
 							this.props.openAdminModal();
 						}}
-						style={{cursor:isAdmin?'pointer':'default'}}
+						style={{ cursor: isAdmin ? 'pointer' : 'default' }}
 					>
 						{t(currentPost.language)}
 					</Label>
@@ -536,7 +537,19 @@ class Post extends React.Component<Props, State> {
 						textAlign="justified"
 						style={{ overflowX: 'auto' }}
 					>
-						<MarkdownComponent source={markdown} />
+						<MarkdownComponent
+							source={markdown}
+							renderers={{
+								image: (props) => {
+									return (
+										<img
+											{...props}
+											style={{ maxWidth: '100%' }}
+										/>
+									);
+								},
+							}}
+						/>
 					</Container>
 
 					<Divider hidden />

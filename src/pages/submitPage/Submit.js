@@ -2,7 +2,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Container, Segment, Header, Divider, Input, Label } from 'semantic-ui-react';
+import {
+	Container,
+	Segment,
+	Header,
+	Divider,
+	Input,
+	Label,
+} from 'semantic-ui-react';
 import { t } from 'i18next';
 import SubmitForm from '../../component/submitForm/SubmitForm';
 import BoardSelector from '../../component/boardSelector/BoardSelector';
@@ -50,8 +57,7 @@ class Submit extends React.Component<Props, State> {
 	}
 
 	onSubmitPost() {
-
-		if(!this.state.title.length || this.state.title.length > 120){
+		if (!this.state.title.length || this.state.title.length > 120) {
 			return;
 		}
 
@@ -65,9 +71,11 @@ class Submit extends React.Component<Props, State> {
 		};
 
 		this.props.submitPost(postData).then((response: Object) => {
-			if(response.type === POST_CREATED) {
+			if (response.type === POST_CREATED) {
 				this.props.history.replace(
-					`/p/${hiddoutViewer.encodeId(response.payload.cratedPostId)}`,
+					`/p/${hiddoutViewer.encodeId(
+						response.payload.cratedPostId,
+					)}`,
 				);
 			}
 		});
@@ -78,17 +86,17 @@ class Submit extends React.Component<Props, State> {
 		return (
 			<React.Fragment>
 				<NavigationBar showBackBtn={true} />
-				<Container className={'PageContent'}  textAlign={'left'}>
+				<Container className={'PageContent'} textAlign={'left'}>
 					<Segment>
 						<Header>
 							{`${t('putPostIn')} `}
-						<BoardSelector
-							exclude={['home','spam']}
-							onSelectChange={this.onBoardSelect.bind(this)}
-						/>
+							<BoardSelector
+								exclude={['home', 'spam']}
+								onSelectChange={this.onBoardSelect.bind(this)}
+							/>
 						</Header>
 						<Header floated={'right'}>{t('submitAPost')}</Header>
-						<Label basic color='blue' style={{cursor:'default'}}>
+						<Label basic color="blue" style={{ cursor: 'default' }}>
 							{t(this.props.i18n.language)}
 						</Label>
 						<Divider clearing />
@@ -97,7 +105,10 @@ class Submit extends React.Component<Props, State> {
 							placeholder={t('title')}
 							size={'large'}
 							onChange={(e, data) =>
-								this.setState({ title: data.value, titleTooLong: data.value.length > 120 })
+								this.setState({
+									title: data.value,
+									titleTooLong: data.value.length > 120,
+								})
 							}
 						/>
 						<Divider hidden />
@@ -110,13 +121,25 @@ class Submit extends React.Component<Props, State> {
 							}
 						/>
 
-						<Divider/>
+						<Divider />
 
 						<Container
 							textAlign="justified"
 							style={{ overflowX: 'auto' }}
 						>
-							<MarkdownComponent source={this.state.content} />
+							<MarkdownComponent
+								source={this.state.content}
+								renderers={{
+									image: (props) => {
+										return (
+											<img
+												{...props}
+												style={{ maxWidth: '100%' }}
+											/>
+										);
+									},
+								}}
+							/>
 						</Container>
 					</Segment>
 				</Container>
