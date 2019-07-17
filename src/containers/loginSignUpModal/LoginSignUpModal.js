@@ -184,6 +184,7 @@ class LoginSignUpModal extends React.Component<Props, State> {
 
 		return (
 			<Modal
+				size={'tiny'}
 				open={loginModalShowed || signUpModalShowed}
 				closeOnDimmerClick={false}
 				onClose={this.close.bind(this)}

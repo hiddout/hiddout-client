@@ -78,7 +78,7 @@ class BoardPage extends React.Component<Props, State> {
 						textAlign={'left'}
 					>
 						{this.state.showPage && (<Segment inverted secondary>
-							<Header as='h2' color='orange'>
+							<Header as='h2'>
 								<Image
 									src={`/public/static/images/avatar/board/${
 										params.id

@@ -548,6 +548,17 @@ class Post extends React.Component<Props, State> {
 										/>
 									);
 								},
+								link: (props) => {
+									return (
+										<a
+											href={props.href}
+											rel={'noopener noreferrer'}
+											target={'_blank'}
+										>
+											{props.children}
+										</a>
+									);
+								},
 							}}
 						/>
 					</Container>

@@ -82,6 +82,7 @@ class Submit extends React.Component<Props, State> {
 	}
 
 	render(): Node {
+		//TODO: warp a component for render markdown elements
 		const MarkdownComponent: any = ReactMarkdown;
 		return (
 			<React.Fragment>
@@ -136,6 +137,17 @@ class Submit extends React.Component<Props, State> {
 												{...props}
 												style={{ maxWidth: '100%' }}
 											/>
+										);
+									},
+									link: (props) => {
+										return (
+											<a
+												href={props.href}
+												rel={'noopener noreferrer'}
+												target={'_blank'}
+											>
+												{props.children}
+											</a>
 										);
 									},
 								}}

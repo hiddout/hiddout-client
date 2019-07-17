@@ -8,6 +8,8 @@ import type { PostState } from '../../reducers/post';
 import type { AuthState } from '../../reducers/auth';
 import { getHiddoutTime } from '../../utils/commonUtil';
 
+const ReactMarkdown = React.lazy(() => import('react-markdown'));
+
 type Props = {
 	auth: AuthState,
 	post: PostState,
@@ -19,24 +21,37 @@ type State = {};
 class CommentSection extends React.Component<Props, State> {
 	render() {
 		const { comments, currentPost } = this.props.post;
+		const MarkdownComponent: any = ReactMarkdown;
 
 		return (
 			<Comment.Group>
 				<Header as="h3" dividing>
-					{`${t('comments')} (${(!comments || !comments.length)? 0: comments.length})`}
+					{`${t('comments')} (${
+						!comments || !comments.length ? 0 : comments.length
+					})`}
 				</Header>
 
 				{comments &&
 					comments.map((c, i) => (
 						<Comment key={i}>
 							<Comment.Content>
-								{c.userId !=='N/A' &&
-								<Comment.Author as="a" href={`/u/${hiddoutViewer.encodeId(c.userId)}`}>
-									{`@${c.userId}`}
-								</Comment.Author>}
-								{ c.userId !=='N/A' && <Comment.Metadata>
-									<div>{getHiddoutTime(c.createTime)}</div>
-								</Comment.Metadata>}
+								{c.userId !== 'N/A' && (
+									<Comment.Author
+										as="a"
+										href={`/u/${hiddoutViewer.encodeId(
+											c.userId,
+										)}`}
+									>
+										{`@${c.userId}`}
+									</Comment.Author>
+								)}
+								{c.userId !== 'N/A' && (
+									<Comment.Metadata>
+										<div>
+											{getHiddoutTime(c.createTime)}
+										</div>
+									</Comment.Metadata>
+								)}
 								{!!c.replyTo && (
 									<Message
 										floating
@@ -44,16 +59,52 @@ class CommentSection extends React.Component<Props, State> {
 										content={`@${
 											comments[c.replyTo - 1].userId
 										} - ${comments[c.replyTo - 1].content}`}
-										style={{overflowX: 'auto'}}
+										style={{ overflowX: 'auto' }}
 									/>
 								)}
-								{ c.userId ==='N/A' && <Label color={'red'}>Deleted</Label>}
-								{ c.userId !=='N/A' && <Comment.Text>{c.content}</Comment.Text>}
-								{this.props.auth.isAuth && c.userId !=='N/A' && (
+								{c.userId === 'N/A' && (
+									<Label color={'red'}>Deleted</Label>
+								)}
+								{c.userId !== 'N/A' && (
+									<Comment.Text>
+										<MarkdownComponent
+											source={c.content}
+											renderers={{
+												image: (props) => {
+													return (
+														<img
+															{...props}
+															style={{
+																maxWidth:
+																	'100%',
+															}}
+														/>
+													);
+												},
+												link: (props) => {
+													return (
+														<a
+															href={props.href}
+															rel={'noopener noreferrer'}
+															target={'_blank'}
+														>
+															{props.children}
+														</a>
+													);
+												},
+											}}
+										/>
+									</Comment.Text>
+								)}
+								{this.props.auth.isAuth && c.userId !== 'N/A' && (
 									<Comment.Actions>
 										<Comment.Action
 											onClick={() => {
-												if (!this.props.auth.isAuth || (currentPost && currentPost.isLocked)) {
+												if (
+													!this.props.auth.isAuth ||
+													(currentPost &&
+														currentPost.isLocked)
+												) {
 													return;
 												}
 												this.props.replyTo(i + 1);
