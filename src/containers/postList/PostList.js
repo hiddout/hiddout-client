@@ -53,7 +53,8 @@ class PostList extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { posts, isLoading } = this.props.post;
+		const { posts, isLoading, hiddenPosts } = this.props.post;
+		const hiddenIds = hiddenPosts? hiddenPosts: [];
 
 		if (isLoading && (!posts || !posts.length)) {
 			return (
@@ -77,7 +78,9 @@ class PostList extends React.Component<Props, State> {
 					{isLoading && <Loader active inline="centered"/>}
 					{isLoading && <Divider/>}
 					<List>
-						{posts.map((p) => {
+						{posts
+							.filter(p => !hiddenIds.find(id => p._id === id))
+							.map((p) => {
 							const titleLength = p.title.length;
 							let shouldReduceTitl = false;
 							const maxCharacterNumber = this.state.width / 12;

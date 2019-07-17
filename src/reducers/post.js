@@ -4,7 +4,7 @@ import {
 	GET_POST,
 	GET_POST_SUBSCRIPTION,
 	GET_POSTS,
-	GET_REACTIONS,
+	GET_REACTIONS, HIDE_POST,
 	REPLY_TO,
 	REQUEST_GET_POST,
 	REQUEST_GET_POSTS,
@@ -18,6 +18,7 @@ export type PostState = {
 	reactions: null | Array<Object>,
 	comments: Array<Object>,
 	currentPost: Object | null,
+	hiddenPosts: Array<Object>,
 	replyTo: number,
 };
 
@@ -28,6 +29,7 @@ const post = (
 		posts: [],
 		reactions: null,
 		comments: [],
+		hiddenPosts: [],
 		currentPost: null,
 		replyTo: 0,
 	},
@@ -72,6 +74,10 @@ const post = (
 				} else {
 					draft.replyTo = payload.level;
 				}
+				break;
+			case HIDE_POST:
+				draft.hiddenPosts = draft.hiddenPosts? draft.hiddenPosts : [];
+				draft.hiddenPosts.push(payload.id);
 				break;
 		}
 	});
