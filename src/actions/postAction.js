@@ -12,7 +12,7 @@ import {
 	REQUEST_SUBSCRIBE,
 	REQUEST_CHECK_IS_POST_SUBSCRIBED,
 	GET_POST_SUBSCRIPTION,
-	HIDE_POST,
+	HIDE_POST, UNHIDE_POST,
 } from './actionType';
 import { config } from '../config';
 import { checkAuth } from './loginAction';
@@ -223,6 +223,10 @@ export const getComments = (id) => {
 
 export const hidePost = (id) => {
 	return { type: HIDE_POST, payload: { id } };
+};
+
+export const unhidePost = (id) => {
+	return { type: UNHIDE_POST, payload: { id } };
 };
 
 export const replyTo = (number) => {

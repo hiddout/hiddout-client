@@ -1,5 +1,5 @@
 // @flow
-import { GET_COMMENTS, GET_POSTS } from '../actions/actionType';
+import { CORRECT_REDUCERS_VERSION, GET_COMMENTS, GET_POSTS } from '../actions/actionType';
 
 export type PageMarkerState = { isLatest: boolean };
 
@@ -13,6 +13,9 @@ const pageMarker = (state: PageMarkerState = initState, action: Action) =>
 				break;
 			case GET_COMMENTS:
 				draft.isLatest = action.payload.isLatest;
+				break;
+			case CORRECT_REDUCERS_VERSION:
+				return initState;
 		}
 	});
 

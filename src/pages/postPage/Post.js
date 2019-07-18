@@ -23,6 +23,8 @@ import { connect } from 'react-redux';
 import { t } from 'i18next';
 import SubmitForm from '../../component/submitForm/SubmitForm';
 
+import ListFooter from '../../containers/listFooter/ListFooter';
+
 import {
 	getComments,
 	getPost,
@@ -30,7 +32,7 @@ import {
 	getReactions,
 	hidePost,
 	replyTo,
-	subscribePost,
+	subscribePost, unhidePost,
 } from '../../actions/postAction';
 
 import {
@@ -49,7 +51,7 @@ import {
 	SUBSCRIBED_POST,
 } from '../../actions/actionType';
 
-const ReactMarkdown = React.lazy(() => import('react-markdown'));
+const MarkdownViewer = React.lazy(() => import('../../component/markdownViewer/MarkdownViewer'));
 
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
@@ -61,7 +63,6 @@ const CommentSection = React.lazy(() =>
 import type { PostState } from '../../reducers/post';
 import type { AuthState } from '../../reducers/auth';
 import type { AccountState } from '../../reducers/account';
-import ListFooter from '../../containers/listFooter/ListFooter';
 
 type Props = {
 	auth: AuthState,
@@ -74,6 +75,7 @@ type Props = {
 	getPostSubscription: (string) => any,
 	replyTo: (number) => any,
 	hidePost: (string) => any,
+	unhidePost: (string) => any,
 	submitComment: (Object) => any,
 	submitReaction: (Object) => any,
 	requestMovePost: () => any,
@@ -90,6 +92,7 @@ type State = {
 	reacted: boolean,
 	reaction: string,
 	subscriptionDone: boolean,
+	postHidden: boolean,
 };
 
 const REACT_UP = 'up';
@@ -102,6 +105,7 @@ class Post extends React.Component<Props, State> {
 		reacted: false,
 		subscriptionDone: true,
 		reaction: '',
+		postHidden: false,
 	};
 
 	async componentDidMount() {
@@ -197,6 +201,22 @@ class Post extends React.Component<Props, State> {
 				});
 			},
 		);
+	}
+
+	onClickHidePost() {
+		const {postHidden} = this.state;
+			const { currentPost } = this.props.post;
+			if (!currentPost) {
+				return;
+			}
+
+			if(!postHidden){
+				this.props.hidePost(currentPost._id);
+			}else {
+				this.props.unhidePost(currentPost._id);
+			}
+
+			this.setState({postHidden: !postHidden});
 	}
 
 	getReactionButtons(): Node {
@@ -316,6 +336,7 @@ class Post extends React.Component<Props, State> {
 
 	getOtherActionsGroup() {
 		const { currentPostSubscribed } = this.props.post;
+		const {postHidden} = this.state;
 
 		if (this.props.auth.isAdmin) {
 			return (
@@ -415,7 +436,6 @@ class Post extends React.Component<Props, State> {
 							),
 							value: 0,
 						},
-						{ key: 'hide', text: t('hide'), icon: 'ban' },
 						{ key: 'report', text: t('report'), icon: 'flag' },
 					]}
 					icon={null}
@@ -455,21 +475,15 @@ class Post extends React.Component<Props, State> {
 					)}
 					{currentPostSubscribed ? t('unsubscribe') : t('subscribe')}
 				</Label>
-
+				<Label
+					as="a"
+					color={!postHidden?'orange':'green'}
+					onClick={this.onClickHidePost.bind(this)}
+				>
+					<Icon name="ban" />
+					{ !postHidden? t('hide'):t('unhide')}
+				</Label>
 				<Responsive as={React.Fragment} minWidth={471}>
-					<Label
-						as="a"
-						color={'orange'}
-						onClick={() => {
-							const { currentPost } = this.props.post;
-							if (currentPost) {
-								this.props.hidePost(currentPost._id);
-							}
-						}}
-					>
-						<Icon name="ban" />
-						{t('hide')}
-					</Label>
 					<Label as="a" color={'violet'}>
 						<Icon name="flag" />
 						{t('report')}
@@ -488,7 +502,6 @@ class Post extends React.Component<Props, State> {
 		}
 
 		const markdown = currentPost.content;
-		const MarkdownComponent: any = ReactMarkdown;
 
 		return (
 			<React.Fragment>
@@ -537,29 +550,8 @@ class Post extends React.Component<Props, State> {
 						textAlign="justified"
 						style={{ overflowX: 'auto' }}
 					>
-						<MarkdownComponent
+						<MarkdownViewer
 							source={markdown}
-							renderers={{
-								image: (props) => {
-									return (
-										<img
-											{...props}
-											style={{ maxWidth: '100%' }}
-										/>
-									);
-								},
-								link: (props) => {
-									return (
-										<a
-											href={props.href}
-											rel={'noopener noreferrer'}
-											target={'_blank'}
-										>
-											{props.children}
-										</a>
-									);
-								},
-							}}
 						/>
 					</Container>
 
@@ -678,6 +670,7 @@ const mapDispatchToProps = (dispatch) => {
 		subscribePost: (subscriptionData) =>
 			dispatch(subscribePost(subscriptionData)),
 		hidePost: (id) => dispatch(hidePost(id)),
+		unhidePost: (id) => dispatch(unhidePost(id)),
 		replyTo: (level) => dispatch(replyTo(level)),
 	};
 };

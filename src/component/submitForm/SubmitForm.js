@@ -1,33 +1,34 @@
 // @flow
 import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
+import { t } from 'i18next';
 
 type Props = {
-	ButtonText: string;
-	disabled?: boolean;
-	onClick: (...arg:any) => any;
-	onChange?: (...arg:any) => any;
+	ButtonText: string,
+	disabled?: boolean,
+	onClick: (...arg: any) => any,
+	onChange?: (...arg: any) => any,
 };
 
 type State = {
-	formData:string,
+	formData: string,
 };
 
 class SubmitForm extends React.Component<Props, State> {
-	state = {formData: ''};
+	state = { formData: '' };
 
-	onTextAreaChange(e: Object,data: Object){
+	onTextAreaChange(e: Object, data: Object) {
 		const { onChange } = this.props;
 
-		if(onChange){
-			onChange(e,data);
+		if (onChange) {
+			onChange(e, data);
 		}
 
-		this.setState({formData: data.value});
+		this.setState({ formData: data.value });
 	}
 
 	onClick() {
-		if(!this.state.formData.length){
+		if (!this.state.formData.length) {
 			return;
 		}
 
@@ -35,16 +36,19 @@ class SubmitForm extends React.Component<Props, State> {
 
 		onClick(this.state.formData);
 
-		this.setState({formData: ''});
+		this.setState({ formData: '' });
 	}
 
 	render() {
-
-		const {ButtonText, disabled} = this.props;
+		const { ButtonText, disabled } = this.props;
 
 		return (
 			<Form reply>
-				<Form.TextArea value={this.state.formData} onChange={this.onTextAreaChange.bind(this)}/>
+				<Form.TextArea
+					value={this.state.formData}
+					placeholder={t('Our text editor is using markdown format')}
+					onChange={this.onTextAreaChange.bind(this)}
+				/>
 				<Button
 					content={ButtonText}
 					labelPosition="left"
@@ -58,4 +62,4 @@ class SubmitForm extends React.Component<Props, State> {
 	}
 }
 
-export default SubmitForm ;
+export default SubmitForm;

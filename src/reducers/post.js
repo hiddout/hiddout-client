@@ -1,5 +1,6 @@
 // @flow
 import {
+	CORRECT_REDUCERS_VERSION,
 	GET_COMMENTS,
 	GET_POST,
 	GET_POST_SUBSCRIPTION,
@@ -8,7 +9,7 @@ import {
 	REPLY_TO,
 	REQUEST_GET_POST,
 	REQUEST_GET_POSTS,
-	SUBSCRIBED_POST,
+	SUBSCRIBED_POST, UNHIDE_POST,
 } from '../actions/actionType';
 
 export type PostState = {
@@ -22,17 +23,19 @@ export type PostState = {
 	replyTo: number,
 };
 
+const initState = {
+	currentPostSubscribed: false,
+	isLoading: false,
+	posts: [],
+	reactions: null,
+	comments: [],
+	hiddenPosts: [],
+	currentPost: null,
+	replyTo: 0,
+};
+
 const post = (
-	state: PostState = {
-		currentPostSubscribed: false,
-		isLoading: false,
-		posts: [],
-		reactions: null,
-		comments: [],
-		hiddenPosts: [],
-		currentPost: null,
-		replyTo: 0,
-	},
+	state: PostState = initState,
 	action: Action,
 ) =>
 	immer.produce(state, (draft) => {
@@ -76,9 +79,13 @@ const post = (
 				}
 				break;
 			case HIDE_POST:
-				draft.hiddenPosts = draft.hiddenPosts? draft.hiddenPosts : [];
 				draft.hiddenPosts.push(payload.id);
 				break;
+			case UNHIDE_POST:
+				draft.hiddenPosts = draft.hiddenPosts.filter(id =>  id !== payload.id);
+				break;
+			case CORRECT_REDUCERS_VERSION:
+				return initState;
 		}
 	});
 

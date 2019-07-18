@@ -27,6 +27,7 @@ const FooterPage = React.lazy(() => import('./footerPage/FooterPage') );
 import type { Node } from 'react';
 import type { ModalState } from '../reducers/modal';
 import type { AuthState } from '../reducers/auth';
+import { CORRECT_REDUCERS_VERSION } from '../actions/actionType';
 
 type Props = {
 	auth: AuthState,
@@ -34,6 +35,8 @@ type Props = {
 	modal: ModalState,
 	history: Object,
 	location: Object,
+	version: Object,
+	correctReducerVersion: (number) => any,
 };
 
 type State = {};
@@ -44,14 +47,23 @@ class MainPage extends React.Component<Props, State> {
 	}
 
 	async initLanguage() {
-		i18n.init({
+		await i18n.init({
 			resources,
 			lng: this.props.i18n.language,
 		});
 	}
 
 	componentDidMount() {
+		this.checkVersion();
 		this.initLanguage();
+	}
+
+	checkVersion(){
+		const latestVersion = 1;
+		const {reducer} = this.props.version;
+		if(reducer !== latestVersion){
+			this.props.correctReducerVersion(latestVersion);
+		}
 	}
 
 	componentDidUpdate(prevProps) {
@@ -120,7 +132,14 @@ const mapStateToProps = (state) => {
 		auth: state.auth,
 		i18n: state.i18n,
 		modal: state.modal,
+		version: state.version,
 	};
 };
 
-export default withRouter(connect(mapStateToProps)(MainPage));
+const mapDispatchToProps = (dispatch) => {
+	return {
+		correctReducerVersion: (version) => dispatch({type: CORRECT_REDUCERS_VERSION, payload: {version}}),
+	};
+};
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MainPage));

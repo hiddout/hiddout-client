@@ -1,5 +1,6 @@
 // @flow
 import {
+	CORRECT_REDUCERS_VERSION,
 	REQUEST_CHANGE_POST_LANGUAGE,
 	REQUEST_DELETE_POST,
 	REQUEST_LOCK_POST,
@@ -8,7 +9,9 @@ import {
 
 export type AdminState = { currentAction: string };
 
-const admin = (state: AdminState = { currentAction: '' }, action: Action) =>
+const initState =  { currentAction: '' };
+
+const admin = (state: AdminState = initState, action: Action) =>
 	immer.produce(state, draft => {
 
 		switch (action.type) {
@@ -23,6 +26,9 @@ const admin = (state: AdminState = { currentAction: '' }, action: Action) =>
 				break;
 			case REQUEST_CHANGE_POST_LANGUAGE:
 				draft.currentAction = REQUEST_CHANGE_POST_LANGUAGE;
+				break;
+			case CORRECT_REDUCERS_VERSION:
+				return initState;
 		}
 	});
 

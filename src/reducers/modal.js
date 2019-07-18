@@ -3,7 +3,7 @@ import {
 	CLOSE_ACCOUNT_MODAL,
 	CLOSE_ADMIN_MODAL,
 	CLOSE_LOGIN_MODAL,
-	CLOSE_SIGN_UP_MODAL, OPEN_ACCOUNT_MODAL,
+	CLOSE_SIGN_UP_MODAL, CORRECT_REDUCERS_VERSION, OPEN_ACCOUNT_MODAL,
 	OPEN_ADMIN_MODAL,
 	OPEN_LOGIN_MODAL,
 	OPEN_SIGN_UP_MODAL, SIGN_UP,
@@ -53,6 +53,8 @@ const modal = (state: ModalState = initState, action: Action) =>
 			case CLOSE_ACCOUNT_MODAL:
 				draft.accountModalShowed = false;
 				break;
+			case CORRECT_REDUCERS_VERSION:
+				return initState;
 		}
 	});
 

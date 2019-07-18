@@ -19,7 +19,8 @@ import {
 import { connect } from 'react-redux';
 import type { AuthState } from '../../reducers/auth';
 
-const BoardSelector = React.lazy(() => import('../../component/boardSelector/BoardSelector') );
+import BoardSelector from '../../component/boardSelector/BoardSelector';
+
 import type { AccountState } from '../../reducers/account';
 
 const Nav = (props) => <NavLink exact {...props} activeClassName="active" />;

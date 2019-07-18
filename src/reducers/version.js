@@ -1,23 +1,17 @@
 // @flow
-type State = { version: number };
+import { CORRECT_REDUCERS_VERSION } from '../actions/actionType';
 
-const initState = { version: 0 };
+type State = { reducer: number };
+
+const initState = { reducer: 0 };
 
 const version = (state: State = initState, action: Action) =>
 	immer.produce(state, (draft) => {
-		// switch (action.type) {
-		// 	case CHANGE_LANGUAGE:
-		// 		draft.language = action.payload.language;
-		// 		break;
-		// 	case CHANGE_PREFER:
-		// 		if(action.payload.prefer.length === 4){
-		// 			draft.prefer = [];
-		// 		}
-		// 		else {
-		// 			draft.prefer = action.payload.prefer;
-		// 		}
-		// 		break;
-		// }
+		switch (action.type) {
+			case CORRECT_REDUCERS_VERSION:
+				draft.reducer = action.payload.version;
+				break;
+		}
 	});
 
 export { version };

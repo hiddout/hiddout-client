@@ -8,7 +8,7 @@ import type { PostState } from '../../reducers/post';
 import type { AuthState } from '../../reducers/auth';
 import { getHiddoutTime } from '../../utils/commonUtil';
 
-const ReactMarkdown = React.lazy(() => import('react-markdown'));
+const MarkdownViewer = React.lazy(() => import('../../component/markdownViewer/MarkdownViewer'));
 
 type Props = {
 	auth: AuthState,
@@ -21,7 +21,6 @@ type State = {};
 class CommentSection extends React.Component<Props, State> {
 	render() {
 		const { comments, currentPost } = this.props.post;
-		const MarkdownComponent: any = ReactMarkdown;
 
 		return (
 			<Comment.Group>
@@ -67,32 +66,8 @@ class CommentSection extends React.Component<Props, State> {
 								)}
 								{c.userId !== 'N/A' && (
 									<Comment.Text>
-										<MarkdownComponent
+										<MarkdownViewer
 											source={c.content}
-											renderers={{
-												image: (props) => {
-													return (
-														<img
-															{...props}
-															style={{
-																maxWidth:
-																	'100%',
-															}}
-														/>
-													);
-												},
-												link: (props) => {
-													return (
-														<a
-															href={props.href}
-															rel={'noopener noreferrer'}
-															target={'_blank'}
-														>
-															{props.children}
-														</a>
-													);
-												},
-											}}
 										/>
 									</Comment.Text>
 								)}

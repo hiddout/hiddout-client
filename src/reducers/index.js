@@ -9,6 +9,7 @@ import { admin } from './admin';
 import { submit } from './submit';
 import { visitUser } from './visitUser';
 import { pageMarker } from './pageMarker';
+import {version} from './version';
 
 export default (history) =>
 	combineReducers({
@@ -22,4 +23,5 @@ export default (history) =>
 		submit,
 		visitUser,
 		pageMarker,
+		version,
 	});

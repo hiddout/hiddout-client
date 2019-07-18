@@ -1,5 +1,5 @@
 // @flow
-import { CHANGE_LANGUAGE,CHANGE_PREFER } from '../actions/actionType';
+import { CHANGE_LANGUAGE, CHANGE_PREFER } from '../actions/actionType';
 
 type State = { language: string, prefer: Array<string> };
 

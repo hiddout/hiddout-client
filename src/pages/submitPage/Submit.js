@@ -12,9 +12,11 @@ import {
 } from 'semantic-ui-react';
 import { t } from 'i18next';
 import SubmitForm from '../../component/submitForm/SubmitForm';
-import BoardSelector from '../../component/boardSelector/BoardSelector';
 
-const ReactMarkdown = React.lazy(() => import('react-markdown'));
+const BoardSelector = React.lazy(() => import('../../component/boardSelector/BoardSelector') );
+const MarkdownViewer = React.lazy(() =>
+	import('../../component/markdownViewer/MarkdownViewer'),
+);
 const NavigationBar = React.lazy(() =>
 	import('../../containers/navigationBar/NavigationBar'),
 );
@@ -82,8 +84,6 @@ class Submit extends React.Component<Props, State> {
 	}
 
 	render(): Node {
-		//TODO: warp a component for render markdown elements
-		const MarkdownComponent: any = ReactMarkdown;
 		return (
 			<React.Fragment>
 				<NavigationBar showBackBtn={true} />
@@ -128,29 +128,8 @@ class Submit extends React.Component<Props, State> {
 							textAlign="justified"
 							style={{ overflowX: 'auto' }}
 						>
-							<MarkdownComponent
+							<MarkdownViewer
 								source={this.state.content}
-								renderers={{
-									image: (props) => {
-										return (
-											<img
-												{...props}
-												style={{ maxWidth: '100%' }}
-											/>
-										);
-									},
-									link: (props) => {
-										return (
-											<a
-												href={props.href}
-												rel={'noopener noreferrer'}
-												target={'_blank'}
-											>
-												{props.children}
-											</a>
-										);
-									},
-								}}
 							/>
 						</Container>
 					</Segment>
