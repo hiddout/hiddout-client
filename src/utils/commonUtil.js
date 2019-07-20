@@ -15,21 +15,8 @@ export const getHiddoutTime = (time:number) => {
 };
 
 export const getUserColor = (name:string) => {
-	let userNameCode = name.charCodeAt(0);
-	userNameCode = (userNameCode * 9301 + 49297) % 233280;
-	const r = userNameCode / 233280.0 * 255;
+	let md = forge.md.md5.create();
+	md.update(name);
 
-	if(name.length > 1) {
-		userNameCode = name[1].charCodeAt(0);
-	}
-	userNameCode = (userNameCode * 9301 + 49297) % 233280;
-	const g = userNameCode / 233280.0 * 255;
-
-	if(name.length > 2) {
-		userNameCode = name[2].charCodeAt(0);
-	}
-	userNameCode = (userNameCode * 9301 + 49297) % 233280;
-	const b = userNameCode / 233280.0 * 255;
-
-	return `rgb(${r},${g},${b})`;
+	return `#${md.digest().toHex().slice(0, 6)}`;
 };
