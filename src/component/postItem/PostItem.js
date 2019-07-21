@@ -25,6 +25,9 @@ class PostItem extends React.Component<Props, State> {
 					<List.Header style={{fontSize: '1.2em'}}>
 						<Image avatar src={boardImgSrc} />
 						<Link to={`/p/${postId}`}>{title}</Link>
+						<Label size={'mini'} color={'black'} style={{float:'right'}}>
+							{reply? reply : 0}
+						</Label>
 					</List.Header>
 					<List.Description>
 						{t('postBy')}
@@ -32,9 +35,6 @@ class PostItem extends React.Component<Props, State> {
 							<b>{author}</b>
 						</a>
 						{createdAt}
-						<Label size={'mini'} color={'black'} >
-							{reply? reply : 0}
-						</Label>
 					</List.Description>
 				</List.Content>
 			</List.Item>
