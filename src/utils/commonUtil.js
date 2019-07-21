@@ -15,7 +15,7 @@ export const getHiddoutTime = (time:number) => {
 };
 
 export const getUserColor = (name:string) => {
-	let md = forge.md.md5.create();
+	const md = forge.md.md5.create();
 	md.update(name);
 
 	return `#${md.digest().toHex().slice(0, 6)}`;
