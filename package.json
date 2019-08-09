@@ -67,7 +67,7 @@
     "connected-react-router": "6.5.1",
     "i18next": "16.0.0",
     "react": "16.9.0",
-    "react-dom": "16.8.6",
+    "react-dom": "16.9.0",
     "react-markdown": "^4.0.6",
     "react-redux": "7.0.3",
     "react-router-dom": "5.0.0",
