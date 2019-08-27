@@ -61,7 +61,7 @@
     "webpack": "4.36.1",
     "webpack-cli": "3.3.6",
     "webpack-dev-server": "3.7.2",
-    "webpack-merge": "4.2.1"
+    "webpack-merge": "4.2.2"
   },
   "dependencies": {
     "connected-react-router": "6.5.1",
