@@ -54,7 +54,7 @@
     "fs-extra": "8.1.0",
     "hiddout-viewer": "0.1.12",
     "html-webpack-plugin": "^3.2.0",
-    "mocha": "6.1.4",
+    "mocha": "6.2.1",
     "prettier": "1.17.0",
     "redux-devtools-extension": "^2.13.8",
     "style-loader": "0.23.1",
