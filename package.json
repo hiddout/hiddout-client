@@ -50,7 +50,7 @@
     "eslint-plugin-react": "7.12.4",
     "expect.js": "0.3.1",
     "file-loader": "3.0.1",
-    "flow-bin": "0.104.0",
+    "flow-bin": "0.110.0",
     "fs-extra": "8.1.0",
     "hiddout-viewer": "0.1.12",
     "html-webpack-plugin": "^3.2.0",
