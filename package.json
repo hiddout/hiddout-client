@@ -45,7 +45,7 @@
     "babel-loader": "8.0.6",
     "circular-dependency-plugin": "5.2.0",
     "core-js": "3.4.3",
-    "css-loader": "3.0.0",
+    "css-loader": "3.2.1",
     "eslint": "5.16.0",
     "eslint-plugin-react": "7.12.4",
     "expect.js": "0.3.1",
