@@ -64,7 +64,7 @@
     "webpack-merge": "4.2.1"
   },
   "dependencies": {
-    "connected-react-router": "6.5.1",
+    "connected-react-router": "6.7.0",
     "i18next": "16.0.0",
     "react": "16.12.0",
     "react-dom": "16.12.0",
