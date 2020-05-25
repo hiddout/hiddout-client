@@ -48,12 +48,12 @@ class BoardSelector extends React.Component<Props, State> {
 				},
 			},
 			{
-				key: 'workBoard',
-				text: t('workBoard'),
+				key: 'shareBoard',
+				text: t('shareBoard'),
 				value: 'work',
 				image: {
 					avatar: true,
-					src: '/public/static/images/avatar/board/work.jpg',
+					src: '/public/static/images/avatar/board/share.jpg',
 				},
 			},
 			{

@@ -57,8 +57,8 @@ class BoardPage extends React.Component<Props, State> {
 				return t('Topics for Everyday Life Conversations');
 			case 'game':
 				return t('Topics for Gaming and Grouping');
-			case 'work':
-				return t('Topics for Work related Networking');
+			case 'share':
+				return t('Topics for something you want to show');
 			case 'spam':
 				return t('Things that better not showing on front page');
 			default:
