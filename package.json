@@ -10,9 +10,7 @@
     "lint-fix": "eslint --ext .js src --fix",
     "dev": "node ./devScript/prebuild.js && webpack-dev-server --open --config config/webpack.dev.js",
     "test": "npm run unit-testing && npm run flow check && npm run lint && npm run build",
-    "unit-testing": "mocha test/**/*.test.js --require @babel/register",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "unit-testing": "mocha test/**/*.test.js --require @babel/register"
   },
   "prettier": {
     "useTabs": true,
@@ -62,7 +60,7 @@
     "style-loader": "1.0.2",
     "webpack": "4.41.6",
     "webpack-cli": "3.3.9",
-    "webpack-dev-server": "3.9.0",
+    "webpack-dev-server": "^3.11.0",
     "webpack-merge": "4.2.1"
   },
   "dependencies": {
@@ -76,8 +74,7 @@
     "redux": "4.0.5",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "semantic-ui-react": "0.88.2",
-    "snyk": "^1.316.1"
+    "semantic-ui-react": "0.88.2"
   },
   "snyk": true
 }
