@@ -50,7 +50,7 @@ class BoardSelector extends React.Component<Props, State> {
 			{
 				key: 'shareBoard',
 				text: t('shareBoard'),
-				value: 'work',
+				value: 'share',
 				image: {
 					avatar: true,
 					src: '/public/static/images/avatar/board/share.jpg',
